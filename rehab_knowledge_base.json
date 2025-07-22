@@ -1,0 +1,688 @@
+[
+  {
+    "title": "Ankle/Foot Rehabilitation Knowledge Base (Post-Op Recovery)",
+    "applies_to": [
+      "Post fracture",
+      "Ligament repair (e.g. ATFL)",
+      "Plantar fasciitis release",
+      "Flatfoot correction",
+      "Ankle arthroscopy"
+    ],
+    "goals": [
+      "Reduce swelling and pain",
+      "Regain mobility and strength",
+      "Protect healing tissues (tendons, ligaments, bones)",
+      "Return to walking, balance, and normal gait"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Protection & Swelling Control",
+        "timeline": "Weeks 0\u20132",
+        "activities": [
+          "Ice and elevate foot 3\u20134x/day",
+          "Gentle toe curls, ankle pumps",
+          "No weight bearing unless allowed",
+          "Keep leg raised while sitting or lying"
+        ]
+      },
+      {
+        "name": "Phase 2: Early Mobilization",
+        "timeline": "Weeks 2\u20136",
+        "activities": [
+          "Begin partial weight-bearing if cleared",
+          "Ankle alphabet \u2013 Trace letters with toes",
+          "Towel stretch \u2013 stretch calf",
+          "Begin balance board or tandem stance"
+        ]
+      },
+      {
+        "name": "Phase 3: Strength & Proprioception",
+        "timeline": "Weeks 6\u201310",
+        "activities": [
+          "TheraBand resistance \u2013 push and pull foot",
+          "Calf raises, heel-toe walking, single-leg stance",
+          "Light stationary bike or pool walking"
+        ]
+      },
+      {
+        "name": "Phase 4: Return to Function",
+        "timeline": "Week 10+",
+        "activities": [
+          "Advance to walking on uneven surfaces",
+          "Begin jogging, hopping, agility drills",
+          "Sports drills or job-specific tasks"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Swelling not going down",
+      "Foot feels cold, blue, or numb",
+      "Pain worsens with light movement",
+      "Wound is red, warm, or leaking"
+    ],
+    "long_term_tips": [
+      "Wear supportive shoes with arch support",
+      "Avoid barefoot walking for first 3 months",
+      "Continue calf and ankle stretches daily",
+      "Use ankle brace during sports for 3\u20136 months"
+    ]
+  },
+  {
+    "title": "Elbow & Wrist Rehabilitation Knowledge Base (Post-Op Recovery)",
+    "applies_to": [
+      "Tennis elbow surgery",
+      "Distal radius fracture",
+      "Carpal tunnel release",
+      "Wrist arthroscopy",
+      "Ligament/tendon repair"
+    ],
+    "goals": [
+      "Control pain and swelling",
+      "Prevent stiffness in hand, wrist, elbow",
+      "Regain grip strength and fine motor control",
+      "Return to functional hand use (typing, lifting, writing, etc.)"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Protection & Mobility",
+        "timeline": "Weeks 0\u20132",
+        "activities": [
+          "Ice, elevation, and rest",
+          "Finger and thumb mobility",
+          "Wrist circles \u2013 gentle movements only",
+          "Elbow range of motion if wrist is immobilized"
+        ]
+      },
+      {
+        "name": "Phase 2: Early Strengthening & Nerve Gliding",
+        "timeline": "Weeks 2\u20136",
+        "activities": [
+          "Gentle grip exercises using a soft ball or towel",
+          "Wrist flexion/extension against gravity",
+          "Median nerve glides",
+          "Forearm rotation exercises"
+        ]
+      },
+      {
+        "name": "Phase 3: Functional Strengthening",
+        "timeline": "Weeks 6\u201310",
+        "activities": [
+          "Resistance bands for wrist curls",
+          "Theraputty for grip and pinch strength",
+          "Wrist radial/ulnar deviation against resistance",
+          "Daily activities practice"
+        ]
+      },
+      {
+        "name": "Phase 4: Full Return to Use",
+        "timeline": "Week 10+",
+        "activities": [
+          "Resume sport/work-specific tasks",
+          "Push-ups, planks, or weight-bearing when cleared",
+          "Simulate work activities"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Tingling or numbness doesn\u2019t improve",
+      "Pain worsens after movement or exercise",
+      "Redness or fluid leaking from wound",
+      "Extreme stiffness or loss of motion"
+    ],
+    "long_term_tips": [
+      "Stretch wrist flexors and extensors regularly",
+      "Use ergonomic tools",
+      "Avoid repetitive stress for the first 3 months",
+      "Consider a wrist brace for repetitive lifting or typing"
+    ]
+  },
+  {
+    "title": "General Physiotherapy & Mobility Rehab Knowledge Base",
+    "applies_to": [
+      "Non-surgical rehab",
+      "Post-op full-body conditioning",
+      "Posture correction",
+      "Injury prevention",
+      "Senior mobility",
+      "Sports recovery"
+    ],
+    "goals": [
+      "Improve overall body strength, posture, and mobility",
+      "Correct muscle imbalances",
+      "Prevent reinjury or degeneration",
+      "Help return to daily life, work, or sport smoothly"
+    ],
+    "phases": [
+      {
+        "name": "Warm-Up & Mobility Basics",
+        "timeline": "Any program start",
+        "activities": [
+          "Neck rolls, shoulder shrugs, trunk twists",
+          "Ankle pumps, toe taps",
+          "Wall walk",
+          "Marching in place"
+        ]
+      },
+      {
+        "name": "Strength & Stability",
+        "timeline": "Beginner-Friendly",
+        "activities": [
+          "Sit-to-stand from chair",
+          "Step-ups on low stair",
+          "Wall push-ups or incline push-ups",
+          "TheraBand rows",
+          "Standing heel raises"
+        ]
+      },
+      {
+        "name": "Posture & Core",
+        "timeline": "",
+        "activities": [
+          "Pelvic tilts",
+          "Chin tucks",
+          "Bird-dog",
+          "Bridge",
+          "Dead bug"
+        ]
+      },
+      {
+        "name": "Balance & Coordination",
+        "timeline": "",
+        "activities": [
+          "Single-leg stand",
+          "Tandem walking",
+          "Clock taps",
+          "Ball toss against wall"
+        ]
+      },
+      {
+        "name": "Flexibility Essentials",
+        "timeline": "",
+        "activities": [
+          "Hamstring & quad stretch",
+          "Calf stretch",
+          "Shoulder cross-body and triceps stretch",
+          "Wrist and forearm mobility drills"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Light-headedness or dizziness during sessions",
+      "Joint swelling after basic exercises",
+      "Sudden weakness or loss of control",
+      "Back pain during core work"
+    ],
+    "long_term_tips": [
+      "Track progress weekly",
+      "Mix cardio 2\u20133x/week",
+      "Stick to 2\u20134 sessions/week with rest days",
+      "Ask physio before increasing resistance or intensity"
+    ]
+  },
+  {
+    "title": "Hand Rehabilitation Knowledge Base (Post-Op Recovery)",
+    "applies_to": [
+      "Tendon repair",
+      "Fracture fixation",
+      "Arthritis surgeries",
+      "Carpal/metacarpal injuries",
+      "Joint replacements"
+    ],
+    "goals": [
+      "Protect surgical repair",
+      "Prevent stiffness in fingers/thumb",
+      "Restore grip, pinch, and dexterity",
+      "Regain full hand function for daily tasks"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Protection & Passive Motion",
+        "timeline": "Weeks 0\u20133",
+        "activities": [
+          "Wear custom splint at all times",
+          "Passive finger movements",
+          "Gentle tendon glides (if cleared)",
+          "Move elbow/shoulder to avoid stiffness"
+        ]
+      },
+      {
+        "name": "Phase 2: Controlled Movement",
+        "timeline": "Weeks 3\u20136",
+        "activities": [
+          "Begin active ROM",
+          "Place and hold exercises",
+          "Thumb opposition drills",
+          "Isolated joint movements (PIP, DIP)"
+        ]
+      },
+      {
+        "name": "Phase 3: Strengthening",
+        "timeline": "Weeks 6\u201310",
+        "activities": [
+          "Theraputty exercises",
+          "Rubber band extension drills",
+          "Rice bucket exercises",
+          "Fine motor tasks (coins, beads)"
+        ]
+      },
+      {
+        "name": "Phase 4: Return to Function",
+        "timeline": "Week 10+",
+        "activities": [
+          "Simulate daily tasks",
+          "Gradual return to lifting and gripping",
+          "Hand coordination games"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Fingers turning blue, cold, or extremely swollen",
+      "Stitches coming undone or wound oozing",
+      "Extreme stiffness without improvement by Week 4\u20136",
+      "Sharp pain with light movement"
+    ],
+    "long_term_tips": [
+      "Use hand supports/braces for high-risk activities",
+      "Stretch hands regularly",
+      "Maintain shoulder and wrist health",
+      "Use ergonomic tools"
+    ]
+  },
+  {
+    "title": "Hip Rehabilitation Knowledge Base (Post-Op Recovery)",
+    "applies_to": [
+      "Hip replacement",
+      "Hip arthroscopy",
+      "Fracture fixation",
+      "Labral repair"
+    ],
+    "goals": [
+      "Focus on controlled movement, regaining ROM",
+      "Avoid dislocation",
+      "Strengthen muscles around the hip",
+      "Return to daily activities safely"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Hospital Stay",
+        "timeline": "Days 1\u20133",
+        "activities": [
+          "Use walker for mobility",
+          "Ankle pumps, quad sets, glute squeezes",
+          "Heel slides and knee extensions",
+          "Avoid crossing legs or rotating operated leg"
+        ]
+      },
+      {
+        "name": "Phase 2: Home Rehab",
+        "timeline": "Week 1\u20134",
+        "activities": [
+          "Standing hip abduction",
+          "Heel raises",
+          "Gradually reduce walker use"
+        ]
+      },
+      {
+        "name": "Phase 3: Strength Building",
+        "timeline": "Week 4\u20138",
+        "activities": [
+          "Bridging",
+          "Side-lying leg lifts",
+          "Begin walking with cane or unassisted"
+        ]
+      },
+      {
+        "name": "Phase 4: Return to Function",
+        "timeline": "Week 8+",
+        "activities": [
+          "Treadmill or swimming",
+          "Balance exercises",
+          "Climbing stairs normally"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Sudden sharp pain in groin",
+      "Clicking or leg shortening",
+      "Swelling or redness in calf"
+    ],
+    "long_term_tips": []
+  },
+  {
+    "title": "Knee Rehabilitation Knowledge Base (Post-Op Recovery)",
+    "applies_to": [
+      "Knee replacement",
+      "ACL reconstruction",
+      "Meniscus repair",
+      "Knee arthroscopy"
+    ],
+    "goals": [
+      "Regain knee range of motion",
+      "Improve quadriceps and hamstring strength",
+      "Reduce swelling and inflammation",
+      "Return to weight-bearing and daily activities"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Immediate Post-Op",
+        "timeline": "Day 1\u20137",
+        "activities": [
+          "Ice, elevate, compression",
+          "Ankle pumps (10\u201320 reps/hour)",
+          "Quadriceps sets",
+          "Heel slides",
+          "Passive knee extension"
+        ]
+      },
+      {
+        "name": "Phase 2: Early Recovery",
+        "timeline": "Week 2\u20134",
+        "activities": [
+          "Straight leg raises",
+          "Seated knee flexion",
+          "Begin partial weight-bearing with crutches"
+        ]
+      },
+      {
+        "name": "Phase 3: Intermediate Strengthening",
+        "timeline": "Week 4\u20138",
+        "activities": [
+          "Mini squats",
+          "Step-ups",
+          "Stationary bike",
+          "Increase walking duration"
+        ]
+      },
+      {
+        "name": "Phase 4: Advanced Strengthening & Function",
+        "timeline": "Week 8+",
+        "activities": [
+          "Wall sits",
+          "Lunges",
+          "Light jogging or swimming",
+          "Sports-specific training"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Fever, redness, or warmth around incision",
+      "Knee locks or gives out",
+      "Persistent swelling after exercises"
+    ],
+    "long_term_tips": []
+  },
+  {
+    "title": "Neck / Cervical Rehabilitation Knowledge Base (Post-Op & Non-Surgical)",
+    "applies_to": [
+      "Cervical spine surgery (e.g., ACDF)",
+      "Whiplash recovery",
+      "Cervical spondylosis",
+      "Neck sprain/strain"
+    ],
+    "goals": [
+      "Reduce neck pain and muscle tightness",
+      "Improve head/neck mobility",
+      "Strengthen postural muscles",
+      "Prevent nerve compression or stiffness"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Protection & Mobility",
+        "timeline": "Weeks 0\u20132",
+        "activities": [
+          "Neck brace/collar if prescribed",
+          "Gentle neck nods",
+          "Scapular squeezes",
+          "Ice for pain/inflammation"
+        ]
+      },
+      {
+        "name": "Phase 2: Gentle Motion & Isometrics",
+        "timeline": "Weeks 2\u20136",
+        "activities": [
+          "Neck rotations",
+          "Lateral tilts",
+          "Chin tucks",
+          "Isometric holds"
+        ]
+      },
+      {
+        "name": "Phase 3: Strengthening & Postural Control",
+        "timeline": "Weeks 6\u201310",
+        "activities": [
+          "Resistance band rows",
+          "Wall angels",
+          "Shoulder shrugs and rolls",
+          "TheraBand neck resistance"
+        ]
+      },
+      {
+        "name": "Phase 4: Functional Recovery",
+        "timeline": "Week 10+",
+        "activities": [
+          "Balance work, core exercises, and light cardio",
+          "Daily activities with good posture",
+          "Gradual return to work/sports"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Arm pain, numbness, or weakness",
+      "Headaches not improving",
+      "Dizziness or visual changes",
+      "Sharp pain with simple neck movements"
+    ],
+    "long_term_tips": [
+      "Maintain neutral neck posture at work",
+      "Use lumbar + neck support",
+      "Avoid sleeping on stomach",
+      "Daily stretches to prevent tightness"
+    ]
+  },
+  {
+    "title": "Pain Management Knowledge Base (Post-Op & Ortho Rehab)",
+    "applies_to": [
+      "Post-operative pain",
+      "Chronic orthopedic pain",
+      "Joint stiffness",
+      "Nerve discomfort",
+      "Inflammation control"
+    ],
+    "goals": [
+      "Reduce pain safely without overmedication",
+      "Promote movement without setbacks",
+      "Educate on pain types",
+      "Support long-term recovery with non-pharma tools"
+    ],
+    "phases": [],
+    "red_flags": [
+      "Pain worsens each day",
+      "Fever, chills, or pus at surgical site",
+      "Sudden numbness or weakness",
+      "Can't sleep or move due to pain"
+    ],
+    "long_term_tips": [
+      "Alternate ice and heat appropriately",
+      "Use TENS, meditation, or massage",
+      "Gentle movement hourly",
+      "Stretch within pain-free range"
+    ]
+  },
+  {
+    "title": "Shoulder Rehabilitation Knowledge Base (Post-Op Recovery)",
+    "applies_to": [
+      "Shoulder surgery",
+      "Rotator cuff repair",
+      "Labrum repair"
+    ],
+    "goals": [
+      "Protect surgical repair",
+      "Restore range of motion",
+      "Build strength and function gradually"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Protective Phase",
+        "timeline": "0\u20134 weeks",
+        "activities": [
+          "Arm supported in sling",
+          "Pendulum exercises",
+          "Elbow and wrist ROM"
+        ]
+      },
+      {
+        "name": "Phase 2: Passive & Assisted Movement",
+        "timeline": "4\u20138 weeks",
+        "activities": [
+          "Shoulder flexion (passive)",
+          "External rotation (passive)"
+        ]
+      },
+      {
+        "name": "Phase 3: Active ROM & Light Strengthening",
+        "timeline": "8\u201312 weeks",
+        "activities": [
+          "Wall walks",
+          "Shoulder abduction with resistance"
+        ]
+      },
+      {
+        "name": "Phase 4: Advanced Strengthening",
+        "timeline": "3\u20136 months",
+        "activities": [
+          "TheraBand rows",
+          "Light overhead press (if cleared)"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Increased pain after exercise",
+      "Swelling or clicking sounds",
+      "Weakness in lifting light objects"
+    ],
+    "long_term_tips": []
+  },
+  {
+    "title": "Spine Conditioning Knowledge Base (Post-Op & Rehab Recovery)",
+    "applies_to": [
+      "Spinal surgery recovery",
+      "Spine-related conditions"
+    ],
+    "goals": [
+      "Improve core strength",
+      "Support spine",
+      "Reduce back/neck pain",
+      "Gradual, safe rehab"
+    ],
+    "phases": [
+      {
+        "name": "Phase 1: Gentle Mobility & Warm-up",
+        "timeline": "",
+        "activities": [
+          "Pelvic tilts",
+          "Knee-to-chest stretch",
+          "Cat-cow stretch",
+          "Child\u2019s pose"
+        ]
+      },
+      {
+        "name": "Phase 2: Core Control & Stability",
+        "timeline": "",
+        "activities": [
+          "Abdominal bracing",
+          "Marching in supine",
+          "Dead bug",
+          "Bridging"
+        ]
+      },
+      {
+        "name": "Phase 3: Lumbar Strengthening",
+        "timeline": "",
+        "activities": [
+          "Bird dog",
+          "McKenzie press-ups",
+          "Superman hold"
+        ]
+      },
+      {
+        "name": "Phase 4: Flexibility & Postural Retraining",
+        "timeline": "",
+        "activities": [
+          "Wall angels",
+          "Standing hamstring stretch",
+          "Seated piriformis stretch",
+          "Chin tucks"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Pain shooting down legs or arms",
+      "Numbness, tingling, or weakness",
+      "Dizziness or chest pressure"
+    ],
+    "long_term_tips": [
+      "Stay active with low-impact cardio",
+      "Practice good posture",
+      "Include core and flexibility routines",
+      "Prioritize consistency over intensity"
+    ]
+  },
+  {
+    "title": "Surgical Wound Care Knowledge Base (Orthopedic Post-Op)",
+    "applies_to": [
+      "Any post-operative wound after orthopedic surgery",
+      "Including knee, hip, spine, shoulder, etc."
+    ],
+    "goals": [
+      "Keep the wound clean, dry, and protected",
+      "Spot early signs of infection or poor healing",
+      "Promote natural tissue repair",
+      "Prevent reopening or scarring"
+    ],
+    "phases": [
+      {
+        "name": "Immediate Care Tips",
+        "timeline": "Days 0\u20137",
+        "activities": [
+          "Leave original dressing unless advised otherwise",
+          "Do not soak the wound",
+          "Shower after 24\u201348 hours only if allowed",
+          "No powders, creams, or oils unless prescribed"
+        ]
+      },
+      {
+        "name": "Dressing Changes",
+        "timeline": "",
+        "activities": [
+          "Change dressing as advised (1\u20133 days)",
+          "Wash hands before and after touching wound",
+          "Use sterile materials",
+          "Change dressing if wet or soiled"
+        ]
+      },
+      {
+        "name": "Cleaning the Wound",
+        "timeline": "",
+        "activities": [
+          "Use saline or warm water",
+          "Pat dry with sterile gauze",
+          "Don\u2019t remove scabs or strips",
+          "Follow specific stitch-care instructions"
+        ]
+      }
+    ],
+    "red_flags": [
+      "Redness spreading around wound",
+      "Warmth or hardness under skin",
+      "Yellow/green or foul-smelling fluid",
+      "Fever over 100.4\u00b0F (38\u00b0C)",
+      "Increasing pain day-by-day"
+    ],
+    "long_term_tips": [
+      "Wear loose, breathable clothing",
+      "Avoid pressure on wound",
+      "Do not scratch \u2014 pat gently",
+      "Use sunscreen on healed scars to reduce darkening"
+    ]
+  }
+]
