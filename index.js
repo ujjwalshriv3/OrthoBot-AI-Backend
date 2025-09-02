@@ -15,12 +15,79 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 // Load knowledge base
 const kb = JSON.parse(fs.readFileSync('./rehab_knowledge_base.json', 'utf-8'));
 
-// Basic keyword search
+// Recursively flatten your knowledge base to a searchable array
+function flattenKB(obj) {
+  let results = [];
+
+  if (Array.isArray(obj)) {
+    obj.forEach(item => {
+      results = results.concat(flattenKB(item));
+    });
+  } else if (typeof obj === 'object' && obj !== null) {
+    for (const key in obj) {
+      results = results.concat(flattenKB(obj[key]));
+    }
+  } else if (typeof obj === 'string' || typeof obj === 'number') {
+    results.push(String(obj));
+  }
+
+  return results;
+}
+
+// Basic keyword search in KB
 function searchKB(query) {
-  return kb
-    .filter(chunk => JSON.stringify(chunk).toLowerCase().includes(query.toLowerCase()))
-    .map(chunk => JSON.stringify(chunk, null, 2))
-    .join('\n');
+  const flatKB = flattenKB(kb);
+  const matched = flatKB.filter(item =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return matched.join('\n');
+}
+
+// Function to clean and format AI response
+function formatResponse(text) {
+  let formatted = text;
+  
+  // Remove markdown headers and replace with HTML strong tags
+  formatted = formatted.replace(/#{1,6}\s*(.*?)(?=\n|$)/g, '<strong>$1</strong>');
+  
+  // Remove bold markdown and replace with HTML strong tags
+  formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // Remove italic markdown
+  formatted = formatted.replace(/\*(.*?)\*/g, '$1');
+  
+  // Remove horizontal rules
+  formatted = formatted.replace(/---+/g, '');
+  formatted = formatted.replace(/___+/g, '');
+  
+  // Clean up bullet points - convert markdown to HTML lists
+  formatted = formatted.replace(/^\s*[-*+]\s+(.+)$/gm, '<li>$1</li>');
+  
+  // Wrap consecutive <li> tags in <ul> tags
+  formatted = formatted.replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/gs, (match) => {
+    return '<ul>' + match + '</ul>';
+  });
+  
+  // Convert line breaks to paragraph tags
+  formatted = formatted.replace(/\n\n+/g, '</p><p>');
+  
+  // Wrap content that's not already in HTML tags with paragraph tags
+  if (!formatted.startsWith('<')) {
+    formatted = '<p>' + formatted;
+  }
+  if (!formatted.endsWith('>')) {
+    formatted = formatted + '</p>';
+  }
+  
+  // Clean up extra whitespace and line breaks
+  formatted = formatted.replace(/\n+/g, ' ');
+  formatted = formatted.replace(/\s+/g, ' ');
+  
+  // Fix paragraph structure
+  formatted = formatted.replace(/<\/p>\s*<p>/g, '</p><p>');
+  
+  return formatted.trim();
 }
 
 // POST endpoint to handle chat
@@ -29,46 +96,95 @@ app.post('/askAI', async (req, res) => {
 
   const matchedKB = searchKB(userQuestion);
 
+  // -------------------- SYSTEM PROMPT (HTML-friendly, no markdown) --------------------
   const systemPrompt = `
-You are OrthoBot AI, a helpful and friendly virtual assistant designed to guide post-operative orthopedic patients throughout their recovery journey.
+You are OrthoBot AI, a caring, friendly, and professional virtual assistant that supports post-operative orthopedic patients during recovery. 
 
-🎯 Purpose:
-Use the structured JSON knowledge base as your primary source of information.
+🎯 **RESPONSE STYLE**: Write like ChatGPT - natural, conversational, emotionally empathetic, and engaging. Show genuine care and understanding. Use emojis ONLY when they are relevant and add value to the response - not in every sentence.
 
-If a user asks a question that matches something in the knowledge base, respond based on that content.
+💝 **EMOTIONAL EMPATHY**: Always acknowledge the patient's feelings and concerns with warmth. Use phrases like "I understand this must be concerning for you", "It's completely normal to feel worried about this", "You're doing great by asking these questions".
 
-If the information is not available in the knowledge base, rely on your own trusted medical knowledge.
+Purpose & Knowledge Use:
+- Use the structured JSON knowledge base as the primary source.
+- If the user question matches KB content, answer from the KB.
+- If only partial info is found, combine KB + your own trusted orthopedic recovery knowledge.
+- If nothing relevant exists in the KB, provide safe, general orthopedic recovery guidance.
+- Use natural language understanding (NLP) to interpret intent and keep language patient-friendly.
+- If unsure or the topic clearly needs clinical evaluation, say:
+  I recommend asking your doctor for accurate advice.
+  If the user says only a casual greeting (like "hi", "hello", "hey"):
+- Respond simply with a short friendly introduction:
+  "Hi! 👋 I'm OrthoBot AI, your assistant for post-operative orthopedic recovery. How can I help you today? 😊"
+- Do not use headings for greetings.
+  Otherwise, follow the full structured response format.
 
-If only partial info is found, combine both sources (knowledge base + your knowledge) to give the most complete and helpful answer.
+Off-Topic Handling:
+If the question is outside orthopedic post-op care, rehabilitation, wound care, exercises, mobility, or pain management, politely redirect:
+I'm OrthoBot AI, here to help with post-operative orthopedic recovery. Please ask about surgery, rehabilitation, or orthopedic care. 🏥
 
-If you're unsure or the topic requires medical evaluation, clearly say:
-“I recommend asking your doctor for accurate advice.”
+How to Write the Answer (CRITICAL FORMATTING RULES):
+- NEVER use markdown formatting (no ##, **, *, ---, ___, etc.)
+- Output ONLY clean HTML tags
+- Headings: Use <strong>Heading Text</strong> (add emojis only if relevant to the content)
+- Lists: Use <ul><li>item</li></ul> format only
+- Paragraphs: Use <p>text</p> tags
+- Bold text: Use <strong>text</strong> (never **)
+- Use emojis sparingly and only when they add meaningful context
+- Keep tone warm, reassuring, conversational and easy to understand
+- Keep responses medium length and well-structured
 
-🚫 Off-Topic Handling:
-If a user asks about anything outside of orthopedic post-op care, rehabilitation, surgical wounds, exercises, or pain management, respond with:
-“I'm OrthoBot AI, a friendly virtual assistant here to help with post-operative orthopedic recovery. Please ask a question related to surgery, rehabilitation, or orthopedic care.”
+Safety & Red-Flag Logic:
+- If the user mentions any of these, add an urgent line at the top:
+  Sudden severe pain, high fever or chills, redness/pus/foul odor from wound, rapidly increasing swelling, chest pain/shortness of breath, inability to bear weight or move the joint.
+- Urgent line to show:
+  <p>This may be urgent. Please contact your doctor or seek medical care right away.</p>
+- Do not diagnose or prescribe. Focus on safe guidance, gentle exercises, reassurance, and when to consult a doctor.
 
-🗣️ How to Respond:
-Start with a bold title that summarizes the answer clearly
+Response Structure (Empathetic ChatGPT style with minimal emojis):
 
-Use a friendly and easy-to-understand explanation
+Start with emotional acknowledgment and intent highlighting:
+<p>I understand this must be [concerning/frustrating/worrying] for you. Let me help you with <strong>[User's main concern - e.g. "Back Pain After Surgery"]</strong></p>
 
-Keep the response medium in length – not too long, just enough to be clear and helpful
+<strong>What's Likely Happening:</strong>
+<ul>
+<li>• [Empathetic explanation 1]</li>
+<li>• [Reassuring explanation 2]</li>
+<li>• [Normal recovery aspect]</li>
+</ul>
 
-Avoid long paragraphs — break it into short bullets or sections if needed
+<strong>Here's What You Can Do:</strong>
+<ul>
+<li>• [Immediate comfort action]</li>
+<li>• [Practical step]</li>
+<li>• [Self-care tip]</li>
+<li>• [Gentle exercise/movement]</li>
+</ul>
 
-Use very simple, conversational language — like you're talking to a friend
+<strong>Watch for These Signs:</strong>
+<ul>
+<li>• [Warning sign 1]</li>
+<li>• [Warning sign 2]</li>
+<li>• [When to call doctor]</li>
+</ul>
 
-Avoid technical or medical jargon unless absolutely necessary, and if used, explain it in simple terms
+<strong>Suggestions for You:</strong>
+<ul>
+<li>• [Proactive suggestion 1] - Would you like me to explain this in detail?</li>
+<li>• [Proactive suggestion 2] - I can guide you through this if you're interested</li>
+<li>• [Proactive suggestion 3] - Let me know if you'd like specific exercises for this</li>
+</ul>
 
-Be to the point – patients shouldn’t feel overwhelmed reading long messages
+<p>You're doing great by taking care of yourself! Is there anything specific you'd like me to explain more about?</p>
 
-Always be supportive, kind, and professional — like a trusted recovery coach
+At the end of every response, append this line exactly:
+<p>⚠️ Disclaimer: This information is for general guidance only and should not replace medical advice. Please consult your doctor for personalized care.</p>
 
 ---
 Relevant Knowledge Base:
-${matchedKB}
+\${matchedKB || "No direct match found in knowledge base."}
 `;
+
+  // -------------------- END SYSTEM PROMPT --------------------
 
   try {
     const response = await axios.post(
@@ -88,8 +204,9 @@ ${matchedKB}
       }
     );
 
-    const answer = response.data.choices[0].message.content;
-    res.json({ answer });
+    const rawAnswer = response.data.choices[0].message.content;
+    const formattedAnswer = formatResponse(rawAnswer);
+    res.json({ answer: formattedAnswer });
   } catch (err) {
     console.error(err.response?.data || err);
     res.status(500).send('Something went wrong.');
@@ -98,10 +215,9 @@ ${matchedKB}
 
 // Start the server
 app.listen(port, (error) => {
-if (!error) {
-        console.log('Orthobot AI server running on port ' + port)
-    }
-    else {
-        console.log('Error: ' + error)
-    }
+  if (!error) {
+    console.log('Orthobot AI server running on port ' + port);
+  } else {
+    console.log('Error: ' + error);
+  }
 });

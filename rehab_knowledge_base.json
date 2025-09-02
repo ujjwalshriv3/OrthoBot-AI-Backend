@@ -1,688 +1,1567 @@
-[
-  {
-    "title": "Ankle/Foot Rehabilitation Knowledge Base (Post-Op Recovery)",
-    "applies_to": [
-      "Post fracture",
-      "Ligament repair (e.g. ATFL)",
-      "Plantar fasciitis release",
-      "Flatfoot correction",
-      "Ankle arthroscopy"
+{
+  "general_guidelines": [
+    "Always follow your surgeon’s prescription and instructions carefully.",
+    "Wash your hands before touching the wound or dressing.",
+    "Ask for family or caregiver support until you are fully independent.",
+    "Adequate rest and proper diet are equally important for recovery.",
+    "Avoid smoking and alcohol as they slow down the healing process."
+  ],
+
+  "daily_living": [
+    "Bathing: If stitches/dressing are waterproof, you can take a sponge bath after 48 hours. Full shower is usually safe after 7 days.",
+    "Walking: Gentle walking is safe from Day 1–2 after most surgeries.",
+    "Returning to work: Usually 2 weeks after minor surgery, 4–6 weeks after major surgery.",
+    "Driving: Safe once pain is under control and your doctor allows (usually after 3–4 weeks).",
+    "Sexual activity: Generally safe after 4–6 weeks, only after doctor’s approval.",
+    "Travel: Short trips can be resumed after 2–3 weeks; long journeys require doctor’s clearance.",
+    "Weight lifting: Avoid lifting heavy weights for at least 6 weeks."
+  ],
+
+  "diet_guidelines": [
+    "Eat high-protein foods (eggs, chicken, paneer, lentils, soy) to promote wound healing.",
+    "Include Vitamin C and Zinc-rich foods (oranges, lemons, amla, nuts) to boost immunity.",
+    "Consume fiber-rich foods (vegetables, fruits, whole grains) to prevent constipation (especially if you are taking painkillers).",
+    "Drink 8–10 glasses of water daily to stay hydrated.",
+    "Avoid fried, oily, and processed foods during recovery."
+  ],
+
+  "physical_activity": [
+    "Day 1–2: Begin with short and slow walking.",
+    "Week 1: Gentle stretching and breathing exercises are safe.",
+    "Week 2: Start physiotherapy under doctor’s guidance if advised.",
+    "Avoid heavy exercise and sports for at least 6 weeks.",
+    "Stop activity immediately if you experience pain, swelling, or bleeding."
+  ],
+
+  "mental_health": [
+    "Mood swings, anxiety, or feeling low are common after surgery.",
+    "Practice deep breathing, meditation, or relaxation techniques to reduce stress.",
+    "Stay connected with friends and family for emotional support.",
+    "If you experience severe anxiety, depression, or sleep disturbance, consult your doctor."
+  ],
+
+  "medications_followup": [
+    "Take painkillers exactly as prescribed by your doctor.",
+    "Complete the full course of antibiotics; do not stop midway.",
+    "If you are on blood thinners or special medicines, never skip them without doctor’s advice.",
+    "Do not miss follow-up visits (usually after 7 days, then as advised)."
+  ],
+
+  "warning_signs_red_flags": [
+    "High fever (above 101°F/38.3°C).",
+    "Severe pain not relieved by medicines.",
+    "Redness, swelling, or pus discharge from the wound.",
+    "Uncontrolled bleeding or sudden swelling.",
+    "Difficulty in breathing or chest pain.",
+    "Persistent vomiting or inability to eat/drink.",
+    "Sudden weakness or dizziness."
+  ],
+
+  "timeline_based_recovery": {
+    "day_1_to_3": [
+      "Rest and gentle walking inside the room.",
+      "Keep wound area clean and dry.",
+      "Pain and mild swelling are normal."
     ],
-    "goals": [
-      "Reduce swelling and pain",
-      "Regain mobility and strength",
-      "Protect healing tissues (tendons, ligaments, bones)",
-      "Return to walking, balance, and normal gait"
+    "week_1": [
+      "Dressing change as advised by doctor.",
+      "Light household activities allowed.",
+      "Avoid long walks or standing for long hours."
     ],
-    "phases": [
-      {
-        "name": "Phase 1: Protection & Swelling Control",
-        "timeline": "Weeks 0\u20132",
-        "activities": [
-          "Ice and elevate foot 3\u20134x/day",
-          "Gentle toe curls, ankle pumps",
-          "No weight bearing unless allowed",
-          "Keep leg raised while sitting or lying"
-        ]
-      },
-      {
-        "name": "Phase 2: Early Mobilization",
-        "timeline": "Weeks 2\u20136",
-        "activities": [
-          "Begin partial weight-bearing if cleared",
-          "Ankle alphabet \u2013 Trace letters with toes",
-          "Towel stretch \u2013 stretch calf",
-          "Begin balance board or tandem stance"
-        ]
-      },
-      {
-        "name": "Phase 3: Strength & Proprioception",
-        "timeline": "Weeks 6\u201310",
-        "activities": [
-          "TheraBand resistance \u2013 push and pull foot",
-          "Calf raises, heel-toe walking, single-leg stance",
-          "Light stationary bike or pool walking"
-        ]
-      },
-      {
-        "name": "Phase 4: Return to Function",
-        "timeline": "Week 10+",
-        "activities": [
-          "Advance to walking on uneven surfaces",
-          "Begin jogging, hopping, agility drills",
-          "Sports drills or job-specific tasks"
-        ]
-      }
+    "week_2": [
+      "Physiotherapy or light exercises if recommended.",
+      "Short outdoor walks are usually safe.",
+      "Continue healthy diet and hydration."
     ],
-    "red_flags": [
-      "Swelling not going down",
-      "Foot feels cold, blue, or numb",
-      "Pain worsens with light movement",
-      "Wound is red, warm, or leaking"
-    ],
-    "long_term_tips": [
-      "Wear supportive shoes with arch support",
-      "Avoid barefoot walking for first 3 months",
-      "Continue calf and ankle stretches daily",
-      "Use ankle brace during sports for 3\u20136 months"
+    "month_1": [
+      "Most patients return to work and daily routine.",
+      "Avoid strenuous exercise and heavy lifting.",
+      "Continue follow-ups for complete recovery."
     ]
   },
-  {
-    "title": "Elbow & Wrist Rehabilitation Knowledge Base (Post-Op Recovery)",
-    "applies_to": [
-      "Tennis elbow surgery",
-      "Distal radius fracture",
-      "Carpal tunnel release",
-      "Wrist arthroscopy",
-      "Ligament/tendon repair"
+
+  "faqs": [
+    {
+      "question": "What should I do if I get fever after surgery?",
+      "answer": "Mild fever is common, but high fever above 101°F needs immediate doctor consultation."
+    },
+    {
+      "question": "When should I change the dressing?",
+      "answer": "Usually after 2–3 days or as per your doctor’s advice."
+    },
+    {
+      "question": "Can I climb stairs after surgery?",
+      "answer": "Yes, but do it slowly and with support during the first 1–2 weeks."
+    },
+    {
+      "question": "Is swelling near the wound normal?",
+      "answer": "Mild swelling is normal, but if it increases or becomes painful, consult your doctor."
+    },
+    {
+      "question": "How long will it take for me to recover fully?",
+      "answer": "Minor surgeries recover in 2–3 weeks, major surgeries may take 6–8 weeks."
+    }
+  ],
+
+  "meta": {
+    "scope": "General post-operative orthopedic recovery guidance for patients",
+    "disclaimer": "This knowledge base provides general guidance only and must not replace medical advice. Always consult the treating surgeon/doctor."
+  },
+  "global_v2": {
+    "emergency_red_flags": [
+      "Chest pain, shortness of breath, fainting",
+      "Calf pain/swelling, one-sided leg warmth/redness (possible DVT)",
+      "High fever (≥38.3°C), chills or rigors",
+      "Rapidly increasing wound redness, swelling, or severe pain",
+      "Pus, foul-smelling discharge, or wound gaping",
+      "Loss of sensation, new weakness, or inability to move limb",
+      "Uncontrolled bleeding or soaking through dressings",
+      "Sudden severe headache, confusion, seizures"
     ],
-    "goals": [
-      "Control pain and swelling",
-      "Prevent stiffness in hand, wrist, elbow",
-      "Regain grip strength and fine motor control",
-      "Return to functional hand use (typing, lifting, writing, etc.)"
+    "general_do_dont": {
+      "do": [
+        "Follow the surgeon’s specific instructions and physiotherapy plan",
+        "Take medicines exactly as prescribed; track timing and doses",
+        "Ice and elevate as advised to reduce pain/swelling",
+        "Deep-breathing and ankle-pump exercises to reduce complications",
+        "Keep the wound clean, dry, and covered as instructed",
+        "Adequate protein, hydration, fruits/vegetables for healing",
+        "Use walking aids correctly; progress only when cleared",
+        "Log symptoms, pain scores, temperature, and wound appearance daily"
+      ],
+      "dont": [
+        "Don’t remove steri-strips/staples/sutures unless told",
+        "Don’t soak the wound (no baths/pools) until cleared",
+        "Don’t drive, lift heavy weights, or resume sports until cleared",
+        "Don’t take over-the-counter NSAIDs or supplements without approval",
+        "Don’t smoke or drink alcohol; both impair healing"
+      ]
+    },
+    "medication_safety": {
+      "pain_meds": [
+        "Follow a scheduled regimen for the first 48–72 hours if prescribed",
+        "Use the lowest effective dose for the shortest time",
+        "Avoid duplicate acetaminophen (paracetamol) from multiple products"
+      ],
+      "anticoagulation_dvt": [
+        "If blood thinners are prescribed, take exactly as directed",
+        "Report nosebleeds, gum bleeds, black stools, or easy bruising",
+        "Avoid contact sports and high-fall-risk activities while anticoagulated"
+      ],
+      "constipation_prevent": [
+        "Hydration, fiber (fruits/veg/whole grains), gentle walking",
+        "Stool softeners if advised while on opioids"
+      ],
+      "allergy_alert": "Stop the medicine and seek care if you get rash, swelling of lips/face, or trouble breathing."
+    },
+    "wound_and_dressings": {
+      "care": [
+        "Wash hands before touching dressings",
+        "Keep the area clean and dry",
+        "Change dressing as instructed or if soaked/dirty",
+        "Observe daily for redness, warmth, drainage"
+      ],
+      "showering": [
+        "Usually allowed after 24–72 hours if dressing is waterproof and surgeon agrees",
+        "Avoid direct high-pressure water stream on the wound",
+        "Pat dry; don’t rub"
+      ],
+      "removal_timeline_general": [
+        "Steri-strips: often fall off in 7–10 days unless told otherwise",
+        "Sutures/staples: typically 10–14 days, depends on site and surgeon"
+      ]
+    },
+    "mobility_progression_generic": [
+      "Bed exercises (day 0–1): ankle pumps, quad/hamstring sets, deep breathing",
+      "Transfer training and short assisted ambulation (day 1–3) as cleared",
+      "Gradual increase in walking distance and frequency (day 3–7)",
+      "Stairs training and gait normalization (week 2+ as advised)"
     ],
-    "phases": [
-      {
-        "name": "Phase 1: Protection & Mobility",
-        "timeline": "Weeks 0\u20132",
-        "activities": [
-          "Ice, elevation, and rest",
-          "Finger and thumb mobility",
-          "Wrist circles \u2013 gentle movements only",
-          "Elbow range of motion if wrist is immobilized"
-        ]
-      },
-      {
-        "name": "Phase 2: Early Strengthening & Nerve Gliding",
-        "timeline": "Weeks 2\u20136",
-        "activities": [
-          "Gentle grip exercises using a soft ball or towel",
-          "Wrist flexion/extension against gravity",
-          "Median nerve glides",
-          "Forearm rotation exercises"
-        ]
-      },
-      {
-        "name": "Phase 3: Functional Strengthening",
-        "timeline": "Weeks 6\u201310",
-        "activities": [
-          "Resistance bands for wrist curls",
-          "Theraputty for grip and pinch strength",
-          "Wrist radial/ulnar deviation against resistance",
-          "Daily activities practice"
-        ]
-      },
-      {
-        "name": "Phase 4: Full Return to Use",
-        "timeline": "Week 10+",
-        "activities": [
-          "Resume sport/work-specific tasks",
-          "Push-ups, planks, or weight-bearing when cleared",
-          "Simulate work activities"
-        ]
-      }
+    "home_environment": [
+      "Clear clutter, remove loose rugs, ensure good lighting",
+      "Keep essentials at waist height to avoid bending/twisting",
+      "Use raised toilet or shower chair if needed",
+      "Handrails on stairs and in bathroom if possible"
     ],
-    "red_flags": [
-      "Tingling or numbness doesn\u2019t improve",
-      "Pain worsens after movement or exercise",
-      "Redness or fluid leaking from wound",
-      "Extreme stiffness or loss of motion"
+    "diet_and_nutrition": {
+      "recommended": [
+        "Protein (eggs, fish, chicken, paneer, tofu, lentils)",
+        "Vitamin C (citrus, guava, capsicum) for collagen synthesis",
+        "Zinc (nuts, seeds, legumes) and iron if advised",
+        "Calcium and Vitamin D (dairy/fortified foods + sensible sun)",
+        "Plenty of water; limit sugar and ultra-processed foods"
+      ],
+      "avoid_or_limit": [
+        "Alcohol and smoking",
+        "Excess caffeine and energy drinks",
+        "High-salt, deep-fried, and sugary foods"
+      ]
+    },
+    "sleep_and_mental_health": {
+      "sleep_positions": [
+        "Use pillows for comfort and limb elevation if advised",
+        "Avoid pressure on operated side until cleared"
+      ],
+      "mind_support": [
+        "Recovery anxiety is common—practice slow breathing/relaxation",
+        "Stay socially connected; ask for help with chores",
+        "Seek professional help if persistent low mood or severe anxiety"
+      ]
+    },
+    "travel_and_activities": {
+      "driving": "Only after you can safely perform an emergency stop and are off sedating pain meds—surgeon clearance required.",
+      "work_return": "Depends on surgery and job demands; light duty may start earlier than heavy manual work.",
+      "air_travel": "Discuss with surgeon; consider DVT risk, walk/ankle-pump hourly during flights."
+    },
+    "generic_7_day_plan": {
+      "day_1_2": [
+        "Pain control on schedule, ice 15–20 min x 3–5/day",
+        "Ankle pumps hourly while awake",
+        "Deep breathing and incentive spirometer if provided",
+        "Short assisted walks if cleared; focus on safety",
+        "Protein-rich meals and hydration"
+      ],
+      "day_3_4": [
+        "Increase walk frequency/distance within comfort",
+        "Begin gentle range-of-motion (ROM) exercises as prescribed",
+        "Daily wound check and dressing change if instructed",
+        "Bowel routine and hydration to prevent constipation"
+      ],
+      "day_5_6": [
+        "Progress ROM/activation exercises; add light functional tasks",
+        "Gradually reduce strong pain meds; use acetaminophen/ice per advice",
+        "Practice safe transfers and stairs if appropriate"
+      ],
+      "day_7": [
+        "Self-check progress (pain, swelling, ROM, function)",
+        "List questions for physiotherapist/surgeon",
+        "Plan next-week goals (mobility, ADLs, independence)"
+      ]
+    }
+  },
+  "assistive_devices": {
+    "walker_crutches_cane": [
+      "Use device size/height fitted by therapist",
+      "Sequence: walker/crutches → cane → independent as cleared",
+      "Lead with the weaker/operated side when instructed"
     ],
-    "long_term_tips": [
-      "Stretch wrist flexors and extensors regularly",
-      "Use ergonomic tools",
-      "Avoid repetitive stress for the first 3 months",
-      "Consider a wrist brace for repetitive lifting or typing"
+    "ice_heat_guidance": [
+      "Ice: first 48–72 hours and after exercises for 15–20 minutes",
+      "Heat: only for muscle soreness/stiffness later, avoid over incision and acute swelling"
+    ],
+    "braces_and_slings": [
+      "Wear as prescribed; do not discontinue without approval",
+      "Check skin for pressure areas; pad if needed"
     ]
   },
-  {
-    "title": "General Physiotherapy & Mobility Rehab Knowledge Base",
-    "applies_to": [
-      "Non-surgical rehab",
-      "Post-op full-body conditioning",
-      "Posture correction",
-      "Injury prevention",
-      "Senior mobility",
-      "Sports recovery"
-    ],
-    "goals": [
-      "Improve overall body strength, posture, and mobility",
-      "Correct muscle imbalances",
-      "Prevent reinjury or degeneration",
-      "Help return to daily life, work, or sport smoothly"
-    ],
-    "phases": [
-      {
-        "name": "Warm-Up & Mobility Basics",
-        "timeline": "Any program start",
-        "activities": [
-          "Neck rolls, shoulder shrugs, trunk twists",
-          "Ankle pumps, toe taps",
-          "Wall walk",
-          "Marching in place"
+  "conditions_v1": {
+    "total_knee_replacement_tkr": {
+      "overview": "Joint replacement of the knee; goals are pain reduction and improved function.",
+      "weight_bearing": "Often WBAT (weight bearing as tolerated) with aids unless surgeon restricts.",
+      "key_exercises": [
+        "Ankle pumps, quad sets, glute sets (day 0–1)",
+        "Heel slides for knee flexion",
+        "Knee extension hangs (avoid pillow under knee for long periods)",
+        "Straight leg raises when quad control returns",
+        "Gait training and step training as cleared"
+      ],
+      "do_dont": {
+        "do": [
+          "Frequent icing and elevation (knee above heart when possible)",
+          "Aim for early extension and gradual flexion milestones",
+          "Use chair with arms; avoid low soft sofas initially"
+        ],
+        "dont": [
+          "Don’t place long pillows directly under the knee for prolonged time",
+          "Don’t force end-range flexion with high pain"
         ]
       },
-      {
-        "name": "Strength & Stability",
-        "timeline": "Beginner-Friendly",
-        "activities": [
-          "Sit-to-stand from chair",
-          "Step-ups on low stair",
-          "Wall push-ups or incline push-ups",
-          "TheraBand rows",
-          "Standing heel raises"
+      "follow_up_timeline": [
+        "Wound review at 10–14 days",
+        "Physio progresses ROM and strength in weeks 1–6",
+        "Surgical follow-up typically at 4–6 weeks"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Ice and elevate 15–20 min, 4–6 times/day",
+          "Ankle pumps hourly, quad/glute sets 3–5 times/day",
+          "Short assisted ambulation with walker as cleared"
+        ],
+        "day_3_4": [
+          "Heel slides (gentle), knee extension hangs",
+          "Increase walk distance/frequency; check gait pattern",
+          "Daily wound check"
+        ],
+        "day_5_6": [
+          "Straight leg raises if able; continue ROM gains",
+          "Add sit-to-stand drills from higher chair",
+          "Stairs training with rail if cleared"
+        ],
+        "day_7": [
+          "Review flexion/extension progress and pain control",
+          "Refine home exercise schedule with physio input"
         ]
       },
-      {
-        "name": "Posture & Core",
-        "timeline": "",
-        "activities": [
-          "Pelvic tilts",
-          "Chin tucks",
-          "Bird-dog",
-          "Bridge",
-          "Dead bug"
+      "red_flags": [
+        "Calf pain/swelling, increasing warmth/redness",
+        "Inability to perform ankle/foot movements",
+        "Severe unrelenting knee pain or loss of active extension"
+      ]
+    },
+    "acl_reconstruction": {
+      "overview": "Ligament reconstruction with graft; protection phase early on.",
+      "weight_bearing": "Depends on graft/fixation; often partial WB with brace locked in extension initially.",
+      "brace": "Usually locked extension while walking early; unlock gradually as per protocol.",
+      "key_exercises": [
+        "Quad sets, ankle pumps, patella mobilizations",
+        "Heel slides within allowed range",
+        "Hip abduction/adduction isometrics",
+        "Avoid open-chain knee extension high load early"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace on; ice/elevate; quad sets hourly",
+          "Partial WB with aids as advised",
+          "Ankle pumps and gentle heel slides"
+        ],
+        "day_3_4": [
+          "Increase short walks; monitor swelling",
+          "Patella mobilizations, gentle ROM goals per protocol"
+        ],
+        "day_5_6": [
+          "Add hip/core activation; avoid pivoting/twisting",
+          "Continue brace per surgeon"
+        ],
+        "day_7": [
+          "ROM/quad activation review; adjust plan with physio"
         ]
       },
-      {
-        "name": "Balance & Coordination",
-        "timeline": "",
-        "activities": [
-          "Single-leg stand",
-          "Tandem walking",
-          "Clock taps",
-          "Ball toss against wall"
+      "red_flags": [
+        "Knee giving way despite brace",
+        "Large effusion not settling with rest/ice",
+        "New numbness/tingling in leg"
+      ]
+    },
+    "meniscus_repair": {
+      "overview": "Meniscal suturing; flexion/loading often restricted early to protect repair.",
+      "weight_bearing": "Commonly partial WB with brace/locked extension initially (protocol-specific).",
+      "key_exercises": [
+        "Ankle pumps, quad sets, straight leg raises with brace as allowed",
+        "Limited ROM heel slides per limits",
+        "Hip/glute activation"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace and crutches; ice/elevate",
+          "Quad sets every 2–3 hours"
+        ],
+        "day_3_4": [
+          "Gentle ROM within limits; avoid deep flexion",
+          "Short assisted ambulation"
+        ],
+        "day_5_6": [
+          "Add hip/ankle strengthening; maintain swelling control"
+        ],
+        "day_7": [
+          "Reassess pain/ROM; don’t exceed flexion limits"
         ]
       },
-      {
-        "name": "Flexibility Essentials",
-        "timeline": "",
-        "activities": [
-          "Hamstring & quad stretch",
-          "Calf stretch",
-          "Shoulder cross-body and triceps stretch",
-          "Wrist and forearm mobility drills"
+      "red_flags": [
+        "Clicking/locking with pain",
+        "Sudden swelling increase",
+        "Sharp joint-line pain on minimal activity"
+      ]
+    },
+    "total_hip_replacement_thr": {
+      "overview": "Hip arthroplasty; precautions depend on surgical approach.",
+      "precautions": [
+        "Posterior approach: avoid hip flexion >90°, adduction past midline, and internal rotation early",
+        "Anterior approach: avoid excessive extension and external rotation early"
+      ],
+      "weight_bearing": "Often WBAT with device unless restricted.",
+      "key_exercises": [
+        "Ankle pumps; quad/glute sets",
+        "Hip abduction in supine (small range)",
+        "Standing weight shift when cleared",
+        "Gait training; raised chair/toilet seat use"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Adhere to hip precautions; ice/elevate",
+          "Assisted ambulation with walker; short bouts",
+          "Isometrics (quad/glute) 3–5 times/day"
+        ],
+        "day_3_4": [
+          "Increase walking distance; gentle abduction",
+          "Practice transfers with precautions"
+        ],
+        "day_5_6": [
+          "Step training if cleared; improve endurance",
+          "Light functional tasks (kitchen/bathroom safety)"
+        ],
+        "day_7": [
+          "Review gait and pain; refine exercises"
         ]
-      }
+      },
+      "red_flags": [
+        "Hip dislocation signs (leg shortened/rotated, sudden pain)",
+        "Calf swelling/pain",
+        "Fever or wound drainage"
+      ]
+    },
+    "hip_fracture_orif_hemiarthroplasty": {
+      "overview": "Fixation or partial replacement after fracture; early mobilization prevents complications.",
+      "weight_bearing": "Protocol-specific; often WBAT or partial WB.",
+      "key_exercises": [
+        "Ankle pumps, quad/glute sets, heel slides within pain limits",
+        "Bed-chair transfers with assistance",
+        "Gait training early to reduce DVT/pneumonia risk"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Pain control, delirium prevention (reorientation, hydration)",
+          "Sitting out of bed and short assisted ambulation"
+        ],
+        "day_3_4": [
+          "Increase walking; start simple stair practice if safe",
+          "Review bone health & fall prevention"
+        ],
+        "day_5_6": [
+          "Progress endurance; hip ROM/strength within tolerance"
+        ],
+        "day_7": [
+          "Home safety planning; caregiver instruction"
+        ]
+      },
+      "red_flags": [
+        "Confusion or sudden decline",
+        "Inability to bear weight after initial progress",
+        "Worsening hip pain or limb deformity"
+      ]
+    },
+    "rotator_cuff_repair": {
+      "overview": "Tendon repair; tendon protection early, sling use common.",
+      "brace_sling": "Wear sling as prescribed; remove only for hygiene/exercises per protocol.",
+      "key_exercises": [
+        "Hand/wrist/elbow ROM",
+        "Scapular setting/gentle retraction",
+        "Passive shoulder ROM only if/when allowed"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling full-time; ice 15–20 min x 3–5/day",
+          "Elbow/wrist/hand ROM, scapular squeezes"
+        ],
+        "day_3_4": [
+          "Pendulums or passive ROM if cleared",
+          "Posture care; avoid reaching/lifting"
+        ],
+        "day_5_6": [
+          "Continue protected ROM; pain/swelling control"
+        ],
+        "day_7": [
+          "Review with physio; reinforce precautions"
+        ]
+      },
+      "red_flags": [
+        "Sudden pop with sharp pain",
+        "Loss of active finger/wrist movement",
+        "Increasing night pain not relieved by rest/ice"
+      ]
+    },
+    "shoulder_stabilization_bankart_latarjet": {
+      "overview": "Stabilization for recurrent dislocation; protect repair early.",
+      "precautions": [
+        "Avoid abduction/external rotation early",
+        "Sling as prescribed; sleep with support pillows"
+      ],
+      "key_exercises": [
+        "Elbow/wrist/hand ROM",
+        "Scapular setting",
+        "Passive ROM only as allowed"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling; ice; elbow/hand ROM",
+          "Education on positions to avoid"
+        ],
+        "day_3_4": [
+          "Pendulums if allowed; posture drills"
+        ],
+        "day_5_6": [
+          "Gentle passive ROM within safe range"
+        ],
+        "day_7": [
+          "Re-assess pain/sleep; adjust sling wear schedule per advice"
+        ]
+      },
+      "red_flags": [
+        "Feeling of shoulder ‘slipping out’",
+        "Sudden severe pain or deformity",
+        "Numbness/tingling down the arm"
+      ]
+    },
+    "lumbar_microdiscectomy": {
+      "overview": "Removal of herniated disc fragment; avoid heavy bending/twisting early.",
+      "precautions": [
+        "No heavy lifting, deep bending, or twisting (BLT) initially",
+        "Log-rolling technique for bed mobility"
+      ],
+      "key_exercises": [
+        "Ankle pumps, gentle walking several times/day",
+        "Transverse abdominis activation and pelvic tilts (as cleared)",
+        "Neural glides later if prescribed"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Short, frequent walks; pain control",
+          "Neutral spine positions; log-rolling"
+        ],
+        "day_3_4": [
+          "Increase walking time; gentle core activation",
+          "Avoid prolonged sitting >30–45 minutes"
+        ],
+        "day_5_6": [
+          "Add posture breaks; light daily tasks",
+          "Review ergonomics"
+        ],
+        "day_7": [
+          "Progress plan with physio; set next-week goals"
+        ]
+      },
+      "red_flags": [
+        "New/worsening leg weakness or foot drop",
+        "Loss of bladder/bowel control (emergency)",
+        "Severe increasing back/leg pain not controlled"
+      ]
+    },
+    "lumbar_laminectomy_or_fusion": {
+      "overview": "Decompression +/- fusion; protect fusion and avoid BLT early.",
+      "brace": "LSO/TLSO if prescribed; wear as instructed.",
+      "key_exercises": [
+        "Ankle pumps, gentle walking, diaphragmatic breathing",
+        "Isometric core activation",
+        "Hip hinges with neutral spine when taught"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace use if prescribed; log-rolling; short walks",
+          "Bowel regimen to avoid straining"
+        ],
+        "day_3_4": [
+          "Increase walk time; posture care",
+          "Basic core activation without pain"
+        ],
+        "day_5_6": [
+          "ADLs with spine precautions; avoid lifting >2–3 kg"
+        ],
+        "day_7": [
+          "Review incision and pain plan; plan week-2 goals"
+        ]
+      },
+      "red_flags": [
+        "Fever, wound drainage",
+        "Severe new nerve pain or weakness",
+        "Loss of bladder/bowel control (emergency)"
+      ]
+    },
+    "ankle_orif": {
+      "overview": "Surgical fixation of ankle fracture; protect fixation.",
+      "weight_bearing": "Often non-weight bearing initially; follow surgeon timeline.",
+      "immobilization": "Cast/boot as prescribed; keep dry; elevate regularly.",
+      "key_exercises": [
+        "Toe curls, isometrics for calf/quads",
+        "Hip/knee ROM to maintain strength",
+        "Ankle ROM only when cleared (out of boot/cast)"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Strict elevation and ice; non-weight bearing",
+          "Crutch training; DVT prevention (ankle pumps if allowed)"
+        ],
+        "day_3_4": [
+          "Upper-body and contralateral leg exercises",
+          "Skin checks around cast/boot"
+        ],
+        "day_5_6": [
+          "Continue NWB; plan home setup for safety"
+        ],
+        "day_7": [
+          "Review swelling; ensure follow-up for wound/cast check"
+        ]
+      },
+      "red_flags": [
+        "Numb toes, blue/pale foot, severe tightness in cast",
+        "Wet/soft cast or foul odor",
+        "Calf pain/swelling"
+      ]
+    },
+    "bunion_correction": {
+      "overview": "Forefoot surgery; protect osteotomy and soft tissues.",
+      "weight_bearing": "Often heel-weight bearing in a surgical shoe; check protocol.",
+      "key_exercises": [
+        "Toe ROM when allowed",
+        "Ankle pumps for circulation",
+        "Calf stretches later"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Foot elevation above heart; ice",
+          "Heel-weight bearing only if allowed"
+        ],
+        "day_3_4": [
+          "Short protected ambulation in post-op shoe",
+          "Keep dressings dry/clean"
+        ],
+        "day_5_6": [
+          "Gentle toe ROM if cleared; avoid tight footwear"
+        ],
+        "day_7": [
+          "Review pain/swelling; plan dressing change as advised"
+        ]
+      },
+      "red_flags": [
+        "Wound bleeding/soaking, severe swelling",
+        "Toe color change or numbness",
+        "Signs of infection"
+      ]
+    }
+  },
+  "special_populations": {
+    "diabetes": [
+      "Check glucose regularly; hyperglycemia delays healing",
+      "Strict foot/wound care; report any skin breakdown early",
+      "Hydration and meal timing around meds/insulin"
     ],
-    "red_flags": [
-      "Light-headedness or dizziness during sessions",
-      "Joint swelling after basic exercises",
-      "Sudden weakness or loss of control",
-      "Back pain during core work"
+    "elderly_fall_prevention": [
+      "Medication review for dizziness/sedation",
+      "Night lights, non-slip footwear, handrails",
+      "Balance exercises when cleared"
     ],
-    "long_term_tips": [
-      "Track progress weekly",
-      "Mix cardio 2\u20133x/week",
-      "Stick to 2\u20134 sessions/week with rest days",
-      "Ask physio before increasing resistance or intensity"
+    "osteoporosis": [
+      "Adequate calcium/Vitamin D per clinician advice",
+      "Weight-bearing exercises when cleared",
+      "Home safety to reduce falls"
+    ],
+    "smoking_cessation": [
+      "Smoking impairs bone and wound healing; seek cessation support",
+      "Avoid second-hand smoke exposure"
     ]
   },
-  {
-    "title": "Hand Rehabilitation Knowledge Base (Post-Op Recovery)",
-    "applies_to": [
-      "Tendon repair",
-      "Fracture fixation",
-      "Arthritis surgeries",
-      "Carpal/metacarpal injuries",
-      "Joint replacements"
+  "faqs1": {
+    "when_can_i_shower": "Often after 24–72 hours with waterproof dressing if surgeon agrees—pat dry.",
+    "when_can_i_drive": "When you can safely control the vehicle, are off sedating meds, and surgeon has cleared you.",
+    "when_back_to_work": "Light desk work may resume earlier than manual labor; confirm with your surgeon.",
+    "can_i_sleep_on_operated_side": "Usually avoid until cleared; use pillows for support.",
+    "how_long_will_swelling_last": "Mild-to-moderate swelling may persist for weeks; reduce with icing, elevation, and walking as guided."
+  },
+  "templates_1": {
+    "dynamic_7_day_plan_template": [
+      "Day 1–2: Rest/ice/elevate as relevant; protected mobility; start gentle activation exercises for the affected region.",
+      "Day 3–4: Increase short walks; introduce gentle ROM within safe limits; daily wound check.",
+      "Day 5–6: Progress ROM/activation; begin light strengthening or posture care specific to condition.",
+      "Day 7: Review progress, refine home program, plan follow-up if pain/swelling persists."
     ],
-    "goals": [
-      "Protect surgical repair",
-      "Prevent stiffness in fingers/thumb",
-      "Restore grip, pinch, and dexterity",
-      "Regain full hand function for daily tasks"
-    ],
-    "phases": [
-      {
-        "name": "Phase 1: Protection & Passive Motion",
-        "timeline": "Weeks 0\u20133",
-        "activities": [
-          "Wear custom splint at all times",
-          "Passive finger movements",
-          "Gentle tendon glides (if cleared)",
-          "Move elbow/shoulder to avoid stiffness"
+    "message_footer_disclaimer_html": "<p>⚠️ Disclaimer: This information is for general guidance only and should not replace medical advice. Please consult your doctor for personalized care.</p>"
+  },
+  "custom_guidelines": {
+    "general_guidelines": {
+      "rest_and_sleep": [
+        "Take enough rest but avoid lying in bed all day.",
+        "Sleep 7-9 hours at night for better healing.",
+        "Use pillows for comfort and to support the operated area.",
+        "Avoid sleeping on the operated side if painful."
+      ],
+      "wound_care": [
+        "Keep the surgical site clean and dry.",
+        "Change dressings only as instructed by your doctor.",
+        "Do not scratch, rub, or apply creams/oils unless approved.",
+        "Watch for redness, pus, or foul smell – report to doctor immediately."
+      ],
+      "pain_management": [
+        "Take prescribed medications on time, not only when pain is severe.",
+        "Use cold packs (10–15 mins) to reduce pain and swelling.",
+        "Elevate the operated limb when resting to improve circulation.",
+        "Practice relaxation breathing to ease discomfort."
+      ],
+      "mobility_and_activity": [
+        "Start moving slowly as advised by your surgeon/physiotherapist.",
+        "Use walker, crutches, or cane if suggested.",
+        "Avoid sudden twisting, bending, or heavy lifting.",
+        "Increase walking time daily in short intervals."
+      ],
+      "diet_and_nutrition": {
+        "recommended": [
+          "Protein-rich foods (eggs, fish, chicken, pulses, beans, tofu) for healing.",
+          "Fruits and vegetables rich in vitamin C (oranges, strawberries, bell peppers) to boost recovery.",
+          "Calcium and vitamin D foods (milk, curd, paneer, leafy greens) to strengthen bones.",
+          "Whole grains (brown rice, oats, whole wheat) for sustained energy.",
+          "Plenty of water and fluids to stay hydrated."
+        ],
+        "to_avoid": [
+          "Oily, fried, and junk foods that slow healing.",
+          "Sugary foods and soft drinks.",
+          "Alcohol and smoking, as they delay recovery and wound healing.",
+          "Excess caffeine, which may interfere with sleep and hydration."
         ]
       },
-      {
-        "name": "Phase 2: Controlled Movement",
-        "timeline": "Weeks 3\u20136",
-        "activities": [
-          "Begin active ROM",
-          "Place and hold exercises",
-          "Thumb opposition drills",
-          "Isolated joint movements (PIP, DIP)"
+      "physiotherapy_and_exercises": {
+        "early_phase": [
+          "Gentle ankle pumps to improve blood flow.",
+          "Isometric exercises (tighten muscles without moving the joint).",
+          "Breathing exercises to keep lungs healthy after anesthesia."
+        ],
+        "intermediate_phase": [
+          "Gradual range-of-motion exercises as advised.",
+          "Quadriceps and hamstring strengthening.",
+          "Short walks with support."
+        ],
+        "advanced_phase": [
+          "Balance and coordination training.",
+          "Climbing stairs slowly if permitted.",
+          "Return to low-impact activities (swimming, cycling) when cleared."
         ]
       },
-      {
-        "name": "Phase 3: Strengthening",
-        "timeline": "Weeks 6\u201310",
-        "activities": [
-          "Theraputty exercises",
-          "Rubber band extension drills",
-          "Rice bucket exercises",
-          "Fine motor tasks (coins, beads)"
-        ]
-      },
-      {
-        "name": "Phase 4: Return to Function",
-        "timeline": "Week 10+",
-        "activities": [
-          "Simulate daily tasks",
-          "Gradual return to lifting and gripping",
-          "Hand coordination games"
+      "lifestyle_and_daily_habits": [
+        "Avoid smoking and alcohol completely during recovery.",
+        "Do not skip follow-up doctor visits.",
+        "Keep a diary of pain levels, medicines, and progress.",
+        "Wear loose, comfortable clothing to avoid pressure on the wound."
+      ],
+      "emotional_and_mental_wellbeing": [
+        "Stay positive – recovery takes time.",
+        "Practice deep breathing, meditation, or light reading for relaxation.",
+        "Talk with family/friends to avoid loneliness.",
+        "If feeling anxious or depressed, share with your doctor."
+      ],
+      "safety_precautions": [
+        "Keep essentials within easy reach to avoid straining.",
+        "Install grab bars in bathroom if needed.",
+        "Avoid slippery floors and use anti-slip mats.",
+        "Do not drive until cleared by your doctor."
+      ],
+      "red_flags": [
+        "Sudden severe pain not relieved by medicines.",
+        "High fever, chills, or sweating.",
+        "Redness, pus, or foul odor from wound.",
+        "Rapid swelling or inability to move joint.",
+        "Chest pain or shortness of breath."
+      ],
+      "7_day_general_recovery_plan": {
+        "day_1_2": [
+          "Rest with gentle ankle and breathing exercises.",
+          "Ice packs for swelling.",
+          "Follow pain medication schedule."
+        ],
+        "day_3_4": [
+          "Start short supported walks.",
+          "Gentle stretching as per physiotherapist advice.",
+          "Continue protein-rich diet and hydration."
+        ],
+        "day_5_6": [
+          "Increase walking duration gradually.",
+          "Begin light strengthening exercises.",
+          "Practice safe bathroom mobility."
+        ],
+        "day_7": [
+          "Review progress.",
+          "Add slightly longer activities (5–10 min extra walk).",
+          "Note any pain/swelling changes and inform doctor if needed."
         ]
       }
-    ],
-    "red_flags": [
-      "Fingers turning blue, cold, or extremely swollen",
-      "Stitches coming undone or wound oozing",
-      "Extreme stiffness without improvement by Week 4\u20136",
-      "Sharp pain with light movement"
-    ],
-    "long_term_tips": [
-      "Use hand supports/braces for high-risk activities",
-      "Stretch hands regularly",
-      "Maintain shoulder and wrist health",
-      "Use ergonomic tools"
+    }
+  },
+  "search": {
+    "synonyms": {
+      "knee replacement": ["tkr", "total knee arthroplasty", "knee arthroplasty"],
+      "hip replacement": ["thr", "total hip arthroplasty", "hip arthroplasty"],
+      "acl": ["acl reconstruction", "acl surgery"],
+      "shoulder replacement": ["tsa", "anatomic shoulder arthroplasty"],
+      "reverse shoulder": ["rtsa", "reverse total shoulder arthroplasty"],
+      "back surgery": ["spine surgery", "laminectomy", "microdiscectomy", "fusion"],
+      "ankle orif": ["ankle fracture surgery", "ankle fixation"],
+      "achilles repair": ["achilles tendon repair", "heel cord repair"],
+      "carpal tunnel": ["carpal tunnel release", "ctr"],
+      "meniscus": ["meniscus repair", "meniscectomy"]
+    },
+    "tags": [
+      "diet","wound","pain","ice","heat","mobility","crutches","walker","dvt","anticoagulant",
+      "exercise","physiotherapy","brace","sling","boot","sleep","mental","return_to_work","driving",
+      "red_flags","7_day_plan","home_safety","constipation","smoking","alcohol"
     ]
   },
-  {
-    "title": "Hip Rehabilitation Knowledge Base (Post-Op Recovery)",
-    "applies_to": [
-      "Hip replacement",
-      "Hip arthroscopy",
-      "Fracture fixation",
-      "Labral repair"
+  "global": {
+    "emergency_red_flags": [
+      "Chest pain or shortness of breath",
+      "Sudden calf pain/swelling/warmth/redness (possible DVT)",
+      "High fever >= 38.3°C or rigors",
+      "Rapidly increasing wound redness, swelling, or severe pain",
+      "Pus/foul-smelling discharge or wound opening",
+      "New numbness, weakness, or inability to move limb",
+      "Uncontrolled bleeding",
+      "Loss of bladder/bowel control (spine emergency)"
     ],
-    "goals": [
-      "Focus on controlled movement, regaining ROM",
-      "Avoid dislocation",
-      "Strengthen muscles around the hip",
-      "Return to daily activities safely"
+    "do": [
+      "Follow surgeon and physiotherapist instructions exactly",
+      "Take medications on schedule; track doses",
+      "Ice and elevate as advised to reduce pain/swelling",
+      "Deep-breathing and ankle pumps hourly while awake (as allowed)",
+      "Daily wound check; keep it clean and dry",
+      "Adequate protein, hydration, fruits/vegetables, calcium and vitamin D",
+      "Use walking aids correctly; progress only when cleared",
+      "Log pain, temperature, steps, and exercise compliance"
     ],
-    "phases": [
-      {
-        "name": "Phase 1: Hospital Stay",
-        "timeline": "Days 1\u20133",
-        "activities": [
-          "Use walker for mobility",
-          "Ankle pumps, quad sets, glute squeezes",
-          "Heel slides and knee extensions",
-          "Avoid crossing legs or rotating operated leg"
-        ]
-      },
-      {
-        "name": "Phase 2: Home Rehab",
-        "timeline": "Week 1\u20134",
-        "activities": [
-          "Standing hip abduction",
-          "Heel raises",
-          "Gradually reduce walker use"
-        ]
-      },
-      {
-        "name": "Phase 3: Strength Building",
-        "timeline": "Week 4\u20138",
-        "activities": [
-          "Bridging",
-          "Side-lying leg lifts",
-          "Begin walking with cane or unassisted"
-        ]
-      },
-      {
-        "name": "Phase 4: Return to Function",
-        "timeline": "Week 8+",
-        "activities": [
-          "Treadmill or swimming",
-          "Balance exercises",
-          "Climbing stairs normally"
-        ]
-      }
+    "dont": [
+      "Do not soak wounds (baths/pools) until cleared",
+      "Do not remove steri-strips/sutures/staples unless instructed",
+      "Do not drive or lift heavy objects until cleared",
+      "Avoid smoking/alcohol; both delay healing",
+      "Avoid high-impact or twisting motions early"
     ],
-    "red_flags": [
-      "Sudden sharp pain in groin",
-      "Clicking or leg shortening",
-      "Swelling or redness in calf"
+    "medication_safety": {
+      "pain_meds": [
+        "Use the lowest effective dose for the shortest time",
+        "Avoid duplicate acetaminophen across combination products",
+        "Do not start NSAIDs/supplements without surgeon approval"
+      ],
+      "anticoagulation": [
+        "If prescribed, take exactly as directed",
+        "Report nose/gum bleeds, black stools, or unusual bruising",
+        "Avoid high-fall-risk activities while on blood thinners"
+      ],
+      "constipation": [
+        "Hydration, fiber, gentle walking",
+        "Stool softener if advised while on opioids"
+      ],
+      "allergy_alert": "Stop the medicine and seek care if rash, facial swelling, or breathing difficulty occurs."
+    },
+    "wound_care": {
+      "care": [
+        "Wash hands before touching dressings",
+        "Keep dressing dry/clean; change as instructed or if soaked/dirty",
+        "Avoid creams/oils/powders unless prescribed",
+        "Observe daily for redness, warmth, drainage"
+      ],
+      "showering": [
+        "Usually allowed 24–72 hours if waterproof dressing and surgeon agrees",
+        "Pat dry—do not rub; avoid direct high-pressure water on incision"
+      ],
+      "removal_timeline_general": [
+        "Steri-strips often fall off in 7–10 days",
+        "Sutures/staples typically removed at 10–14 days (site/surgeon dependent)"
+      ]
+    },
+    "nutrition": {
+      "recommended": [
+        "Protein: eggs, fish, chicken, paneer, tofu, lentils, beans",
+        "Vitamin C: citrus, guava, bell pepper, amla",
+        "Zinc & iron: nuts, seeds, legumes; iron only if advised",
+        "Calcium & Vitamin D: dairy/fortified foods + sensible sun exposure",
+        "Hydration: water and clear fluids; limit sugar"
+      ],
+      "avoid": [
+        "Alcohol and tobacco",
+        "Ultra-processed, deep-fried, and very salty foods",
+        "Excess caffeine/energy drinks"
+      ]
+    },
+    "home_setup": [
+      "Clear clutter; remove loose rugs; ensure good lighting",
+      "Keep essentials at waist height to avoid bending/twisting",
+      "Raised toilet/shower chair if needed; install grab bars",
+      "Handrails on stairs; non-slip bathroom mats"
     ],
-    "long_term_tips": []
+    "sleep_mental_health": {
+      "sleep": [
+        "7–9 hours/night supports healing",
+        "Use pillows for comfort and limb elevation if advised",
+        "Avoid pressure on the operated side until cleared"
+      ],
+      "mental_health": [
+        "Mild anxiety/low mood is common—use relaxation and breathing",
+        "Stay connected with family/friends; ask for help",
+        "Seek professional support if persistent low mood or high anxiety"
+      ]
+    },
+    "mobility_generic": [
+      "Day 0–1: bed exercises (ankle pumps, quad sets, breathing)",
+      "Day 1–3: transfer training and short assisted walks (if cleared)",
+      "Day 3–7: gradual increase in walk frequency/distance",
+      "Week 2+: stairs training and gait normalization as advised"
+    ],
+    "assistive_devices": {
+      "walker_crutches_cane": [
+        "Adjust height for proper elbow bend (~15–30°)",
+        "Sequence: walker/crutches → cane → independent, as cleared",
+        "Lead with weaker/operated side when instructed"
+      ],
+      "braces_slings_boots": [
+        "Wear as prescribed; do not discontinue without approval",
+        "Check skin daily for pressure marks; use padding if needed"
+      ],
+      "ice_heat": [
+        "Ice: first 48–72 hours and after exercises, 15–20 minutes",
+        "Heat: only for muscle soreness later; avoid incision/acute swelling"
+      ]
+    },
+    "generic_7_day_plan": {
+      "day_1_2": [
+        "Pain control on schedule; ice 3–5 times/day",
+        "Ankle pumps hourly while awake; deep breathing",
+        "Short assisted walks if cleared; nutrition focus on protein"
+      ],
+      "day_3_4": [
+        "Increase walking distance within comfort",
+        "Gentle ROM (as prescribed); daily wound check",
+        "Hydration and bowel routine"
+      ],
+      "day_5_6": [
+        "Progress ROM/activation; light functional tasks",
+        "Taper stronger pain meds if possible; use ice/acetaminophen per advice",
+        "Practice safe transfers and stairs if appropriate"
+      ],
+      "day_7": [
+        "Self-assess pain/swelling/ROM/function",
+        "List questions for physio/surgeon",
+        "Set goals for the next week"
+      ]
+    }
   },
-  {
-    "title": "Knee Rehabilitation Knowledge Base (Post-Op Recovery)",
-    "applies_to": [
-      "Knee replacement",
-      "ACL reconstruction",
-      "Meniscus repair",
-      "Knee arthroscopy"
+  "templates": {
+    "dynamic_7_day_plan": [
+      "Day 1–2: Rest/protect region; ice/elevate; start gentle activation as allowed.",
+      "Day 3–4: Increase short walks; begin ROM within safe limits; daily wound check.",
+      "Day 5–6: Progress ROM; introduce light strengthening/posture care specific to the region.",
+      "Day 7: Review progress; refine home program; plan follow-up if pain/swelling persists."
     ],
-    "goals": [
-      "Regain knee range of motion",
-      "Improve quadriceps and hamstring strength",
-      "Reduce swelling and inflammation",
-      "Return to weight-bearing and daily activities"
-    ],
-    "phases": [
-      {
-        "name": "Phase 1: Immediate Post-Op",
-        "timeline": "Day 1\u20137",
-        "activities": [
-          "Ice, elevate, compression",
-          "Ankle pumps (10\u201320 reps/hour)",
-          "Quadriceps sets",
-          "Heel slides",
-          "Passive knee extension"
-        ]
-      },
-      {
-        "name": "Phase 2: Early Recovery",
-        "timeline": "Week 2\u20134",
-        "activities": [
-          "Straight leg raises",
-          "Seated knee flexion",
-          "Begin partial weight-bearing with crutches"
-        ]
-      },
-      {
-        "name": "Phase 3: Intermediate Strengthening",
-        "timeline": "Week 4\u20138",
-        "activities": [
-          "Mini squats",
-          "Step-ups",
-          "Stationary bike",
-          "Increase walking duration"
-        ]
-      },
-      {
-        "name": "Phase 4: Advanced Strengthening & Function",
-        "timeline": "Week 8+",
-        "activities": [
-          "Wall sits",
-          "Lunges",
-          "Light jogging or swimming",
-          "Sports-specific training"
-        ]
-      }
-    ],
-    "red_flags": [
-      "Fever, redness, or warmth around incision",
-      "Knee locks or gives out",
-      "Persistent swelling after exercises"
-    ],
-    "long_term_tips": []
+    "message_footer_disclaimer_html": "<p>⚠️ Disclaimer: This information is for general guidance only and should not replace medical advice. Please consult your doctor for personalized care.</p>"
   },
-  {
-    "title": "Neck / Cervical Rehabilitation Knowledge Base (Post-Op & Non-Surgical)",
-    "applies_to": [
-      "Cervical spine surgery (e.g., ACDF)",
-      "Whiplash recovery",
-      "Cervical spondylosis",
-      "Neck sprain/strain"
-    ],
-    "goals": [
-      "Reduce neck pain and muscle tightness",
-      "Improve head/neck mobility",
-      "Strengthen postural muscles",
-      "Prevent nerve compression or stiffness"
-    ],
-    "phases": [
-      {
-        "name": "Phase 1: Protection & Mobility",
-        "timeline": "Weeks 0\u20132",
-        "activities": [
-          "Neck brace/collar if prescribed",
-          "Gentle neck nods",
-          "Scapular squeezes",
-          "Ice for pain/inflammation"
+  "conditions": {
+    "total_knee_replacement_tkr": {
+      "overview": "Knee joint arthroplasty to reduce pain and improve function.",
+      "weight_bearing": "Often weight bearing as tolerated with aids unless restricted.",
+      "key_exercises": [
+        "Ankle pumps, quad and glute sets (day 0–1)",
+        "Heel slides for flexion; extension hangs (avoid long pillow under knee)",
+        "Straight leg raises when quad control returns",
+        "Gait and step training as cleared"
+      ],
+      "do": [
+        "Frequent icing and elevation; knee above heart when possible",
+        "Prioritize knee extension early; gradual flexion milestones",
+        "Use chair with arms; avoid low soft sofas initially"
+      ],
+      "dont": [
+        "Do not force painful end-range flexion",
+        "Avoid prolonged knee-bent positions early"
+      ],
+      "follow_up": [
+        "Wound review 10–14 days",
+        "Physio progression weeks 1–6",
+        "Surgical follow-up typically 4–6 weeks"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Ice/elevate 15–20 min, 4–6x/day",
+          "Ankle pumps hourly; quad/glute sets 3–5x/day",
+          "Short assisted ambulation with walker"
+        ],
+        "day_3_4": [
+          "Gentle heel slides; extension hangs",
+          "Increase walking distance; check gait",
+          "Daily wound check"
+        ],
+        "day_5_6": [
+          "Straight leg raises if able; continue ROM gains",
+          "Sit-to-stand drills from higher chair",
+          "Stair training if cleared"
+        ],
+        "day_7": [
+          "Review flexion/extension progress and pain control",
+          "Refine home program with physio"
         ]
       },
-      {
-        "name": "Phase 2: Gentle Motion & Isometrics",
-        "timeline": "Weeks 2\u20136",
-        "activities": [
-          "Neck rotations",
-          "Lateral tilts",
-          "Chin tucks",
-          "Isometric holds"
+      "red_flags": [
+        "Calf pain/swelling, warmth/redness",
+        "Severe unrelenting knee pain or loss of active extension",
+        "Fever or wound drainage"
+      ]
+    },
+    "acl_reconstruction": {
+      "overview": "ACL graft reconstruction; protect graft and restore ROM/strength.",
+      "weight_bearing": "Often partial WB with brace locked in extension initially; protocol-specific.",
+      "brace": "Brace typically locked in extension early; unlock gradually as allowed.",
+      "key_exercises": [
+        "Quad sets, ankle pumps, patellar mobilization",
+        "Heel slides within allowed range",
+        "Hip abduction/adduction isometrics",
+        "Avoid high-load open-chain knee extension early"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace on; ice/elevate; quad sets hourly",
+          "Partial WB with aids as advised",
+          "Ankle pumps and gentle heel slides"
+        ],
+        "day_3_4": [
+          "Increase short walks; monitor swelling",
+          "Patella mobilization; ROM goals per protocol"
+        ],
+        "day_5_6": [
+          "Add hip/core activation; avoid pivoting/twisting",
+          "Continue brace per surgeon"
+        ],
+        "day_7": [
+          "ROM/quad activation review; adjust plan with physio"
         ]
       },
-      {
-        "name": "Phase 3: Strengthening & Postural Control",
-        "timeline": "Weeks 6\u201310",
-        "activities": [
-          "Resistance band rows",
-          "Wall angels",
-          "Shoulder shrugs and rolls",
-          "TheraBand neck resistance"
+      "red_flags": [
+        "Giving-way episodes despite brace",
+        "Large effusion not settling with rest/ice",
+        "New numbness/tingling"
+      ]
+    },
+    "meniscus_repair": {
+      "overview": "Meniscal suturing; flexion/loading restricted early.",
+      "weight_bearing": "Often partial WB with brace in extension; surgeon protocol rules.",
+      "key_exercises": [
+        "Ankle pumps, quad sets, straight leg raises with brace as allowed",
+        "Limited ROM heel slides per limits",
+        "Hip/glute activation"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace and crutches; ice/elevate",
+          "Quad sets q2–3h"
+        ],
+        "day_3_4": [
+          "Gentle ROM within limits; avoid deep flexion",
+          "Short assisted ambulation"
+        ],
+        "day_5_6": [
+          "Hip/ankle strengthening; maintain swelling control"
+        ],
+        "day_7": [
+          "Reassess pain/ROM; respect flexion limits"
         ]
       },
-      {
-        "name": "Phase 4: Functional Recovery",
-        "timeline": "Week 10+",
-        "activities": [
-          "Balance work, core exercises, and light cardio",
-          "Daily activities with good posture",
-          "Gradual return to work/sports"
+      "red_flags": [
+        "Clicking/locking with pain",
+        "Sudden swelling increase",
+        "Sharp joint-line pain on minimal activity"
+      ]
+    },
+    "meniscectomy": {
+      "overview": "Trimming torn meniscus; faster WB progression than repair.",
+      "weight_bearing": "Often WBAT as pain allows; check surgeon preference.",
+      "key_exercises": [
+        "Quad sets, straight leg raises",
+        "Gradual knee ROM, cycling as tolerated",
+        "Gait normalization"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Ice, elevation; short assisted walks",
+          "Quad activation; gentle ROM"
+        ],
+        "day_3_4": [
+          "Increase walking; add mini-squats if comfortable",
+          "Stationary cycling low resistance"
+        ],
+        "day_5_6": [
+          "Step-ups/downs low height; balance drills"
+        ],
+        "day_7": [
+          "Review swelling/pain; progress plan"
         ]
-      }
-    ],
-    "red_flags": [
-      "Arm pain, numbness, or weakness",
-      "Headaches not improving",
-      "Dizziness or visual changes",
-      "Sharp pain with simple neck movements"
-    ],
-    "long_term_tips": [
-      "Maintain neutral neck posture at work",
-      "Use lumbar + neck support",
-      "Avoid sleeping on stomach",
-      "Daily stretches to prevent tightness"
-    ]
+      },
+      "red_flags": [
+        "Persistent joint locking",
+        "Large effusion limiting ROM",
+        "Calf pain/swelling"
+      ]
+    },
+    "total_hip_replacement_thr": {
+      "overview": "Hip arthroplasty; approach-specific precautions.",
+      "precautions": [
+        "Posterior: avoid flexion >90°, adduction past midline, internal rotation",
+        "Anterior: avoid excessive extension and external rotation"
+      ],
+      "weight_bearing": "Often WBAT with device unless restricted.",
+      "key_exercises": [
+        "Ankle pumps; quad/glute sets",
+        "Gentle hip abduction in supine",
+        "Standing weight shift and gait training"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Adhere to precautions; ice/elevate",
+          "Assisted ambulation with walker",
+          "Isometrics 3–5x/day"
+        ],
+        "day_3_4": [
+          "Increase walking; gentle abduction",
+          "Practice transfers with precautions"
+        ],
+        "day_5_6": [
+          "Step training if cleared; improve endurance",
+          "Light functional tasks"
+        ],
+        "day_7": [
+          "Review gait and pain; refine exercises"
+        ]
+      },
+      "red_flags": [
+        "Signs of dislocation (shortened/rotated leg, sudden pain)",
+        "Calf swelling/pain",
+        "Fever or wound drainage"
+      ]
+    },
+    "hip_fracture_fixation_or_hemiarthroplasty": {
+      "overview": "Fixation/partial replacement after fracture; early mobilization critical.",
+      "weight_bearing": "Protocol-specific; WBAT or partial WB.",
+      "key_exercises": [
+        "Ankle pumps, quad/glute sets, heel slides",
+        "Bed-chair transfers; gait training early"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Pain control; delirium prevention (hydration/reorientation)",
+          "Sit out of bed; short assisted ambulation"
+        ],
+        "day_3_4": [
+          "Increase walking; stairs if safe",
+          "Bone health & fall prevention education"
+        ],
+        "day_5_6": [
+          "Endurance progression; hip ROM/strength within tolerance"
+        ],
+        "day_7": [
+          "Home safety plan; caregiver training"
+        ]
+      },
+      "red_flags": [
+        "New confusion or sudden decline",
+        "Inability to bear weight after initial progress",
+        "Worsening hip pain/deformity"
+      ]
+    },
+    "rotator_cuff_repair": {
+      "overview": "Tendon repair; protect with sling; staged ROM.",
+      "sling": "Wear as prescribed; remove only for hygiene/exercises if allowed.",
+      "key_exercises": [
+        "Hand/wrist/elbow ROM",
+        "Scapular setting/retraction",
+        "Passive shoulder ROM/pendulums when allowed"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling; ice; elbow/wrist/hand ROM; scap squeezes"
+        ],
+        "day_3_4": [
+          "Pendulums/passive ROM if cleared; posture care"
+        ],
+        "day_5_6": [
+          "Continue protected ROM; pain/swelling control"
+        ],
+        "day_7": [
+          "Review with physio; reinforce precautions"
+        ]
+      },
+      "red_flags": [
+        "Sudden pop with sharp pain",
+        "Loss of active finger/wrist movement",
+        "Increasing night pain unrelieved by rest/ice"
+      ]
+    },
+    "shoulder_stabilization_bankart_latarjet": {
+      "overview": "Stabilization for recurrent dislocation; protect repair.",
+      "precautions": [
+        "Avoid abduction/external rotation early",
+        "Sling as prescribed; sleep with pillows"
+      ],
+      "key_exercises": [
+        "Elbow/wrist/hand ROM",
+        "Scapular setting",
+        "Passive ROM only as allowed"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling; ice; elbow/hand ROM; avoid risky positions"
+        ],
+        "day_3_4": [
+          "Pendulums if allowed; posture drills"
+        ],
+        "day_5_6": [
+          "Gentle passive ROM within safe range"
+        ],
+        "day_7": [
+          "Reassess pain/sleep; adjust sling schedule"
+        ]
+      },
+      "red_flags": [
+        "Feeling of shoulder ‘slipping out’",
+        "Severe pain/deformity",
+        "Numbness/tingling in arm"
+      ]
+    },
+    "total_shoulder_arthroplasty_tsa": {
+      "overview": "Anatomic shoulder replacement; protect subscap/rotator cuff.",
+      "sling": "Wear as advised; avoid active internal rotation early if repaired.",
+      "key_exercises": [
+        "Elbow/wrist/hand ROM",
+        "Pendulums and passive forward elevation as allowed",
+        "Scapular stabilization"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling; ice; distal ROM; pendulums if cleared"
+        ],
+        "day_3_4": [
+          "Passive elevation in supine; no resisted IR early"
+        ],
+        "day_5_6": [
+          "Continue passive ROM; posture care"
+        ],
+        "day_7": [
+          "Check pain/sleep/ROM; update plan"
+        ]
+      },
+      "red_flags": [
+        "Sudden weakness or deformity",
+        "Wound drainage/fever",
+        "Severe increasing pain"
+      ]
+    },
+    "reverse_total_shoulder_arthroplasty_rtsa": {
+      "overview": "Reverse shoulder replacement; deltoid-dependent mechanics.",
+      "precautions": [
+        "Avoid combined adduction, internal rotation, extension behind back early",
+        "Sling use as advised"
+      ],
+      "key_exercises": [
+        "Elbow/wrist/hand ROM",
+        "Gentle deltoid activation later",
+        "Scapular setting"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling; distal ROM; ice; education on precautions"
+        ],
+        "day_3_4": [
+          "Pendulums if allowed; posture drills"
+        ],
+        "day_5_6": [
+          "Protected PROM; avoid risky combined positions"
+        ],
+        "day_7": [
+          "Review tolerance; plan next phase"
+        ]
+      },
+      "red_flags": [
+        "Instability sensations",
+        "Infection signs",
+        "Sudden mechanical clunk with pain"
+      ]
+    },
+    "lumbar_microdiscectomy": {
+      "overview": "Removal of herniated disc fragment; avoid BLT (bend, lift, twist) early.",
+      "precautions": [
+        "No heavy lifting or deep bending/twisting initially",
+        "Log-rolling for bed mobility"
+      ],
+      "key_exercises": [
+        "Short frequent walks",
+        "Transverse abdominis activation and pelvic tilts",
+        "Neural glides later if prescribed"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Short walks; pain control; neutral spine",
+          "Log-rolling in/out of bed"
+        ],
+        "day_3_4": [
+          "Increase walking time; gentle core activation",
+          "Limit prolonged sitting >30–45 min"
+        ],
+        "day_5_6": [
+          "Posture breaks; light ADLs"
+        ],
+        "day_7": [
+          "Progress with physio; set next-week goals"
+        ]
+      },
+      "red_flags": [
+        "New/worsening leg weakness or foot drop",
+        "Loss of bladder/bowel control (emergency)",
+        "Uncontrolled back/leg pain"
+      ]
+    },
+    "lumbar_laminectomy_or_fusion": {
+      "overview": "Decompression ± fusion; protect construct and avoid BLT.",
+      "brace": "LSO/TLSO if prescribed; wear as instructed.",
+      "key_exercises": [
+        "Walking and diaphragmatic breathing",
+        "Isometric core activation",
+        "Hip hinges with neutral spine when taught"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace if prescribed; short walks; bowel regimen"
+        ],
+        "day_3_4": [
+          "Increase walk time; posture care; light core activation"
+        ],
+        "day_5_6": [
+          "ADLs with spine precautions; avoid lifting >2–3 kg"
+        ],
+        "day_7": [
+          "Review incision and pain control; plan week-2 goals"
+        ]
+      },
+      "red_flags": [
+        "Fever or wound drainage",
+        "New severe nerve pain or weakness",
+        "Bladder/bowel dysfunction (emergency)"
+      ]
+    },
+    "cervical_acdf": {
+      "overview": "Anterior cervical discectomy and fusion; protect neck and swallow.",
+      "precautions": [
+        "Avoid heavy lifting; limit end-range neck motion early",
+        "Cervical collar if prescribed"
+      ],
+      "key_exercises": [
+        "Gentle walking; diaphragmatic breathing",
+        "Scapular retraction; chin tucks when cleared"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Collar if prescribed; short frequent walks; ice for neck soreness"
+        ],
+        "day_3_4": [
+          "Swallowing care (small bites/sips); posture drills"
+        ],
+        "day_5_6": [
+          "Gradually increase walks; gentle scapular work"
+        ],
+        "day_7": [
+          "Review pain/swallow/voice changes; plan progression"
+        ]
+      },
+      "red_flags": [
+        "Severe swallowing or breathing difficulty",
+        "New arm weakness/numbness",
+        "Worsening neck swelling"
+      ]
+    },
+    "ankle_orif": {
+      "overview": "Ankle fracture fixation; protect hardware and soft tissues.",
+      "weight_bearing": "Often non-weight bearing initially; follow surgeon timeline.",
+      "immobilization": "Cast/boot as prescribed; keep dry; elevate regularly.",
+      "key_exercises": [
+        "Toe curls; isometrics for calf/quads",
+        "Hip/knee ROM maintenance",
+        "Ankle ROM only when cleared"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Strict elevation/ice; non-weight bearing",
+          "Crutch training; DVT prevention"
+        ],
+        "day_3_4": [
+          "Upper-body and opposite-leg exercises; skin checks around cast/boot"
+        ],
+        "day_5_6": [
+          "Continue NWB; plan home setup for safety"
+        ],
+        "day_7": [
+          "Review swelling; schedule wound/cast check"
+        ]
+      },
+      "red_flags": [
+        "Numb toes, blue/pale foot, severe tightness in cast",
+        "Wet/soft cast or foul odor",
+        "Calf pain/swelling"
+      ]
+    },
+    "achilles_tendon_repair": {
+      "overview": "Achilles tendon repair; protected plantarflexion and staged WB.",
+      "immobilization": "Equinus splint/boot; avoid dorsiflexion beyond limits.",
+      "weight_bearing": "Typically NWB early; staged progression per protocol.",
+      "key_exercises": [
+        "Toe curls; hip/knee strengthening",
+        "Isometrics as allowed; ankle ROM later in boot"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Strict elevation; boot care; NWB with crutches",
+          "DVT prevention education"
+        ],
+        "day_3_4": [
+          "Upper-body/contralateral leg conditioning",
+          "Skin checks; pain/ice management"
+        ],
+        "day_5_6": [
+          "Plan transition milestones with physio"
+        ],
+        "day_7": [
+          "Review swelling and wound; confirm follow-up"
+        ]
+      },
+      "red_flags": [
+        "Sudden snap/pop with gap",
+        "Toe discoloration/numbness",
+        "Wound breakdown or drainage"
+      ]
+    },
+    "patellar_tendon_repair": {
+      "overview": "Extensor mechanism repair; knee flexion usually limited early.",
+      "brace": "Knee brace locked in extension; gradual unlock per protocol.",
+      "weight_bearing": "Often partial WB in locked extension initially.",
+      "key_exercises": [
+        "Quad sets with caution; hip abduction/adduction isometrics",
+        "Ankle pumps; SLR when cleared in brace"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Brace locked; ice/elevate; quad sets activation"
+        ],
+        "day_3_4": [
+          "Short assisted ambulation; monitor swelling"
+        ],
+        "day_5_6": [
+          "Gentle ROM only if allowed; avoid loaded flexion"
+        ],
+        "day_7": [
+          "Reassess extensor control; adjust plan"
+        ]
+      },
+      "red_flags": [
+        "Inability to straight-leg raise when previously possible",
+        "Excessive gap/swelling at tendon",
+        "Fever or wound discharge"
+      ]
+    },
+    "wrist_hand_orif": {
+      "overview": "Fixation of distal radius/metacarpal/phalangeal fractures.",
+      "immobilization": "Cast/splint early; elevate hand above heart.",
+      "key_exercises": [
+        "Finger/thumb ROM to prevent stiffness",
+        "Shoulder/elbow ROM to avoid proximal stiffness",
+        "Forearm rotation when cleared"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Elevation; finger flex/extend hourly",
+          "Pain control; ice around—not over—incision"
+        ],
+        "day_3_4": [
+          "Gentle thumb opposition; edema control"
+        ],
+        "day_5_6": [
+          "Progress finger ROM; light functional tasks"
+        ],
+        "day_7": [
+          "Check splint fit/skin; plan hand therapy"
+        ]
+      },
+      "red_flags": [
+        "Numb/cold fingers, severe swelling",
+        "Splint too tight/loose or wet",
+        "Wound drainage or fever"
+      ]
+    },
+    "carpal_tunnel_release": {
+      "overview": "Median nerve decompression at wrist; early finger motion.",
+      "immobilization": "Soft dressing/splint as advised; keep palm dry.",
+      "key_exercises": [
+        "Immediate finger/thumb ROM",
+        "Gentle tendon glides when allowed",
+        "Forearm/shoulder mobility"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Finger ROM hourly; elevate hand",
+          "Pain control; dressing care"
+        ],
+        "day_3_4": [
+          "Light use for ADLs; avoid forceful grip/vibration"
+        ],
+        "day_5_6": [
+          "Introduce tendon and nerve glides if cleared"
+        ],
+        "day_7": [
+          "Assess numbness/tingling trend; plan suture removal"
+        ]
+      },
+      "red_flags": [
+        "Worsening numbness/weak grip",
+        "Severe palm pain or swelling",
+        "Infection signs"
+      ]
+    },
+    "clavicle_orif": {
+      "overview": "Plate/screw fixation of clavicle; protect early.",
+      "sling": "Sling for comfort; remove for elbow/wrist/hand ROM.",
+      "key_exercises": [
+        "Pendulums and passive forward elevation when allowed",
+        "Scapular setting; posture care"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Sling; ice; distal ROM; posture"
+        ],
+        "day_3_4": [
+          "Pendulums if cleared; gentle scapular work"
+        ],
+        "day_5_6": [
+          "Gradual passive/assist ROM; avoid lifting"
+        ],
+        "day_7": [
+          "Review pain/sleep; adjust plan"
+        ]
+      },
+      "red_flags": [
+        "Skin irritation over plate/wound issues",
+        "Numbness/tingling in arm",
+        "Fever or significant swelling"
+      ]
+    },
+    "tibia_plateau_orif": {
+      "overview": "Fixation of proximal tibia; protect articular surface.",
+      "weight_bearing": "Often non- or partial WB initially; surgeon protocol.",
+      "key_exercises": [
+        "Ankle pumps; quad sets; SLR when cleared",
+        "Knee ROM in passive/assist range per limits"
+      ],
+      "7_day_plan": {
+        "day_1_2": [
+          "Elevation/ice; NWB with crutches; quad activation"
+        ],
+        "day_3_4": [
+          "Gentle ROM within limits; daily wound checks"
+        ],
+        "day_5_6": [
+          "Hip/core strengthening; continue NWB"
+        ],
+        "day_7": [
+          "Review swelling and ROM; plan clinic follow-up"
+        ]
+      },
+      "red_flags": [
+        "Calf pain/swelling",
+        "Severe knee pain with minimal movement",
+        "Wound drainage/fever"
+      ]
+    }
   },
-  {
-    "title": "Pain Management Knowledge Base (Post-Op & Ortho Rehab)",
-    "applies_to": [
-      "Post-operative pain",
-      "Chronic orthopedic pain",
-      "Joint stiffness",
-      "Nerve discomfort",
-      "Inflammation control"
-    ],
-    "goals": [
-      "Reduce pain safely without overmedication",
-      "Promote movement without setbacks",
-      "Educate on pain types",
-      "Support long-term recovery with non-pharma tools"
-    ],
-    "phases": [],
-    "red_flags": [
-      "Pain worsens each day",
-      "Fever, chills, or pus at surgical site",
-      "Sudden numbness or weakness",
-      "Can't sleep or move due to pain"
-    ],
-    "long_term_tips": [
-      "Alternate ice and heat appropriately",
-      "Use TENS, meditation, or massage",
-      "Gentle movement hourly",
-      "Stretch within pain-free range"
-    ]
-  },
-  {
-    "title": "Shoulder Rehabilitation Knowledge Base (Post-Op Recovery)",
-    "applies_to": [
-      "Shoulder surgery",
-      "Rotator cuff repair",
-      "Labrum repair"
-    ],
-    "goals": [
-      "Protect surgical repair",
-      "Restore range of motion",
-      "Build strength and function gradually"
-    ],
-    "phases": [
-      {
-        "name": "Phase 1: Protective Phase",
-        "timeline": "0\u20134 weeks",
-        "activities": [
-          "Arm supported in sling",
-          "Pendulum exercises",
-          "Elbow and wrist ROM"
-        ]
-      },
-      {
-        "name": "Phase 2: Passive & Assisted Movement",
-        "timeline": "4\u20138 weeks",
-        "activities": [
-          "Shoulder flexion (passive)",
-          "External rotation (passive)"
-        ]
-      },
-      {
-        "name": "Phase 3: Active ROM & Light Strengthening",
-        "timeline": "8\u201312 weeks",
-        "activities": [
-          "Wall walks",
-          "Shoulder abduction with resistance"
-        ]
-      },
-      {
-        "name": "Phase 4: Advanced Strengthening",
-        "timeline": "3\u20136 months",
-        "activities": [
-          "TheraBand rows",
-          "Light overhead press (if cleared)"
-        ]
-      }
-    ],
-    "red_flags": [
-      "Increased pain after exercise",
-      "Swelling or clicking sounds",
-      "Weakness in lifting light objects"
-    ],
-    "long_term_tips": []
-  },
-  {
-    "title": "Spine Conditioning Knowledge Base (Post-Op & Rehab Recovery)",
-    "applies_to": [
-      "Spinal surgery recovery",
-      "Spine-related conditions"
-    ],
-    "goals": [
-      "Improve core strength",
-      "Support spine",
-      "Reduce back/neck pain",
-      "Gradual, safe rehab"
-    ],
-    "phases": [
-      {
-        "name": "Phase 1: Gentle Mobility & Warm-up",
-        "timeline": "",
-        "activities": [
-          "Pelvic tilts",
-          "Knee-to-chest stretch",
-          "Cat-cow stretch",
-          "Child\u2019s pose"
-        ]
-      },
-      {
-        "name": "Phase 2: Core Control & Stability",
-        "timeline": "",
-        "activities": [
-          "Abdominal bracing",
-          "Marching in supine",
-          "Dead bug",
-          "Bridging"
-        ]
-      },
-      {
-        "name": "Phase 3: Lumbar Strengthening",
-        "timeline": "",
-        "activities": [
-          "Bird dog",
-          "McKenzie press-ups",
-          "Superman hold"
-        ]
-      },
-      {
-        "name": "Phase 4: Flexibility & Postural Retraining",
-        "timeline": "",
-        "activities": [
-          "Wall angels",
-          "Standing hamstring stretch",
-          "Seated piriformis stretch",
-          "Chin tucks"
-        ]
-      }
-    ],
-    "red_flags": [
-      "Pain shooting down legs or arms",
-      "Numbness, tingling, or weakness",
-      "Dizziness or chest pressure"
-    ],
-    "long_term_tips": [
-      "Stay active with low-impact cardio",
-      "Practice good posture",
-      "Include core and flexibility routines",
-      "Prioritize consistency over intensity"
-    ]
-  },
-  {
-    "title": "Surgical Wound Care Knowledge Base (Orthopedic Post-Op)",
-    "applies_to": [
-      "Any post-operative wound after orthopedic surgery",
-      "Including knee, hip, spine, shoulder, etc."
-    ],
-    "goals": [
-      "Keep the wound clean, dry, and protected",
-      "Spot early signs of infection or poor healing",
-      "Promote natural tissue repair",
-      "Prevent reopening or scarring"
-    ],
-    "phases": [
-      {
-        "name": "Immediate Care Tips",
-        "timeline": "Days 0\u20137",
-        "activities": [
-          "Leave original dressing unless advised otherwise",
-          "Do not soak the wound",
-          "Shower after 24\u201348 hours only if allowed",
-          "No powders, creams, or oils unless prescribed"
-        ]
-      },
-      {
-        "name": "Dressing Changes",
-        "timeline": "",
-        "activities": [
-          "Change dressing as advised (1\u20133 days)",
-          "Wash hands before and after touching wound",
-          "Use sterile materials",
-          "Change dressing if wet or soiled"
-        ]
-      },
-      {
-        "name": "Cleaning the Wound",
-        "timeline": "",
-        "activities": [
-          "Use saline or warm water",
-          "Pat dry with sterile gauze",
-          "Don\u2019t remove scabs or strips",
-          "Follow specific stitch-care instructions"
-        ]
-      }
-    ],
-    "red_flags": [
-      "Redness spreading around wound",
-      "Warmth or hardness under skin",
-      "Yellow/green or foul-smelling fluid",
-      "Fever over 100.4\u00b0F (38\u00b0C)",
-      "Increasing pain day-by-day"
-    ],
-    "long_term_tips": [
-      "Wear loose, breathable clothing",
-      "Avoid pressure on wound",
-      "Do not scratch \u2014 pat gently",
-      "Use sunscreen on healed scars to reduce darkening"
-    ]
+  "faq": {
+    "when_can_i_shower": "Usually after 24–72 hours with waterproof dressing if surgeon agrees—pat dry.",
+    "when_can_i_drive": "When off sedating meds and you can safely perform an emergency stop—requires surgeon clearance.",
+    "return_to_work": "Depends on procedure and job demands; light duty may resume earlier than manual labor.",
+    "sleep_on_operated_side": "Usually avoid until cleared; use pillows for support.",
+    "swelling_duration": "Mild–moderate swelling may persist for weeks; use icing, elevation, and walking as guided.",
+    "air_travel": "Discuss with surgeon; walk/ankle-pump hourly during flights to reduce DVT risk."
   }
-]
+}
