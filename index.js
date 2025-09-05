@@ -3,6 +3,8 @@ const express = require('express');
 const axios = require('axios');
 const fs = require('fs');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
 const app = express();
@@ -11,6 +13,16 @@ app.use(cors());
 
 // Groq API key
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+// MongoDB Atlas connection
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Import SharedChat model
+const SharedChat = require('./models/SharedChat');
 
 // Load knowledge base
 const kb = JSON.parse(fs.readFileSync('./rehab_knowledge_base.json', 'utf-8'));
@@ -210,6 +222,81 @@ Relevant Knowledge Base:
   } catch (err) {
     console.error(err.response?.data || err);
     res.status(500).send('Something went wrong.');
+  }
+});
+
+// Share chat endpoint - Create a shareable link
+app.post('/api/share/chat', async (req, res) => {
+  try {
+    const { shareType, title, messages, singleMessage } = req.body;
+    
+    if (!shareType || !title) {
+      return res.status(400).json({ error: 'Missing required fields: shareType and title' });
+    }
+
+    if (shareType === 'full_chat' && (!messages || !Array.isArray(messages))) {
+      return res.status(400).json({ error: 'Messages array is required for full_chat sharing' });
+    }
+
+    if (shareType === 'single_message' && !singleMessage) {
+      return res.status(400).json({ error: 'Single message is required for single_message sharing' });
+    }
+
+    const shareId = uuidv4();
+    
+    const sharedChat = new SharedChat({
+      shareId,
+      shareType,
+      title,
+      messages: shareType === 'full_chat' ? messages : undefined,
+      singleMessage: shareType === 'single_message' ? singleMessage : undefined
+    });
+
+    await sharedChat.save();
+
+    res.json({
+      success: true,
+      shareId,
+      shareUrl: `${req.protocol}://${req.get('host')}/share/${shareId}`
+    });
+
+  } catch (error) {
+    console.error('Error creating shared chat:', error);
+    res.status(500).json({ error: 'Failed to create shared chat' });
+  }
+});
+
+// Get shared chat endpoint
+app.get('/api/share/:shareId', async (req, res) => {
+  try {
+    const { shareId } = req.params;
+    
+    const sharedChat = await SharedChat.findOne({ shareId });
+    
+    if (!sharedChat) {
+      return res.status(404).json({ error: 'Shared chat not found or expired' });
+    }
+
+    // Increment view count
+    sharedChat.viewCount += 1;
+    await sharedChat.save();
+
+    res.json({
+      success: true,
+      data: {
+        shareId: sharedChat.shareId,
+        shareType: sharedChat.shareType,
+        title: sharedChat.title,
+        messages: sharedChat.messages,
+        singleMessage: sharedChat.singleMessage,
+        createdAt: sharedChat.createdAt,
+        viewCount: sharedChat.viewCount
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching shared chat:', error);
+    res.status(500).json({ error: 'Failed to fetch shared chat' });
   }
 });
 
