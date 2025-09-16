@@ -24,6 +24,14 @@ mongoose.connect(MONGODB_URI)
 // Import SharedChat model
 const SharedChat = require('./models/SharedChat');
 
+// Import Conversational Agent
+const ConversationalAgent = require('./conversationalAgent');
+const conversationalAgent = new ConversationalAgent();
+
+// Import Voice Session Service
+const VoiceSessionService = require('./services/voiceSessionService');
+const voiceSessionService = new VoiceSessionService();
+
 // Load knowledge base
 const kb = JSON.parse(fs.readFileSync('./rehab_knowledge_base.json', 'utf-8'));
 
@@ -102,9 +110,54 @@ function formatResponse(text) {
   return formatted.trim();
 }
 
-// POST endpoint to handle chat
+// Enhanced POST endpoint with conversational AI agent
 app.post('/askAI', async (req, res) => {
-  const userQuestion = req.body.query;
+  const { query: userQuestion, userId = 'anonymous', useConversationalAgent = true, source = 'text', sessionId = null } = req.body;
+  
+  console.log('📥 Received request:', { userQuestion, userId, source, useConversationalAgent, sessionId });
+
+  // Use voice session service for voice calls with session memory
+  if (source === 'voice' && sessionId) {
+    try {
+      console.log('🎤 Processing voice message with session memory...');
+      const result = await voiceSessionService.processMessageWithContext(sessionId, userQuestion, GROQ_API_KEY);
+      console.log('✅ Voice session response:', result);
+      
+      return res.json({ 
+        response: result.response,
+        answer: result.response,
+        detectedLanguage: result.detectedLanguage,
+        detectedEmotion: result.detectedEmotion,
+        sessionContext: result.sessionContext,
+        isVoiceSession: true,
+        sessionActive: result.isActive
+      });
+    } catch (error) {
+      console.error('❌ Voice session error:', error);
+      // Fall back to regular conversational agent
+    }
+  }
+
+  // Use conversational agent if enabled
+  if (useConversationalAgent) {
+    try {
+      console.log('🤖 Processing with conversational agent...');
+      const result = await conversationalAgent.processMessage(userId, userQuestion, GROQ_API_KEY);
+      console.log('✅ Conversational agent response:', result);
+      
+      return res.json({ 
+        response: result.response,  // Changed from 'answer' to 'response'
+        answer: result.response,    // Keep both for compatibility
+        detectedLanguage: result.detectedLanguage,
+        detectedEmotion: result.detectedEmotion,
+        conversationId: result.conversationId,
+        isConversational: true
+      });
+    } catch (error) {
+      console.error('❌ Conversational agent error:', error);
+      // Fall back to original system if conversational agent fails
+    }
+  }
 
   const matchedKB = searchKB(userQuestion);
 
@@ -297,6 +350,159 @@ app.get('/api/share/:shareId', async (req, res) => {
   } catch (error) {
     console.error('Error fetching shared chat:', error);
     res.status(500).json({ error: 'Failed to fetch shared chat' });
+  }
+});
+
+// Conversational Agent Endpoints
+
+// Get conversation history
+app.get('/api/conversation/:userId', (req, res) => {
+  try {
+    const { userId } = req.params;
+    const history = conversationalAgent.getConversationHistory(userId);
+    res.json({ success: true, history });
+  } catch (error) {
+    console.error('Error fetching conversation history:', error);
+    res.status(500).json({ error: 'Failed to fetch conversation history' });
+  }
+});
+
+// Clear conversation history
+app.delete('/api/conversation/:userId', (req, res) => {
+  try {
+    const { userId } = req.params;
+    conversationalAgent.clearConversationHistory(userId);
+    res.json({ success: true, message: 'Conversation history cleared' });
+  } catch (error) {
+    console.error('Error clearing conversation history:', error);
+    res.status(500).json({ error: 'Failed to clear conversation history' });
+  }
+});
+
+// Get conversation statistics
+app.get('/api/conversation/:userId/stats', (req, res) => {
+  try {
+    const { userId } = req.params;
+    const stats = conversationalAgent.getConversationStats(userId);
+    res.json({ success: true, stats });
+  } catch (error) {
+    console.error('Error fetching conversation stats:', error);
+    res.status(500).json({ error: 'Failed to fetch conversation stats' });
+  }
+});
+
+// Get greeting in user's preferred language
+app.post('/api/greeting', (req, res) => {
+  try {
+    const { language = 'english', userName = null } = req.body;
+    const greeting = conversationalAgent.getGreeting(language, userName);
+    res.json({ success: true, greeting });
+  } catch (error) {
+    console.error('Error generating greeting:', error);
+    res.status(500).json({ error: 'Failed to generate greeting' });
+  }
+});
+
+// Voice Session Management Endpoints
+
+// Start voice session
+app.post('/api/voice/session/start', async (req, res) => {
+  try {
+    const { userId, sessionType = 'voice_call' } = req.body;
+    
+    if (!userId) {
+      return res.status(400).json({ error: 'userId is required' });
+    }
+
+    const sessionInfo = await voiceSessionService.startVoiceSession(userId, sessionType);
+    
+    res.json({
+      success: true,
+      ...sessionInfo
+    });
+  } catch (error) {
+    console.error('Error starting voice session:', error);
+    res.status(500).json({ error: 'Failed to start voice session' });
+  }
+});
+
+// End voice session
+app.post('/api/voice/session/end', async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    
+    if (!sessionId) {
+      return res.status(400).json({ error: 'sessionId is required' });
+    }
+
+    const result = await voiceSessionService.endVoiceSession(sessionId);
+    
+    if (result) {
+      res.json({
+        success: true,
+        ...result
+      });
+    } else {
+      res.status(404).json({ error: 'Session not found' });
+    }
+  } catch (error) {
+    console.error('Error ending voice session:', error);
+    res.status(500).json({ error: 'Failed to end voice session' });
+  }
+});
+
+// Get voice session info
+app.get('/api/voice/session/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    const sessionInfo = await voiceSessionService.getSessionInfo(sessionId);
+    
+    if (sessionInfo) {
+      res.json({
+        success: true,
+        session: sessionInfo
+      });
+    } else {
+      res.status(404).json({ error: 'Session not found' });
+    }
+  } catch (error) {
+    console.error('Error getting session info:', error);
+    res.status(500).json({ error: 'Failed to get session info' });
+  }
+});
+
+// Get user's voice session history
+app.get('/api/voice/sessions/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { limit = 10 } = req.query;
+    
+    const sessions = await voiceSessionService.getUserSessions(userId, parseInt(limit));
+    
+    res.json({
+      success: true,
+      sessions
+    });
+  } catch (error) {
+    console.error('Error getting user sessions:', error);
+    res.status(500).json({ error: 'Failed to get user sessions' });
+  }
+});
+
+// Cleanup expired sessions (admin endpoint)
+app.post('/api/voice/cleanup', async (req, res) => {
+  try {
+    const deletedCount = await voiceSessionService.cleanupExpiredSessions();
+    
+    res.json({
+      success: true,
+      deletedCount,
+      message: `Cleaned up ${deletedCount} expired sessions`
+    });
+  } catch (error) {
+    console.error('Error cleaning up sessions:', error);
+    res.status(500).json({ error: 'Failed to cleanup sessions' });
   }
 });
 
