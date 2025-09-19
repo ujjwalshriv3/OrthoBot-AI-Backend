@@ -16,6 +16,8 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 // MongoDB Atlas connection
 const MONGODB_URI = process.env.MONGODB_URI;
+const AZURE_SPEECH_KEY = process.env.AZURE_SPEECH_KEY;
+const AZURE_SPEECH_REGION = process.env.AZURE_SPEECH_REGION;
 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
@@ -117,10 +119,22 @@ app.post('/askAI', async (req, res) => {
   console.log('📥 Received request:', { userQuestion, userId, source, useConversationalAgent, sessionId });
 
   // Use voice session service for voice calls with session memory
-  if (source === 'voice' && sessionId) {
+  if (source === 'voice') {
     try {
       console.log('🎤 Processing voice message with session memory...');
-      const result = await voiceSessionService.processMessageWithContext(sessionId, userQuestion, GROQ_API_KEY);
+      // Ensure we have a session from the very first user message
+      let ensuredSessionId = sessionId;
+      if (!ensuredSessionId && userId) {
+        const activeSession = await voiceSessionService.ensureActiveSession(userId, 'voice_call');
+        ensuredSessionId = activeSession.sessionId;
+        console.log('✅ Using active voice session for first message:', ensuredSessionId);
+      }
+
+      if (!ensuredSessionId) {
+        return res.status(400).json({ error: 'sessionId or userId is required for voice messages' });
+      }
+
+      const result = await voiceSessionService.handleVoiceMessage(ensuredSessionId, userQuestion, GROQ_API_KEY);
       console.log('✅ Voice session response:', result);
       
       return res.json({ 
@@ -130,7 +144,8 @@ app.post('/askAI', async (req, res) => {
         detectedEmotion: result.detectedEmotion,
         sessionContext: result.sessionContext,
         isVoiceSession: true,
-        sessionActive: result.isActive
+        sessionActive: result.isActive,
+        sessionId: ensuredSessionId
       });
     } catch (error) {
       console.error('❌ Voice session error:', error);
@@ -388,6 +403,112 @@ app.get('/api/conversation/:userId/stats', (req, res) => {
   } catch (error) {
     console.error('Error fetching conversation stats:', error);
     res.status(500).json({ error: 'Failed to fetch conversation stats' });
+  }
+});
+
+// Azure Speech: Exchange subscription key for short-lived token
+app.get('/api/azure/tts/token', async (req, res) => {
+  try {
+    if (!AZURE_SPEECH_KEY || !AZURE_SPEECH_REGION) {
+      return res.status(400).json({ error: 'Azure Speech env vars missing', haveKey: Boolean(AZURE_SPEECH_KEY), region: AZURE_SPEECH_REGION || null });
+    }
+
+    const tokenResp = await axios.post(
+      `https://${AZURE_SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`,
+      null,
+      {
+        headers: {
+          'Ocp-Apim-Subscription-Key': AZURE_SPEECH_KEY,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+
+    res.json({
+      token: tokenResp.data,
+      region: AZURE_SPEECH_REGION,
+      expiresInSeconds: 540 // ~9 minutes typical
+    });
+  } catch (error) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data || error.message;
+    console.error('Error getting Azure Speech token:', { status, data, region: AZURE_SPEECH_REGION });
+    res.status(status).json({ error: 'Failed to get Azure Speech token', details: data, region: AZURE_SPEECH_REGION });
+  }
+});
+
+// Azure Speech: Full health check (token + tiny synthesis)
+app.get('/api/azure/tts/health', async (req, res) => {
+  try {
+    if (!AZURE_SPEECH_KEY || !AZURE_SPEECH_REGION) {
+      return res.status(400).json({ ok: false, error: 'Azure Speech env vars missing', haveKey: Boolean(AZURE_SPEECH_KEY), region: AZURE_SPEECH_REGION || null });
+    }
+
+    // 1) Get token
+    const tokenResp = await axios.post(
+      `https://${AZURE_SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`,
+      null,
+      {
+        headers: {
+          'Ocp-Apim-Subscription-Key': AZURE_SPEECH_KEY,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+    const token = tokenResp.data;
+
+    // 2) Do a tiny synthesis request
+    const ssml = `<?xml version="1.0" encoding="UTF-8"?>
+<speak version="1.0" xml:lang="en-US" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts">
+  <voice name="en-US-JennyNeural">
+    <mstts:express-as style="chat">ok</mstts:express-as>
+  </voice>
+</speak>`;
+
+    const synthResp = await axios.post(
+      `https://${AZURE_SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`,
+      ssml,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/ssml+xml',
+          'X-Microsoft-OutputFormat': 'audio-16khz-32kbitrate-mono-mp3'
+        },
+        responseType: 'arraybuffer'
+      }
+    );
+
+    return res.json({ ok: true, region: AZURE_SPEECH_REGION, tokenIssued: true, synthStatus: synthResp.status, contentType: synthResp.headers['content-type'] });
+  } catch (error) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data || error.message;
+    console.error('Azure TTS health check failed:', { status, data, region: AZURE_SPEECH_REGION });
+    return res.status(status).json({ ok: false, region: AZURE_SPEECH_REGION, details: data });
+  }
+});
+
+// Azure Speech: List available voices for the configured region
+app.get('/api/azure/tts/voices', async (req, res) => {
+  try {
+    if (!AZURE_SPEECH_KEY || !AZURE_SPEECH_REGION) {
+      return res.status(400).json({ error: 'Azure Speech env vars missing', haveKey: Boolean(AZURE_SPEECH_KEY), region: AZURE_SPEECH_REGION || null });
+    }
+
+    const voicesResp = await axios.get(
+      `https://${AZURE_SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/voices/list`,
+      {
+        headers: {
+          'Ocp-Apim-Subscription-Key': AZURE_SPEECH_KEY
+        }
+      }
+    );
+
+    res.json({ region: AZURE_SPEECH_REGION, count: voicesResp.data?.length || 0, voices: voicesResp.data });
+  } catch (error) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data || error.message;
+    console.error('Error fetching Azure voices:', { status, data, region: AZURE_SPEECH_REGION });
+    res.status(status).json({ error: 'Failed to fetch Azure voices', details: data, region: AZURE_SPEECH_REGION });
   }
 });
 
