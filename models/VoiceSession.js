@@ -211,7 +211,13 @@ voiceSessionSchema.methods.getContextSummary = function() {
 
 // Static methods
 voiceSessionSchema.statics.findOrCreateSession = async function(userId, sessionType = 'voice_call') {
-  // Always create a completely new session for each call (no memory between calls)
+  // Reuse an existing active session if one exists for this user and session type
+  const existing = await this.findOne({ userId, sessionType, isActive: true }).sort({ lastActiveAt: -1 });
+  if (existing) {
+    return existing;
+  }
+
+  // Otherwise create a fresh session for this call
   const sessionId = `voice_${userId}_${Date.now()}`;
   const session = new this({
     sessionId,
