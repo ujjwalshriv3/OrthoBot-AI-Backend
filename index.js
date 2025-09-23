@@ -611,6 +611,38 @@ app.get('/api/voice/sessions/:userId', async (req, res) => {
   }
 });
 
+// Get voice session history (for saving to chat history before deletion)
+app.post('/api/voice/session/history', async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    
+    if (!sessionId) {
+      return res.status(400).json({ error: 'sessionId is required' });
+    }
+
+    // Import VoiceSession model to get conversation history directly
+    const VoiceSession = require('./models/VoiceSession');
+    const session = await VoiceSession.findOne({ sessionId });
+    
+    if (session) {
+      res.json({
+        success: true,
+        sessionId: session.sessionId,
+        conversationHistory: session.conversationHistory || [],
+        primaryTopics: session.sessionContext.primaryTopics || [],
+        patientCondition: session.sessionContext.patientCondition,
+        lastActiveAt: session.lastActiveAt,
+        createdAt: session.createdAt
+      });
+    } else {
+      res.status(404).json({ error: 'Session not found' });
+    }
+  } catch (error) {
+    console.error('Error getting voice session history:', error);
+    res.status(500).json({ error: 'Failed to get voice session history' });
+  }
+});
+
 // Cleanup expired sessions (admin endpoint)
 app.post('/api/voice/cleanup', async (req, res) => {
   try {
