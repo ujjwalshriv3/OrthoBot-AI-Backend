@@ -10,14 +10,18 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@supabase/supabase-js": "^2.74.0",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.2",
+    "cohere-ai": "^7.19.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
+    "groq-sdk": "^0.33.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.0",
+    "openai": "^6.2.0",
     "uuid": "^9.0.1"
   }
 }
