@@ -7,14 +7,299 @@ const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { Groq } = require('groq-sdk');
+const { createClient } = require('@supabase/supabase-js');
+const { CohereClient } = require('cohere-ai');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Clean OrthoBot Response Formatter
+function formatOrthoResponse(userQuery, kbInfo, aiResponse) {
+  console.log('🎯 Using actual AI response for query:', userQuery);
+  console.log('📝 AI Response length:', aiResponse?.length || 0);
+  console.log('📚 KB Info:', kbInfo?.title || 'No title');
+  console.log('🔗 KB URL:', kbInfo?.url || 'No URL in KB');
+  
+  // Detect if user query is in Hindi
+  const isHindiQuery = /[\u0900-\u097F]/.test(userQuery) || 
+    userQuery.toLowerCase().includes('hindi') ||
+    userQuery.toLowerCase().includes('bhai') ||
+    userQuery.toLowerCase().includes('kon') ||
+    userQuery.toLowerCase().includes('kya') ||
+    userQuery.toLowerCase().includes('kaise') ||
+    userQuery.toLowerCase().includes('dikha') ||
+    userQuery.toLowerCase().includes('batao') ||
+    userQuery.toLowerCase().includes('kaun') ||
+    userQuery.toLowerCase().includes('hai');
+  
+  // Detect if user query is specifically in English
+  const isEnglishQuery = userQuery.toLowerCase().includes('who is') ||
+    userQuery.toLowerCase().includes('what is') ||
+    userQuery.toLowerCase().includes('tell me about') ||
+    userQuery.toLowerCase().includes('about dr') ||
+    userQuery.toLowerCase().includes('dr rameshwar kumar') ||
+    (!isHindiQuery && /^[a-zA-Z\s?.,!]+$/.test(userQuery));
+  
+  console.log('🌐 Language detected - Hindi:', isHindiQuery, 'English:', isEnglishQuery, 'for query:', userQuery);
+
+    
+  
+  // Use the actual AI response as base, but enhance it with KB info
+  let finalResponse = aiResponse || 'मुझे खुशी होगी आपकी मदद करने में। कृपया अपना सवाल पूछें।';
+  
+  // Add KB title and summary if available
+  if (kbInfo?.title) {
+    let title = kbInfo.title;
+    
+    // Clean up technical terms from title
+    title = title.replace(/courseVideos_kb\.json/gi, '')
+                 .replace(/courseTitle/gi, '')
+                 .replace(/\.json/gi, '')
+                 .replace(/_kb/gi, '')
+                 .replace(/kb_/gi, '')
+                 .replace(/\s+>/g, '')
+                 .replace(/>\s+/g, '')
+                 .trim();
+    
+    // Convert technical titles to user-friendly ones
+    if (title.includes('6 Weeks Knee Pain Relief')) {
+      title = isEnglishQuery ? '6 Weeks Knee Pain Relief Challenge Course' : '6 सप्ताह घुटने के दर्द से राहत चुनौती कोर्स';
+    } else if (title.includes('Rameshwar Kumar') || title.includes('Dr. Rameshwar')) {
+      title = isEnglishQuery ? 'Dr. Rameshwar Kumar - Chief Physiotherapist' : 'डॉ. रामेश्वर कुमार - मुख्य फिजियोथेरेपिस्ट';
+    } else if (title.includes('Morning Physiotherapy')) {
+      title = isEnglishQuery ? 'Daily Morning Physiotherapy Session' : 'दैनिक सुबह फिजियोथेरेपी सत्र';
+    } else if (title.toLowerCase().includes('course') || title.toLowerCase().includes('video')) {
+      title = isEnglishQuery ? 'Knee Health Education' : 'घुटने के स्वास्थ्य की जानकारी';
+    } else if (title.toLowerCase().includes('masterclass')) {
+      title = isEnglishQuery ? 'Expert Masterclass Session' : 'विशेषज्ञ मास्टरक्लास सत्र';
+    } else if (title.toLowerCase().includes('webinar')) {
+      title = isEnglishQuery ? 'Health Education Webinar' : 'स्वास्थ्य शिक्षा वेबिनार';
+    }
+    
+    // Only add title if it's meaningful and not empty
+    if (title && title.length > 2) {
+      finalResponse = `🦵 ${title}\n\n${finalResponse}`;
+    }
+  }
+  
+  // Add context-specific summary for Dr. Rameshwar
+  if (kbInfo?.content && (kbInfo.content.includes('Rameshwar') || userQuery.toLowerCase().includes('rameshwar'))) {
+    if (isEnglishQuery) {
+      const rameshwarSummary = `Dr. Rameshwar Kumar is an expert physiotherapist and Chief Physiotherapist who conducts daily morning exercise sessions for knee health. He specializes in home-based exercises, rehabilitation programs, and provides comprehensive guidance for knee pain relief.
+
+👨‍⚕️ Dr. Rameshwar Kumar is also an experienced orthopedic and joint replacement surgeon with over 18 years of practice. He has earned MBBS, MS, DNB, and M.Ch (Ortho) degrees.
+
+🏥 His Achievements:
+• 20,000+ orthopedic and joint replacement surgeries
+• 150+ free surgeries for poor people
+• Trained 7,000+ health workers in first aid
+• Conducted 300+ health camps in villages
+• Consulted 7+ lakh patients
+• 10+ million social media reach
+
+🎯 Founder of Save The Knee Mission:
+Dr. Rameshwar realized he could help people heal from knee pain without surgery or medications. He developed Miracle MP rituals and dedicated his life to serving people through natural healing methods. He offers personalized coaching, evidence-based treatment approaches, and helps patients avoid surgery through natural healing methods. His morning sessions include physiotherapy exercises, meditation, and holistic wellness approaches for orthopedic conditions.
+
+🏢 Legal Entity: Shreesai Hospital & Trauma Center Private Limited
+📍 Address: Surgeon Lane, Bangaliu Pakri, Gaushala Road, Siwan, Bihar – 841226
+
+📞 Contact Details:
+• Website: https://drrameshwarkumar.in/
+• Clinic Address: C-1/101, Pankha Rd, Block C1, Janakpuri, Delhi, 110059
+• Phone: +917992271883
+• Email: care@drrameshwarkumar.in
+• YouTube: https://www.youtube.com/@DrRameshwarkumar
+• Hospital: https://srisaihospitalsiwan.com/`;
+      finalResponse += `\n\n📋 About Dr. Rameshwar Kumar:\n${rameshwarSummary}`;
+    } else {
+      const rameshwarSummary = `डॉ. रामेश्वर कुमार एक विशेषज्ञ फिजियोथेरेपिस्ट और मुख्य फिजियोथेरेपिस्ट हैं जो घुटने के स्वास्थ्य के लिए दैनिक सुबह व्यायाम सत्र आयोजित करते हैं। वे घर-आधारित व्यायाम, पुनर्वास कार्यक्रमों में विशेषज्ञ हैं और घुटने के दर्द से राहत के लिए व्यापक मार्गदर्शन प्रदान करते हैं।
+
+👨‍⚕️ डॉ. रामेश्वर कुमार एक अनुभवी ऑर्थोपेडिक और जॉइंट रिप्लेसमेंट सर्जन भी हैं जो 18 साल से अधिक समय से प्रैक्टिस कर रहे हैं। उन्होंने MBBS, MS, DNB, और M.Ch (Ortho) की डिग्री हासिल की है।
+
+🏥 उनकी उपलब्धियां:
+• 20,000+ ऑर्थोपेडिक और जॉइंट रिप्लेसमेंट सर्जरी
+• 150+ गरीब लोगों के लिए मुफ्त सर्जरी
+• 7,000+ स्वास्थ्य कर्मचारियों को प्राथमिक चिकित्सा का प्रशिक्षण
+• 300+ गांवों में स्वास्थ्य शिविर
+• 7 लाख+ मरीजों को परामर्श
+• 10 मिलियन+ सोशल मीडिया रीच
+
+🎯 Save The Knee Mission के संस्थापक:
+डॉ. रामेश्वर ने महसूस किया कि वे बिना सर्जरी और दवाओं के घुटने के दर्द से राहत दिला सकते हैं। उन्होंने Miracle MP rituals विकसित किए और अपना जीवन लोगों की सेवा में समर्पित कर दिया। वे व्यक्तिगत कोचिंग, साक्ष्य-आधारित उपचार दृष्टिकोण प्रदान करते हैं और रोगियों को प्राकृतिक उपचार विधियों के माध्यम से सर्जरी से बचने में मदद करते हैं।
+
+🏢 कानूनी इकाई: Shreesai Hospital & Trauma Center Private Limited
+📍 पता: Surgeon Lane, Bangaliu Pakri, Gaushala Road, Siwan, Bihar – 841226
+
+📞 संपर्क विवरण:
+• वेबसाइट: https://drrameshwarkumar.in/
+• क्लिनिक पता: C-1/101, Pankha Rd, Block C1, Janakpuri, Delhi, 110059
+• फोन: +917992271883
+• ईमेल: care@drrameshwarkumar.in
+• YouTube: https://www.youtube.com/@DrRameshwarkumar
+• अस्पताल: https://srisaihospitalsiwan.com/`;
+      finalResponse += `\n\n📋 डॉ. रामेश्वर कुमार के बारे में:\n${rameshwarSummary}`;
+    }
+  }
+  // Add summary from KB if available and different from AI response (for other content)
+  else if (kbInfo?.summary && !finalResponse.includes(kbInfo.summary.substring(0, 50))) {
+    let summary = kbInfo.summary;
+    if (summary.length > 300) {
+      summary = summary.substring(0, 300) + '...';
+    }
+    finalResponse += `\n\n📋 ${isEnglishQuery ? 'Key Information:' : 'मुख्य जानकारी:'}\n${summary}`;
+  }
+  
+  // Get video URL from KB first, then fallback to mapping
+  let videoUrl = kbInfo?.url;
+  
+  // If no URL in KB, try to find relevant URL based on content and query
+  if (!videoUrl && kbInfo?.content) {
+    const content = kbInfo.content.toLowerCase();
+    const query = userQuery.toLowerCase();
+    console.log('🔍 Searching for video URL based on content and query...');
+    
+    // Course Videos KB URLs (Complete List)
+    if (content.includes('6 weeks') || content.includes('course') || query.includes('course')) {
+      videoUrl = 'https://www.youtube.com/watch?v=j71zF4ofgr8'; // Introduction Video
+    } else if (content.includes('basic knowledge') || query.includes('basic')) {
+      videoUrl = 'https://www.youtube.com/watch?v=wwm4waoO3oU'; // Basic Knowledge Series
+    } else if (content.includes('causes') || content.includes('कारण')) {
+      videoUrl = 'https://www.youtube.com/watch?v=MXmS5ED87T0'; // Main Causes Of Knee Pain
+    } else if (content.includes('symptoms') || content.includes('लक्षण')) {
+      videoUrl = 'https://www.youtube.com/watch?v=bAzw-3FX3z0'; // Symptoms Of Cartilage Damage
+    } else if (content.includes('diagnosis') || content.includes('निदान')) {
+      videoUrl = 'https://www.youtube.com/watch?v=2cETcxcr4q4'; // How to confirm diagnosis
+    } else if (content.includes('arthritis grade') || content.includes('womac')) {
+      videoUrl = 'https://www.youtube.com/watch?v=fMvqaPRe8KM'; // Knee arthritis grade and WOMAC score
+    } else if (content.includes('treatment') || content.includes('इलाज')) {
+      videoUrl = 'https://www.youtube.com/watch?v=78IMjmNQQY0'; // Treatment options
+    } else if (content.includes('call to action') || content.includes('activities')) {
+      videoUrl = 'https://www.youtube.com/watch?v=zMRj8CF0n3s'; // Call To Action
+    } else if (content.includes('pain management') || query.includes('pain management')) {
+      videoUrl = 'https://www.youtube.com/watch?v=MIElsmWZKHc'; // Pain Management Module
+    } else if (content.includes('medicine') || content.includes('दवा')) {
+      videoUrl = 'https://www.youtube.com/watch?v=oO859kzPkao'; // Medicine knowledge
+    } else if (content.includes('home remedies') || content.includes('घरेलू')) {
+      videoUrl = 'https://www.youtube.com/watch?v=4L7aNdpuw3w'; // Home remedies
+    } else if (content.includes('hot') || content.includes('cold') || content.includes('therapy')) {
+      videoUrl = 'https://www.youtube.com/watch?v=MIVp_V-Dre4'; // Hot or cold therapy
+    } else if (content.includes('severe pain') || content.includes('अत्यधिक दर्द')) {
+      videoUrl = 'https://www.youtube.com/watch?v=dSkjl5wgMG0'; // Severe Pain Relief Exercises
+    } else if (content.includes('diet') || content.includes('food') || content.includes('आहार')) {
+      videoUrl = 'https://www.youtube.com/watch?v=8LsPh3TEbdk'; // Diet and foods
+    } else if (content.includes('painkiller') || content.includes('complication')) {
+      videoUrl = 'https://www.youtube.com/watch?v=7oAiIWlUDjk'; // Painkiller complications
+    } else if (content.includes('call to action') && content.includes('pain')) {
+      videoUrl = 'https://www.youtube.com/watch?v=02pVUTdFYYo'; // Pain Management Call to Action
+    } else if (content.includes('early stage') || content.includes('exercise') || content.includes('व्यायाम')) {
+      videoUrl = 'https://www.youtube.com/watch?v=9mS9jm54dlE'; // Early Stage Exercise
+    } else if (content.includes('sitting') || content.includes('बैठना') || content.includes('ground')) {
+      videoUrl = 'https://www.youtube.com/watch?v=8mln2vJLLis'; // How to sit on ground
+    } else if (content.includes('pillow') || content.includes('तकिया')) {
+      videoUrl = 'https://www.youtube.com/watch?v=AiJ9RWdJsoI'; // Exercise with pillow
+    } else if (content.includes('daily life') || content.includes('activity')) {
+      videoUrl = 'https://www.youtube.com/watch?v=gZSdOWKOpZ4'; // Daily life activities part 1
+    } else if (content.includes('stairs') || content.includes('सीढ़ी')) {
+      videoUrl = 'https://www.youtube.com/watch?v=kXAvqGgQE6k'; // How to climb stairs
+    } else if (content.includes('daily life') && content.includes('part 2')) {
+      videoUrl = 'https://www.youtube.com/watch?v=P12kzQFad68'; // Daily life activities part 2
+    
+    // Morning Exercise KB URLs
+    } else if (content.includes('rameshwar') || content.includes('morning') || content.includes('physiotherapy') || query.includes('rameshwar') || query.includes('dr rameshwar')) {
+      videoUrl = 'https://www.youtube.com/watch?v=kY1vwF5lpFI'; // Morning Physiotherapy Session
+      console.log('🎯 Dr. Rameshwar URL matched!');
+    
+    // Masterclass KB URLs
+    } else if (content.includes('masterclass') || content.includes('मास्टरक्लास') || query.includes('masterclass')) {
+      videoUrl = 'https://www.youtube.com/watch?v=gxEHLIe1HPc'; // Live Masterclass
+    
+    // Sunday Webinar KB URLs (Complete List)
+    } else if (content.includes('save the knee mission') || content.includes('understanding knee pain')) {
+      videoUrl = 'https://www.youtube.com/watch?v=DmZbT7uO8TU'; // Save the Knee Mission
+    } else if (content.includes('webinar 1') || (content.includes('webinar') && content.includes('first'))) {
+      videoUrl = 'https://www.youtube.com/watch?v=AYvGeHsOOuk'; // Webinar 1
+    } else if (content.includes('webinar 2') || (content.includes('webinar') && content.includes('second'))) {
+      videoUrl = 'https://www.youtube.com/watch?v=lD7MbWMmuPM'; // Webinar 2
+    } else if (content.includes('webinar 4') || content.includes('joint replacement') || content.includes('replacement')) {
+      videoUrl = 'https://www.youtube.com/watch?v=G2Pbfj83MbM'; // Webinar 4 - Joint replacement
+    } else if (content.includes('webinar 8') || content.includes('knee replacement')) {
+      videoUrl = 'https://www.youtube.com/watch?v=EnZPFC98K9Q'; // Webinar 8
+    } else if (content.includes('webinar') || query.includes('webinar')) {
+      videoUrl = 'https://www.youtube.com/watch?v=DmZbT7uO8TU'; // Default webinar
+    
+    // Query-based intent matching for better URL selection
+    } else if (query.includes('pain') || query.includes('दर्द') || query.includes('relief')) {
+      videoUrl = 'https://www.youtube.com/watch?v=MIElsmWZKHc'; // Pain Management Module
+    } else if (query.includes('exercise') || query.includes('व्यायाम') || query.includes('workout')) {
+      videoUrl = 'https://www.youtube.com/watch?v=9mS9jm54dlE'; // Early Stage Exercise
+    } else if (query.includes('diet') || query.includes('food') || query.includes('आहार') || query.includes('nutrition')) {
+      videoUrl = 'https://www.youtube.com/watch?v=8LsPh3TEbdk'; // Diet and foods for knee health
+    } else if (query.includes('medicine') || query.includes('दवा') || query.includes('painkiller')) {
+      videoUrl = 'https://www.youtube.com/watch?v=oO859kzPkao'; // Medicine knowledge for pain
+    } else if (query.includes('home') || query.includes('घरेलू') || query.includes('remedy')) {
+      videoUrl = 'https://www.youtube.com/watch?v=4L7aNdpuw3w'; // Home remedies for knee pain
+    } else if (query.includes('causes') || query.includes('कारण') || query.includes('why')) {
+      videoUrl = 'https://www.youtube.com/watch?v=MXmS5ED87T0'; // Main Causes Of Knee Pain
+    } else if (query.includes('symptoms') || query.includes('लक्षण')) {
+      videoUrl = 'https://www.youtube.com/watch?v=bAzw-3FX3z0'; // Symptoms Of Cartilage Damage
+    } else if (query.includes('treatment') || query.includes('इलाज')) {
+      videoUrl = 'https://www.youtube.com/watch?v=78IMjmNQQY0'; // Treatment options
+    } else if (query.includes('diagnosis') || query.includes('जांच')) {
+      videoUrl = 'https://www.youtube.com/watch?v=2cETcxcr4q4'; // How to confirm diagnosis
+    } else if (query.includes('webinar') || query.includes('सेमिनार')) {
+      videoUrl = 'https://www.youtube.com/watch?v=DmZbT7uO8TU'; // Save the Knee Mission
+    } else if (query.includes('masterclass') || query.includes('मास्टरक्लास')) {
+      videoUrl = 'https://www.youtube.com/watch?v=gxEHLIe1HPc'; // Live Masterclass
+    } else {
+      // Default fallback to Dr. Rameshwar's YouTube playlists
+      videoUrl = 'https://www.youtube.com/@DrRameshwarkumar/playlists'; // Dr. Rameshwar YouTube playlists
+    }
+  }
+  
+  
+  // Add video URL to the AI response if found
+  if (videoUrl) {
+    console.log('🔗 Adding video URL to response:', videoUrl);
+    finalResponse += `\n\n🎥 ${isEnglishQuery ? 'You can watch this helpful video:' : 'इस वीडियो को देखें जो आपकी मदद करेगा:'}\n🔗 ${videoUrl}`;
+  } else {
+    console.log('❌ No video URL found for query:', userQuery);
+  }
+  
+  // Add helpful next steps based on query context
+  if (finalResponse.length < 500) { // Only add if response is short
+    if (isEnglishQuery) {
+      finalResponse += `\n\n💪 What to do next:\n• Feel free to ask me any other questions\n• Start with small, consistent daily practices\n• Be patient - natural healing takes time\n• Consult your doctor for any concerns`;
+      
+      finalResponse += `\n\n🌟 Remember: You're not alone in this journey! I'm here to help you every step of the way. Take it one day at a time and keep your knees healthy.`;
+    } else {
+      finalResponse += `\n\n💪 आगे क्या करें:\n• अगर आपको और जानकारी चाहिए तो मुझसे पूछें\n• रोजाना थोड़ा-थोड़ा अभ्यास करें\n• धैर्य रखें - प्राकृतिक उपचार में समय लगता है\n• किसी भी समस्या के लिए डॉक्टर से सलाह लें`;
+      
+      finalResponse += `\n\n🌟 याद रखें: आप अकेले नहीं हैं! मैं यहाँ आपकी मदद के लिए हूँ। छोटे-छोटे कदम उठाएं और अपने घुटनों को स्वस्थ रखें।`;
+    }
+  }
+  
+  console.log('📝 Final response length:', finalResponse.length);
+  console.log('📝 Response includes video URL:', finalResponse.includes('🎥'));
+  
+  return finalResponse;
+}
+
+// This function is no longer needed as we use actual AI responses
+
 // Groq API key
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+// Initialize Groq SDK
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+// Initialize Supabase client
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+// Initialize Cohere client
+const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
 
 // MongoDB Atlas connection
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -36,6 +321,10 @@ const conversationalAgent = new ConversationalAgent();
 const VoiceSessionService = require('./services/voiceSessionService');
 const voiceSessionService = new VoiceSessionService();
 
+// Import Health Response Formatter
+const HealthResponseFormatter = require('./healthResponseFormatter');
+const healthFormatter = new HealthResponseFormatter();
+
 // Import Chat History Service
 const ChatHistoryService = require('./services/chatHistoryService');
 const chatHistoryService = new ChatHistoryService();
@@ -45,6 +334,7 @@ const Users = require('./models/UserSchema');
 
 // Load knowledge base
 const kb = JSON.parse(fs.readFileSync('./rehab_knowledge_base.json', 'utf-8'));
+const drRameshwarKB = JSON.parse(fs.readFileSync('./Dr_kbs/drRameshwar_kb.json', 'utf-8'));
 
 // Recursively flatten your knowledge base to a searchable array
 function flattenKB(obj) {
@@ -65,8 +355,82 @@ function flattenKB(obj) {
   return results;
 }
 
+// Search Dr. Rameshwar KB first for any Dr. Rameshwar related queries
+function searchDrRameshwarKB(query) {
+  const lowerQuery = query.toLowerCase();
+  
+  // Check if query is about Dr. Rameshwar
+  if (lowerQuery.includes('rameshwar') || lowerQuery.includes('dr rameshwar') || 
+      lowerQuery.includes('doctor rameshwar') || lowerQuery.includes('rameshwar kumar')) {
+    
+    const drKB = drRameshwarKB.knowledgeBase.DrRameshwar;
+    
+    // Contact related queries
+    if (lowerQuery.includes('contact') || lowerQuery.includes('phone') || 
+        lowerQuery.includes('number') || lowerQuery.includes('email') || 
+        lowerQuery.includes('address') || lowerQuery.includes('clinic')) {
+      return {
+        title: drKB.contact.title,
+        content: drKB.contact.content,
+        summary: drKB.contact.summary,
+        url: 'https://www.youtube.com/@DrRameshwarkumar/playlists' // Dr. Rameshwar YouTube playlists
+      };
+    }
+    
+    // Website related queries
+    if (lowerQuery.includes('website') || lowerQuery.includes('site') || 
+        lowerQuery.includes('youtube') || lowerQuery.includes('online')) {
+      return {
+        title: drKB.contact.title,
+        content: 'Website: https://drrameshwarkumar.in/, Contact Page: https://drrameshwarkumar.in/contact/, YouTube: https://www.youtube.com/@DrRameshwarkumar',
+        summary: 'Dr. Rameshwar Kumar official website, contact page and YouTube channel',
+        url: 'https://www.youtube.com/@DrRameshwarkumar/playlists' // Dr. Rameshwar YouTube playlists
+      };
+    }
+    
+    // Hospital related queries
+    if (lowerQuery.includes('hospital') || lowerQuery.includes('clinic') || 
+        lowerQuery.includes('location') || lowerQuery.includes('where')) {
+      return {
+        title: drKB.hospital.title,
+        content: drKB.hospital.content,
+        summary: drKB.hospital.summary,
+        url: 'kY1vwF5lpFI' // Dr. Rameshwar Morning Session video
+      };
+    }
+    
+    // General profile queries
+    if (lowerQuery.includes('who is') || lowerQuery.includes('about') || 
+        lowerQuery.includes('profile') || lowerQuery.includes('kaun hai')) {
+      return {
+        title: drKB.profile.title,
+        content: drKB.profile.content + ' ' + drKB.achievements.content + ' ' + drKB.mission.content,
+        summary: drKB.profile.summary,
+        url: 'kY1vwF5lpFI' // Dr. Rameshwar Morning Session video
+      };
+    }
+    
+    // Default Dr. Rameshwar response
+    return {
+      title: drKB.profile.title,
+      content: drKB.profile.content,
+      summary: drKB.profile.summary,
+      url: 'kY1vwF5lpFI' // Dr. Rameshwar Morning Session video
+    };
+  }
+  
+  return null;
+}
+
 // Basic keyword search in KB
 function searchKB(query) {
+  // First check Dr. Rameshwar KB
+  const drResult = searchDrRameshwarKB(query);
+  if (drResult) {
+    return drResult;
+  }
+  
+  // Then search general KB
   const flatKB = flattenKB(kb);
   const matched = flatKB.filter(item =>
     item.toLowerCase().includes(query.toLowerCase())
@@ -126,6 +490,35 @@ app.post('/askAI', async (req, res) => {
   const { query: userQuestion, userId = 'anonymous', useConversationalAgent = true, source = 'text', sessionId = null } = req.body;
   
   console.log('📥 Received request:', { userQuestion, userId, source, useConversationalAgent, sessionId });
+
+  // Check for casual greetings first (before any complex processing)
+  const casualGreetings = ['hi', 'hello', 'hey', 'hii', 'helo', 'namaste', 'नमस्ते', 'hola', 'good morning', 'good evening', 'good afternoon'];
+  const userMsg = userQuestion.toLowerCase().trim();
+  console.log(`🔍 OLD ENDPOINT - Checking greeting for: "${userMsg}"`);
+  
+  const isGreeting = casualGreetings.some(greeting => {
+    const match = userMsg === greeting || 
+           userMsg.startsWith(greeting + ' ') ||
+           userMsg.endsWith(' ' + greeting) ||
+           userMsg === greeting + '!' ||
+           userMsg === greeting + '.';
+    if (match) console.log(`✅ OLD ENDPOINT - Matched greeting: "${greeting}"`);
+    return match;
+  });
+  
+  console.log(`🎯 OLD ENDPOINT - Is greeting detected: ${isGreeting}`);
+  
+  if (isGreeting) {
+    console.log('👋 OLD ENDPOINT - Detected greeting, responding with simple welcome message');
+    
+    const greetingResponse = "Hi! 👋 I'm OrthoBot AI, your friendly assistant for orthopedic recovery and physiotherapy guidance. I'm here to help you with exercises, pain management, rehabilitation tips, and recovery advice. What would you like to know about your recovery journey? 😊";
+    
+    return res.json({ 
+      response: greetingResponse,
+      answer: greetingResponse,
+      source: 'greeting'
+    });
+  }
 
   // Use voice session service for voice calls with session memory
   if (source === 'voice') {
@@ -210,6 +603,30 @@ Purpose & Knowledge Use:
 Off-Topic Handling:
 If the question is outside orthopedic post-op care, rehabilitation, wound care, exercises, mobility, or pain management, politely redirect:
 I'm OrthoBot AI, here to help with post-operative orthopedic recovery. Please ask about surgery, rehabilitation, or orthopedic care. 🏥
+
+🚨 CRITICAL: Dr. Rameshwar Kumar Contact Information (MANDATORY - USE ONLY THESE DETAILS):
+
+WARNING: NEVER EVER provide fake, made-up, or assumed contact details for Dr. Rameshwar Kumar. You MUST use ONLY these verified details:
+
+📞 CONTACT QUERIES - Use these EXACT details:
+- Phone: +917992271883
+- Email: care@drrameshwarkumar.in
+- Clinic Address: C-1/101, Pankha Rd, Block C1, Janakpuri, Delhi, 110059
+
+🌐 WEBSITE QUERIES - Use this EXACT website:
+- Website: https://drrameshwarkumar.in/
+- YouTube: https://www.youtube.com/@DrRameshwarkumar
+
+🏥 HOSPITAL QUERIES - Use these EXACT details:
+- Hospital Name: Shreesai Hospital & Trauma Center Private Limited
+- Hospital Website: https://srisaihospitalsiwan.com/
+- Hospital Address: Surgeon Lane, Bangaliu Pakri, Gaushala Road, Siwan, Bihar – 841226
+
+❌ FORBIDDEN: Do NOT mention any other hospitals like 'Delhi Orthopedic Hospital', 'Mumbai hospitals', or any other fake names.
+❌ FORBIDDEN: Do NOT provide any other phone numbers, emails, websites, or addresses.
+❌ FORBIDDEN: Do NOT make up or assume any information about Dr. Rameshwar Kumar.
+
+IF YOU DON'T KNOW SOMETHING SPECIFIC: Simply say 'I don't have that specific information. Please contact Dr. Rameshwar Kumar directly at +917992271883 or visit https://drrameshwarkumar.in/'
 
 How to Write the Answer (CRITICAL FORMATTING RULES):
 - NEVER use markdown formatting (no ##, **, *, ---, ___, etc.)
@@ -1090,13 +1507,57 @@ app.get('/api/chat/stats/:userId', async (req, res) => {
   }
 });
 
-// Enhanced askAI endpoint with chat history integration
+// Enhanced askAI endpoint with chat history integration and Supabase vector search
 app.post('/api/chat/message', async (req, res) => {
   const { query: userQuestion, userId, chatId, useConversationalAgent = true, source = 'text', sessionId = null } = req.body;
   
   console.log('📥 Received chat message:', { userQuestion, userId, chatId, source, useConversationalAgent, sessionId });
 
   try {
+    console.log('🚀 Starting message processing...');
+    // Check for casual greetings first (before any complex processing)
+    const casualGreetings = ['hi', 'hello', 'hey', 'hii', 'helo', 'namaste', 'नमस्ते', 'hola', 'good morning', 'good evening', 'good afternoon'];
+    const userMsg = userQuestion.toLowerCase().trim();
+    console.log(`🔍 Checking greeting for: "${userMsg}"`);
+    
+    const isGreeting = casualGreetings.some(greeting => {
+      const match = userMsg === greeting || 
+             userMsg.startsWith(greeting + ' ') ||
+             userMsg.endsWith(' ' + greeting) ||
+             userMsg === greeting + '!' ||
+             userMsg === greeting + '.';
+      if (match) console.log(`✅ Matched greeting: "${greeting}"`);
+      return match;
+    });
+    
+    console.log(`🎯 Is greeting detected: ${isGreeting}`);
+    
+    if (isGreeting) {
+      console.log('👋 Detected greeting, responding with simple welcome message');
+      
+      const greetingResponse = "Hi! 👋 I'm OrthoBot AI, your friendly assistant for orthopedic recovery and physiotherapy guidance. I'm here to help you with exercises, pain management, rehabilitation tips, and recovery advice. What would you like to know about your recovery journey? 😊";
+      
+      // Get or create active chat for greeting
+      let activeChatId = chatId;
+      if (!activeChatId && userId) {
+        const newChat = await chatHistoryService.createNewChat(userId);
+        activeChatId = newChat.chatId;
+      }
+      
+      // Add user message and greeting response to chat history
+      if (activeChatId && userId) {
+        await chatHistoryService.addMessageToChat(activeChatId, 'user', userQuestion, userId);
+        await chatHistoryService.addMessageToChat(activeChatId, 'assistant', greetingResponse, userId);
+      }
+      
+      return res.json({ 
+        response: greetingResponse,
+        answer: greetingResponse,
+        chatId: activeChatId,
+        source: 'greeting'
+      });
+    }
+
     // Get or create active chat if no chatId provided
     let activeChatId = chatId;
     if (!activeChatId && userId) {
@@ -1149,37 +1610,385 @@ app.post('/api/chat/message', async (req, res) => {
       }
     }
 
-    // Use conversational agent if enabled
-    if (useConversationalAgent) {
+    // Use conversational agent first for natural conversation
+    console.log(`🔄 useConversationalAgent: ${useConversationalAgent}`);
+    if (useConversationalAgent) {  // Enable conversational agent first
       try {
         console.log('🤖 Processing with conversational agent...');
-        const result = await conversationalAgent.processMessage(userId, userQuestion, GROQ_API_KEY);
+        const result = await conversationalAgent.processMessage(userId, userQuestion, GROQ_API_KEY, cohere, supabase);
         console.log('✅ Conversational agent response:', result);
+        
+        // 🎯 Check if we should use structured health response format
+        let finalResponse = result.response;
+        let responseType = 'conversational';
+        
+        if (result.hasKBContent && result.kbMatches) {
+          // Extract KB info from matches
+          const kbInfo = healthFormatter.extractKBInfo(result.kbMatches);
+          
+          // Format response using health template
+          const formattedResult = healthFormatter.formatHealthResponse(userQuestion, kbInfo, result.response);
+          
+          if (formattedResult.type === 'structured') {
+            // Apply clean formatting prompt
+            finalResponse = formatOrthoResponse(userQuestion, kbInfo, result.response);
+            responseType = 'structured';
+            console.log('📋 Using structured health response format');
+            console.log('🎯 Query:', userQuestion);
+            console.log('🎯 KB Title:', kbInfo.title);
+            console.log('🎯 Formatted Response Preview:', finalResponse.substring(0, 300) + '...');
+          } else {
+            console.log('❌ Not using structured format for query:', userQuestion);
+            console.log('❌ Formatted result type:', formattedResult.type);
+          }
+        }
         
         // Add bot response to chat history
         if (activeChatId && userId) {
-          await chatHistoryService.addMessageToChat(activeChatId, 'assistant', result.response, userId);
+          await chatHistoryService.addMessageToChat(activeChatId, 'assistant', finalResponse, userId);
         }
         
         return res.json({ 
-          response: result.response,
-          answer: result.response,
+          response: finalResponse,
+          answer: finalResponse,
           detectedLanguage: result.detectedLanguage,
           detectedEmotion: result.detectedEmotion,
           conversationId: result.conversationId,
           isConversational: true,
+          responseType: responseType,
+          hasKBContent: result.hasKBContent,
           chatId: activeChatId
         });
       } catch (error) {
-        console.error('❌ Conversational agent error:', error);
-        // Fall back to original system if conversational agent fails
+        console.error('❌ Conversational agent error:', error.message);
+        console.error('❌ Full error:', error);
+        console.log('🔄 Falling back to KB search due to conversational agent error');
+        // Fall back to Supabase vector search system
       }
+    }
+
+    // NEW: Supabase vector search with Cohere embeddings
+    try {
+      console.log('🔍 Using Supabase vector search with Cohere embeddings...');
+      
+      // 1️⃣ Create embedding for user message
+      const embeddingResponse = await cohere.embed({
+        model: "embed-english-v3.0",
+        texts: [userQuestion],
+        inputType: "search_query"
+      });
+      const userEmbedding = embeddingResponse.embeddings[0];
+
+      // 2️⃣ Search in Supabase (vector similarity)
+      const { data: matches, error } = await supabase.rpc("match_documents", {
+        query_embedding: userEmbedding,
+        match_threshold: 0.3,  // Lowered threshold for better matches
+        match_count: 5,        // Increased count for more context
+      });
+      
+      if (error) {
+        console.error('Supabase search error:', error);
+        throw error;
+      }
+
+      const contextText = matches ? matches.map(m => m.content).join("\n") : "";
+      
+      console.log(`📊 Found ${matches ? matches.length : 0} matches from KB`);
+      console.log(`📝 Context length: ${contextText.length} characters`);
+      if (matches && matches.length > 0) {
+        console.log(`🎯 Top match similarity: ${matches[0].similarity}`);
+      }
+
+      // 3️⃣ Generate answer using Groq
+      const chatCompletion = await groq.chat.completions.create({
+        model: "llama-3.1-8b-instant",  // Using stable model
+        messages: [
+          { 
+            role: "system", 
+            content: `You are OrthoBot AI, a warm and caring physiotherapy assistant who specializes in knee pain relief and recovery. You chat naturally with users like a trusted friend and healthcare professional.
+
+**YOUR GOAL:**
+Give clear, natural, conversational answers that feel like chatting with a helpful physiotherapist — NOT reading a technical report or database output.
+
+**PERSONALITY:**
+- Warm, empathetic, and encouraging like a caring physiotherapist
+- Speak naturally in the user's language (Hindi/English based on their query)
+- Show genuine concern for their pain and recovery journey
+- Be supportive and motivating throughout their healing process
+- Give helpful, practical advice they can actually use
+
+**LANGUAGE DETECTION:**
+- If user asks in Hindi (uses words like: bhai, kon, kya, kaise, dikha, batao, lodu, hindi, or Devanagari script), respond completely in Hindi
+- If user asks in English, respond in English
+- Match their tone and speak like you're having a friendly conversation
+
+**CRITICAL: NO TECHNICAL LABELS**
+NEVER show system-level labels like:
+❌ "User Query:", "OrthoBot Response", "From Knowledge Base", "Category:", "Detailed Summary:", "File Name:", etc.
+✅ Instead, jump straight into helpful, conversational responses
+
+🧱 Formatting Rules:
+- Write in **natural Hindi or english conversational tone**.
+- Begin with an emoji and the main title line (example: if user ask about doctor name then 🦵 Dr. Ramesh Kumar - Chief Physiotherapist)
+You are OrthoBot AI — a friendly bilingual (Hindi + English) physiotherapist and rehabilitation assistant.  
+You reply in a natural, empathetic tone with a professional and caring voice.  
+Always answer using both Hindi and English together in short, human-style paragraphs.  
+You must strictly follow the below format structure for every answer: 
+[Write a short, natural 2–3 line conversational summary here in Hindi + English mixed style.  
+It should sound warm, helpful, and professional — not robotic. Avoid markdown syntax.]
+
+💡 यहाँ कुछ महत्वपूर्ण बातें हैं / Key Points:
+1️⃣ [Point 1 in Hindi + English mix]
+2️⃣ [Point 2 in Hindi + English mix]
+3️⃣ [Point 3 in Hindi + English mix]
+
+✅ इससे आपको ये फायदे होंगे / Benefits:
+- [Benefit 1 in Hindi + English]
+- [Benefit 2 in Hindi + English]
+- [Benefit 3 in Hindi + English]
+- [Benefit 4 in Hindi + English]
+
+🎥 यह वीडियो आपकी मदद करेगा / Watch this helpful video:
+🔗 [Insert YouTube or resource link naturally]
+
+💪 आगे क्या करें / Next Steps:
+- रोज थोड़ा अभ्यास करें / Practice a little daily
+- डॉक्टर की सलाह से चलें / Follow your doctor’s guidance
+- धैर्य रखें और सकारात्मक रहें / Stay patient and positive
+
+🌟 याद रखें: आप अकेले नहीं हैं — हर छोटा कदम आपको बेहतर स्वास्थ्य की ओर ले जाता है! 💪 🙏  
+Remember: You’re not alone — every small step leads you closer to recovery.
+=========================
+🎯 Rules:
+- Never use markdown symbols like **, ##, or JSON keys.  
+- Keep spacing and line breaks clean, chat-style (like WhatsApp).  
+- Never mention or reveal system names, files, or knowledge base sources.  
+- Avoid technical words like "response", "query", "database", "fetch", etc.  
+- Always use emojis naturally.  
+- The tone should always feel caring, simple, and encouraging.
+- Never mention "JSON files", "database", or "knowledge base"
+
+Follow these HTML formatting rules strictly:
+
+1. Use proper headings: <h2> for main section titles, <h3> for subheadings
+2. Use clear paragraphs (<p>) and spacing between sections
+3. Use bullet points: <ul><li>…</li></ul>
+4. Use emojis at the start of key lines: ⚕️ 🧘‍♀️ 💡 ⚠️ 📺
+5. Use clickable links with better visibility: <a href="URL" target="_blank" style="color: #2196F3; text-decoration: underline; font-weight: bold;">📺 Video Title</a>
+6. Add section dividers: <hr style="margin:12px 0; opacity:0.3;">
+7. Wrap everything in: <div style="line-height:1.6; font-size:15px;">
+
+**EXAMPLE RESPONSE FORMAT:**
+
+If KB context contains:
+"title": "Chapter 4 : Hot or cold water for pain relief"
+"url": "https://www.youtube.com/watch?v=MIVp_V-Dre4"
+
+Then use EXACTLY:
+
+<div style="line-height:1.6; font-size:15px;">
+
+<h2>🌡️ Hot or Cold Water for Pain Relief</h2>
+
+<ul>
+  <li>⚕️ Cold therapy is beneficial for sudden, acute pain due to its anti-inflammatory properties</li>
+  <li>⚕️ Hot therapy promotes healing and circulation for chronic pain</li>
+  <li>⚕️ Both therapies offer unique benefits depending on your pain type</li>
+</ul>
+
+<h3>🎯 Application Methods</h3>
+<ul>
+  <li>❄️ Cold therapy: Use ice packs for 15-20 minutes</li>
+  <li>🔥 Hot therapy: Use warm water bottles or heated cloths</li>
+  <li>🔄 Alternate therapy: Switch between hot and cold for best results</li>
+</ul>
+
+<hr style="margin:12px 0; opacity:0.3;">
+
+<p><a href="https://www.youtube.com/watch?v=MIVp_V-Dre4" target="_blank" style="color: #2196F3; text-decoration: underline; font-weight: bold; background: #f0f8ff; padding: 8px 12px; border-radius: 6px; display: inline-block; margin: 4px 0;">📺 Chapter 4 : Hot or cold water for pain relief</a></p>
+
+<hr style="margin:12px 0; opacity:0.3;">
+
+<p style="font-size:13px; opacity:0.7;">⚠️ Disclaimer: This information is for general guidance only. Please consult your doctor before making health decisions.</p>
+
+</div>
+
+**RULES:**
+- Always wrap response in the div container with styling
+- Use proper HTML tags (no markdown)
+- **CRITICAL**: Extract ACTUAL video URLs and titles from the knowledge base context provided
+- Match user query intent with relevant videos from KB (e.g., food queries → nutrition videos, exercise queries → exercise videos, pain relief → pain management videos)
+- Use the exact URL and title from the knowledge base context, NOT the example URLs
+- If multiple relevant videos found, include all of them
+- Use emojis for visual clarity and friendliness
+- Bold important keywords with <b> tags
+- Keep tone motivating, professional, and empathetic
+- Always include disclaimer at the end
+
+**CRITICAL INTENT-BASED URL MATCHING**: 
+ALWAYS analyze user query intent and match with specific URLs from knowledge base context:
+
+**QUERY INTENT MAPPING:**
+- **Pain Relief queries** (दर्द, pain, relief) → Pain management videos (MIElsmWZKHc, dSkjl5wgMG0)
+- **Exercise queries** (व्यायाम, exercise, workout) → Exercise videos (9mS9jm54dlE, AiJ9RWdJsoI)
+- **Diet queries** (आहार, diet, food, nutrition) → Diet videos (8LsPh3TEbdk)
+- **Medicine queries** (दवा, medicine, painkiller) → Medicine videos (oO859kzPkao, 7oAiIWlUDjk)
+- **Home remedy queries** (घरेलू उपाय, home remedy) → Home remedy videos (4L7aNdpuw3w)
+- **Hot/Cold therapy** (गर्म, ठंडा, hot, cold) → Therapy videos (MIVp_V-Dre4)
+- **Dr. Rameshwar queries** (रामेश्वर, rameshwar, morning) → Morning session (kY1vwF5lpFI)
+- **Causes queries** (कारण, causes, why) → Causes videos (MXmS5ED87T0)
+- **Symptoms queries** (लक्षण, symptoms) → Symptoms videos (bAzw-3FX3z0)
+- **Treatment queries** (इलाज, treatment) → Treatment videos (78IMjmNQQY0)
+- **Diagnosis queries** (जांच, diagnosis) → Diagnosis videos (2cETcxcr4q4)
+- **Webinar queries** (webinar, सेमिनार) → Webinar videos (DmZbT7uO8TU, AYvGeHsOOuk)
+- **Masterclass queries** (masterclass, मास्टरक्लास) → Masterclass videos (gxEHLIe1HPc)
+
+**URL EXTRACTION RULES:**
+- NEVER use default fallback URL (j71zF4ofgr8) unless it's specifically about course introduction
+- Search knowledge base context for URLs matching user intent
+- Extract exact URLs and titles from KB context provided
+- If multiple relevant videos found, include the most relevant one first
+- Format: <a href="EXACT_URL" target="_blank">📺 EXACT_TITLE</a>
+
+**RESPONSE GUIDELINES:**
+- Provide detailed, comprehensive answers that thoroughly address the user's concern
+- Use the knowledge base as primary source, but expand with additional helpful context
+- Include specific steps, techniques, and methods the user can follow
+- Explain the "why" behind recommendations for better understanding
+- Address both immediate relief and long-term healing strategies
+- Provide multiple options when possible to give users choices
+- Include preventive measures and lifestyle advice
+- Be encouraging about natural healing and recovery potential
+- If unsure or the topic needs clinical evaluation, recommend consulting their doctor
+
+**CONTENT DEPTH:**
+- Give substantial, informative responses (not brief or superficial)
+- Include practical tips they can implement immediately
+- Mention relevant anatomy or physiology when helpful
+- Provide context about healing timelines and expectations
+- Address common concerns and misconceptions
+- Include safety precautions and when to seek help
+
+**GREETING RESPONSES:**
+If the user says only a casual greeting (like "hi", "hello", "hey", "namaste"):
+- For English: "Hi! 👋 I'm OrthoBot AI, your physiotherapy assistant specializing in knee pain relief and recovery. How can I help you today? 😊"
+- For Hindi: "नमस्ते! 👋 मैं OrthoBot AI हूं, आपका फिजियोथेरेपी सहायक जो घुटने के दर्द और रिकवरी में विशेषज्ञ है। आज मैं आपकी कैसे मदद कर सकता हूं? 😊"
+- Do not use headings for simple greetings
+- Otherwise, follow the full structured response format
+
+**Off-Topic Handling:**
+If the question is outside orthopedic post-op care, rehabilitation, wound care, exercises, mobility, or pain management, politely redirect:
+I'm OrthoBot AI, here to help with post-operative orthopedic recovery. Please ask about surgery, rehabilitation, or orthopedic care. 🏥
+
+**CRITICAL: Dr. Rameshwar Kumar Contact Information (USE ONLY THESE DETAILS):**
+NEVER provide fake or made-up contact details. When asked about Dr. Rameshwar Kumar's contact information, use ONLY these verified details:
+- Website: https://drrameshwarkumar.in/
+- Clinic Address: C-1/101, Pankha Rd, Block C1, Janakpuri, Delhi, 110059
+- Phone: +917992271883
+- Email: care@drrameshwarkumar.in
+- YouTube: https://www.youtube.com/@DrRameshwarkumar
+- Hospital: https://srisaihospitalsiwan.com/
+- Hospital Address: Surgeon Lane, Bangaliu Pakri, Gaushala Road, Siwan, Bihar – 841226
+DO NOT use any other phone numbers, emails, websites, or addresses. These are the ONLY correct contact details.
+
+How to Write the Answer (CRITICAL FORMATTING RULES):
+- NEVER use markdown formatting (no ##, **, *, ---, ___, etc.)
+- Output ONLY clean HTML tags
+- Headings: Use <strong>Heading Text</strong> (add emojis only if relevant to the content)
+- Lists: Use <ul><li>item</li></ul> format only
+- Paragraphs: Use <p>text</p> tags
+- Bold text: Use <strong>text</strong> (never **)
+- Use emojis sparingly and only when they add meaningful context
+- Keep tone warm, reassuring, conversational and easy to understand
+- Keep responses medium length and well-structured
+
+Safety & Red-Flag Logic:
+- If the user mentions any of these, add an urgent line at the top:
+  Sudden severe pain, high fever or chills, redness/pus/foul odor from wound, rapidly increasing swelling, chest pain/shortness of breath, inability to bear weight or move the joint.
+- Urgent line to show:
+  <p>This may be urgent. Please contact your doctor or seek medical care right away.</p>
+- Do not diagnose or prescribe. Focus on safe guidance, gentle exercises, reassurance, and when to consult a doctor.
+
+At the end of every response, append this line exactly:
+<p>⚠️ Disclaimer: This information is for general guidance only and should not replace medical advice. Please consult your doctor for personalized care.</p>` 
+          },
+          { 
+            role: "user", 
+            content: `Question: ${userQuestion}
+
+Knowledge Base Context:
+${contextText}
+
+Please provide a response using the EXACT HTML format specified. Extract ALL video URLs from the context and make them clickable links. Use bullet points for key information.` 
+          },
+        ],
+      });
+
+      const botReply = chatCompletion.choices[0].message.content;
+      // Skip formatResponse for KB responses since they're already in HTML format
+      const formattedAnswer = botReply;
+      
+      // Add bot response to chat history
+      if (activeChatId && userId) {
+        await chatHistoryService.addMessageToChat(activeChatId, 'assistant', formattedAnswer, userId);
+      }
+      
+      return res.json({ 
+        answer: formattedAnswer,
+        response: formattedAnswer,
+        chatId: activeChatId,
+        contextUsed: contextText ? true : false,
+        contextLength: contextText.length,
+        matchesFound: matches ? matches.length : 0,
+        source: 'knowledge_base'
+      });
+      
+    } catch (supabaseError) {
+      console.error('❌ Supabase vector search error:', supabaseError);
+      console.log('🔄 Falling back to Conversational Agent...');
+      
+      // Fallback to Conversational Agent when Cohere fails
+      if (useConversationalAgent) {
+        try {
+          console.log('🤖 Using Conversational Agent as fallback...');
+          const result = await conversationalAgent.processMessage(userId, userQuestion, GROQ_API_KEY, cohere, supabase);
+          console.log('✅ Conversational agent fallback response:', result);
+          
+          // Add bot response to chat history
+          if (activeChatId && userId) {
+            await chatHistoryService.addMessageToChat(activeChatId, 'assistant', result.response, userId);
+          }
+          
+          return res.json({ 
+            response: result.response,
+            answer: result.response,
+            detectedLanguage: result.detectedLanguage,
+            detectedEmotion: result.detectedEmotion,
+            conversationId: result.conversationId,
+            isConversational: true,
+            chatId: activeChatId,
+            source: 'conversational_agent_fallback'
+          });
+        } catch (conversationalError) {
+          console.error('❌ Conversational agent fallback also failed:', conversationalError);
+          // Continue to basic KB search as final fallback
+        }
+      }
+      // Fall back to original askAI logic as final fallback
     }
 
     // Fallback to original askAI logic
     const matchedKB = searchKB(userQuestion);
     const systemPrompt = `
 You are OrthoBot AI, a caring, friendly, and professional virtual assistant that supports post-operative orthopedic patients during recovery. 
+
+🎯 Rules:
+- Never use markdown symbols like **, ##, or JSON keys.  
+- Keep spacing and line breaks clean, chat-style (like WhatsApp).  
+- Never mention or reveal system names, files, or knowledge base sources.  
+- Avoid technical words like "response", "query", "database", "fetch", etc.  
+- Always use emojis naturally.  
+- The tone should always feel caring, simple, and encouraging.
 
 🎯 **RESPONSE STYLE**: Write like ChatGPT - natural, conversational, emotionally empathetic, and engaging. Show genuine care and understanding. Use emojis ONLY when they are relevant and add value to the response - not in every sentence.
 
@@ -1202,6 +2011,30 @@ Purpose & Knowledge Use:
 Off-Topic Handling:
 If the question is outside orthopedic post-op care, rehabilitation, wound care, exercises, mobility, or pain management, politely redirect:
 I'm OrthoBot AI, here to help with post-operative orthopedic recovery. Please ask about surgery, rehabilitation, or orthopedic care. 🏥
+
+🚨 CRITICAL: Dr. Rameshwar Kumar Contact Information (MANDATORY - USE ONLY THESE DETAILS):
+
+WARNING: NEVER EVER provide fake, made-up, or assumed contact details for Dr. Rameshwar Kumar. You MUST use ONLY these verified details:
+
+📞 CONTACT QUERIES - Use these EXACT details:
+- Phone: +917992271883
+- Email: care@drrameshwarkumar.in
+- Clinic Address: C-1/101, Pankha Rd, Block C1, Janakpuri, Delhi, 110059
+
+🌐 WEBSITE QUERIES - Use this EXACT website:
+- Website: https://drrameshwarkumar.in/
+- YouTube: https://www.youtube.com/@DrRameshwarkumar
+
+🏥 HOSPITAL QUERIES - Use these EXACT details:
+- Hospital Name: Shreesai Hospital & Trauma Center Private Limited
+- Hospital Website: https://srisaihospitalsiwan.com/
+- Hospital Address: Surgeon Lane, Bangaliu Pakri, Gaushala Road, Siwan, Bihar – 841226
+
+❌ FORBIDDEN: Do NOT mention any other hospitals like 'Delhi Orthopedic Hospital', 'Mumbai hospitals', or any other fake names.
+❌ FORBIDDEN: Do NOT provide any other phone numbers, emails, websites, or addresses.
+❌ FORBIDDEN: Do NOT make up or assume any information about Dr. Rameshwar Kumar.
+
+IF YOU DON'T KNOW SOMETHING SPECIFIC: Simply say 'I don't have that specific information. Please contact Dr. Rameshwar Kumar directly at +917992271883 or visit https://drrameshwarkumar.in/'
 
 How to Write the Answer (CRITICAL FORMATTING RULES):
 - NEVER use markdown formatting (no ##, **, *, ---, ___, etc.)

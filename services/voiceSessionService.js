@@ -102,38 +102,16 @@ class VoiceSessionService {
       const emotion = this.conversationalAgent.detectEmotion(userMessage);
       await session.addMessage('user', userMessage, language, emotion);
 
-      // 2) Fetch ALL previous messages for this active call
-      const allMessages = session.conversationHistory || [];
-
-      // 3) Build formatted history string
-      const formattedHistory = allMessages
-        .map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
-        .join('\n');
-
-      // 3) Build system prompt with full history
-      const systemPrompt = `\nYou are OrthoBot AI, an empathetic orthopedic recovery assistant.\nYou are currently in a VOICE CALL session.\nAlways use the full conversation history to understand the patient’s condition.\nNever forget what the user said earlier in this session.\nRespond naturally and concisely (1-2 sentences), in the same language as the user.\n\nHere is the conversation so far:\n${formattedHistory}\n\nContinue the conversation based on the latest user message.\n`;
-
-      // 4) Call Groq API for response (system + latest user input)
-      const response = await axios.post(
-        'https://api.groq.com/openai/v1/chat/completions',
-        {
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userMessage }
-          ],
-          temperature: 0.7,
-          max_tokens: 200
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${groqApiKey}`,
-            'Content-Type': 'application/json'
-          }
-        }
+      // 2) Use conversational agent with Dr. Rameshwar KB support
+      const conversationalResult = await this.conversationalAgent.processMessage(
+        sessionId, 
+        userMessage, 
+        groqApiKey,
+        null, // cohere client - not needed for Dr. Rameshwar KB
+        null  // supabase client - not needed for Dr. Rameshwar KB
       );
 
-      const aiResponse = response.data.choices[0].message.content;
+      const aiResponse = conversationalResult.response;
 
       // 5) Store bot response into session
       await session.addMessage('assistant', aiResponse, language, 'neutral');

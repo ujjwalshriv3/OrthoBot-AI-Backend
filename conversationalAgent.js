@@ -2,6 +2,8 @@
 // Supports Hindi/English with automatic language detection
 // Provides empathetic responses for post-operative and health queries
 
+const path = require('path');
+
 class ConversationalAgent {
   constructor() {
     this.conversationHistory = new Map(); // Store user conversations
@@ -96,15 +98,14 @@ class ConversationalAgent {
     return 'neutral';
   }
 
-  // Enhanced system prompt for bilingual healthcare conversations
-  generateSystemPrompt(language, emotion, userHistory) {
+  // Generate system prompt based on language and emotion
+  generateSystemPrompt(language, emotion, userHistory = '', kbContext = '') {
     const basePrompt = `You are OrthoBot AI, a friendly and caring healthcare companion who talks naturally like a real person. You're here to help with orthopedic care and recovery, speaking both Hindi and English fluently.
-
 CORE IDENTITY:
 - Talk like a caring friend who happens to be a healthcare expert
 - Be genuinely warm and conversational, not formal or robotic
+- Show empathy and understanding like a human would
 - Specialized in helping people recover from orthopedic procedures
-- Show real empathy and understanding like a human would
 
 LANGUAGE HANDLING:
 - User is communicating in: ${language}
@@ -112,27 +113,30 @@ LANGUAGE HANDLING:
 - For Hinglish, flow naturally between Hindi and English
 - Never be formal or translate unless asked - just talk naturally
 
-EMOTIONAL INTELLIGENCE:
-- User's current emotional state: ${emotion}
-- Show genuine empathy and understanding
-- Use warm, caring, and supportive tone
-- Acknowledge their feelings before providing medical guidance
-- Be patient and encouraging throughout the conversation
+CONVERSATION FLOW:
+- For general conversation (like "can you speak Hindi", "how are you", etc.): Respond conversationally without using knowledge base
+- For specific medical questions (exercises, pain relief, treatments, food advice, etc.): ALWAYS use knowledge base context if available
+- If knowledge base context is provided, extract relevant information and present it conversationally
+- Always be conversational first, but use KB data when available for medical queries
 
 CONVERSATION STYLE:
-- Talk like a caring friend and healthcare professional, not a robot
-- Use natural, flowing conversational language like ChatGPT assistant
-- Be warm, personable, and genuinely caring in your responses
-- Ask follow-up questions naturally to understand better
-- Provide guidance in a conversational, easy-to-understand manner
-- Show personality while maintaining professionalism
+- Keep responses SHORT and conversational (1-3 sentences max)
+- Ask follow-up questions to understand their needs
+- Don't give medical explanations unless specifically asked
+- Focus on understanding their issue first
+- Respond like talking to a friend - brief, helpful, and natural
+- Use empathetic, warm language that sounds human, not robotic
 - Use appropriate cultural context and expressions for Hindi speakers
 - Avoid formal or robotic language patterns
 - Sound like you're having a real conversation, not reading from a script
 
-MEDICAL EXPERTISE FOCUS:
-- Post-operative care and recovery
-- Orthopedic rehabilitation exercises  
+EXAMPLES:
+- User: "Hindi me bat kr skta h bhai" → Response: "Haan bilkul bhai! Main Hindi aur English dono mein baat kar sakta hun. Aap comfortable feel karo. Kya help chahiye aapko?"
+- User: "knee pain exercises" → Use KB context for specific exercises and videos
+- User: "which food is useful" → Use KB context for nutrition advice and food recommendations
+- User: "how are you" → "Main theek hun, thank you! Aap kaise hain? Koi problem hai jo main help kar sakun?"
+
+IMPORTANT: If KB context contains relevant information (videos, exercises, food advice), ALWAYS use it and present conversationally.
 - Pain management techniques
 - Wound care and healing
 - Mobility and physical therapy guidance
@@ -146,6 +150,12 @@ SAFETY PROTOCOLS:
 - Encourage professional medical consultation when needed
 - Provide evidence-based general guidance only
 
+🚨 CRITICAL YOUTUBE LINK WARNING:
+❌ NEVER EVER create fake YouTube links like youtu.be/randomID or youtube.com/watch?v=fakeID
+❌ NEVER generate random YouTube video IDs or URLs
+❌ If you don't have the exact YouTube link from the knowledge base, DO NOT provide any YouTube link
+❌ Only use verified YouTube links or say "I don't have that specific video link"
+
 RESPONSE FORMAT:
 - Keep responses VERY SHORT and conversational (1-3 sentences max)
 - Ask ONE direct question about their specific problem
@@ -158,13 +168,16 @@ RESPONSE FORMAT:
 - Show genuine care and understanding in your tone
 
 ${userHistory ? `Previous conversation context: ${userHistory}` : ''}
+
+${kbContext ? `Knowledge Base Context (use this for specific medical information):
+${kbContext}` : ''}
 `;
 
     return basePrompt;
   }
 
   // Process user message and generate appropriate response
-  async processMessage(userId, message, groqApiKey) {
+  async processMessage(userId, message, groqApiKey, cohereClient = null, supabaseClient = null) {
     try {
       // Detect language and emotion
       const language = this.detectLanguage(message);
@@ -178,8 +191,111 @@ ${userHistory ? `Previous conversation context: ${userHistory}` : ''}
       const history = this.conversationHistory.get(userId);
       const userHistory = history.slice(-5).map(h => `${h.role}: ${h.content}`).join('\n');
       
-      // Generate system prompt
-      const systemPrompt = this.generateSystemPrompt(language, emotion, userHistory);
+      // 🔍 Try Dr. Rameshwar KB first, then general KB
+      let kbContext = "";
+      let kbMatches = null;
+      
+      // First check Dr. Rameshwar specific KB
+      try {
+        const path = require('path');
+        const drRameshwarKB = require(path.join(__dirname, 'Dr_kbs', 'drRameshwar_kb.json'));
+        const lowerQuery = message.toLowerCase();
+        
+        // Check if query is about Dr. Rameshwar
+        console.log('🔍 Voice Call Query:', lowerQuery);
+        if (lowerQuery.includes('rameshwar') || lowerQuery.includes('रामेश्वर') || 
+            lowerQuery.includes('doctor') || lowerQuery.includes('डॉक्टर') ||
+            lowerQuery.includes('course') || lowerQuery.includes('कोर्स') ||
+            lowerQuery.includes('experience') || lowerQuery.includes('अनुभव') ||
+            lowerQuery.includes('hospital') || lowerQuery.includes('अस्पताल') ||
+            lowerQuery.includes('contact') || lowerQuery.includes('संपर्क')) {
+          
+          console.log('🎯 Dr. Rameshwar keywords detected in voice call!');
+          
+          const drKB = drRameshwarKB.knowledgeBase.DrRameshwar;
+          
+          // Contact related queries
+          if (lowerQuery.includes('contact') || lowerQuery.includes('phone') || 
+              lowerQuery.includes('number') || lowerQuery.includes('email') || 
+              lowerQuery.includes('address') || lowerQuery.includes('clinic')) {
+            kbContext = `${drKB.contact.title}\n${drKB.contact.content}`;
+            console.log('🎯 Dr. Rameshwar contact info found for voice call');
+          }
+          // About Dr. Rameshwar queries
+          else if (lowerQuery.includes('who') || lowerQuery.includes('कौन') || 
+                   lowerQuery.includes('about') || lowerQuery.includes('बारे')) {
+            kbContext = `${drKB.profile.title}\n${drKB.profile.content}`;
+            console.log('🎯 Dr. Rameshwar profile info found for voice call');
+          }
+          // Experience related queries
+          else if (lowerQuery.includes('experience') || lowerQuery.includes('अनुभव') ||
+                   lowerQuery.includes('years') || lowerQuery.includes('साल')) {
+            kbContext = `${drKB.achievements.title}\n${drKB.achievements.content}`;
+            console.log('🎯 Dr. Rameshwar experience info found for voice call');
+          }
+          // Hospital related queries
+          else if (lowerQuery.includes('hospital') || lowerQuery.includes('अस्पताल')) {
+            kbContext = `${drKB.hospital.title}\n${drKB.hospital.content}`;
+            console.log('🎯 Dr. Rameshwar hospital info found for voice call');
+          }
+          // Course/Mission related queries
+          else if (lowerQuery.includes('course') || lowerQuery.includes('कोर्स') || 
+                   lowerQuery.includes('mission') || lowerQuery.includes('मिशन')) {
+            kbContext = `${drKB.mission.title}\n${drKB.mission.content}`;
+            console.log('🎯 Dr. Rameshwar mission info found for voice call');
+          }
+          // Default Dr. Rameshwar info
+          else {
+            kbContext = `${drKB.profile.title}\n${drKB.profile.content}\n\n${drKB.achievements.title}\n${drKB.achievements.content}`;
+            console.log('🎯 Dr. Rameshwar general info found for voice call');
+          }
+        }
+      } catch (drKBError) {
+        console.error('❌ Dr. Rameshwar KB error:', drKBError.message);
+        console.error('❌ Current directory:', __dirname);
+        console.error('❌ Looking for KB at:', path.join(__dirname, 'Dr_kbs', 'drRameshwar_kb.json'));
+      }
+      
+      // If no Dr. Rameshwar KB match, try general Supabase KB
+      if (!kbContext && cohereClient && supabaseClient) {
+        try {
+          console.log('🔍 Conversational Agent: Searching KB with Cohere embeddings...');
+          
+          // Create embedding for user message
+          const embeddingResponse = await cohereClient.embed({
+            model: "embed-english-v3.0",
+            texts: [message],
+            inputType: "search_query"
+          });
+          const userEmbedding = embeddingResponse.embeddings[0];
+
+          // Search in Supabase
+          const { data: matches, error } = await supabaseClient.rpc("match_documents", {
+            query_embedding: userEmbedding,
+            match_threshold: 0.3,
+            match_count: 5,  // Get more matches
+          });
+          
+          if (!error && matches && matches.length > 0) {
+            kbMatches = matches; // Store matches for formatting
+            kbContext = matches.map(m => m.content).join("\n");
+            console.log(`📊 Conversational Agent: Found ${matches.length} KB matches`);
+            console.log(`📝 KB Context length: ${kbContext.length} characters`);
+            console.log(`🎯 Top match similarity: ${matches[0].similarity}`);
+          } else {
+            console.log('❌ No KB matches found or error occurred');
+          }
+        } catch (kbError) {
+          console.error('❌ Conversational Agent KB search failed:', kbError);
+        }
+      } else {
+        console.log('⚠️ Cohere or Supabase client not provided to conversational agent');
+      }
+      
+      // Generate system prompt with KB context
+      console.log('📝 Final KB Context length:', kbContext.length);
+      console.log('📝 KB Context preview:', kbContext.substring(0, 200));
+      const systemPrompt = this.generateSystemPrompt(language, emotion, userHistory, kbContext);
       
 
       // Store user message in history
@@ -190,7 +306,7 @@ ${userHistory ? `Previous conversation context: ${userHistory}` : ''}
       const response = await axios.post(
         'https://api.groq.com/openai/v1/chat/completions',
         {
-          model: 'llama-3.3-70b-versatile',
+          model: 'llama-3.1-8b-instant',  // Updated to stable model
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: message }
@@ -220,7 +336,9 @@ ${userHistory ? `Previous conversation context: ${userHistory}` : ''}
         response: aiResponse,
         detectedLanguage: language,
         detectedEmotion: emotion,
-        conversationId: userId
+        conversationId: userId,
+        kbMatches: kbMatches, // Include KB matches for formatting
+        hasKBContent: kbMatches && kbMatches.length > 0
       };
       
     } catch (error) {

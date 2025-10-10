@@ -188,7 +188,8 @@ class ChatHistoryService {
    */
   async saveVoiceConversationToHistory(userId, conversationHistory, sessionMetadata = {}) {
     try {
-      const title = this.extractVoiceCallTitle(conversationHistory, sessionMetadata);
+      // Use provided chatTitle if available, otherwise generate one
+      const title = sessionMetadata.chatTitle || this.extractVoiceCallTitle(conversationHistory, sessionMetadata);
       
       const newChat = await ChatHistory.create({
         userId,
