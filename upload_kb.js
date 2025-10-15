@@ -246,9 +246,9 @@ async function main() {
   const files = fs.readdirSync(folder).filter(f => f.endsWith(".json"));
   console.log(`📁 Found ${files.length} JSON files in ${folder}`);
   
-  // Skip already uploaded files
-  const skipFiles = ['courseVideos_kb.json']; // Already in Supabase
-  const filesToProcess = files.filter(f => !skipFiles.includes(f));
+  // Skip already uploaded files - only process Youtube_Kb.json
+  const skipFiles = ['courseVideos_kb.json', 'rehab_knowledge_base.json', 'masterclass_kb.json', 'morningExercise_kb.json', 'sundayWebinar_kb.json']; // Already in Supabase
+  const filesToProcess = files.filter(f => f === 'Youtube_Kb.json'); // Only process the new YouTube KB
   
   console.log(`⚠️ Skipping already uploaded files: ${skipFiles.join(', ')}`);
   console.log(`🔄 Files to process: ${filesToProcess.join(', ')}`);
