@@ -230,6 +230,150 @@ Dr. Rameshwar realized he could help people heal from knee pain without surgery 
     } else if (content.includes('webinar') || query.includes('webinar')) {
       videoUrl = 'https://www.youtube.com/watch?v=DmZbT7uO8TU'; // Default webinar
     
+    // YouTube KB URLs - New comprehensive video library
+    } else if (content.includes('water in knee') || content.includes('knee effusion') || query.includes('water') || query.includes('पानी') || query.includes('swelling')) {
+      videoUrl = 'https://www.youtube.com/watch?v=IwEyTRHujDI'; // Water in knee treatment
+    } else if (content.includes('walking') || content.includes('चलना') || query.includes('walk') || query.includes('mobility')) {
+      videoUrl = 'https://www.youtube.com/watch?v=zuJCdvX6-ns'; // Walking for knee pain relief
+    } else if (content.includes('tibia') || content.includes('fibula') || content.includes('fracture') || query.includes('fracture') || query.includes('हड्डी टूटना')) {
+      videoUrl = 'https://www.youtube.com/watch?v=JvdQWLvXneE'; // Tibia fibula fracture treatment
+    } else if (content.includes('ayushman') || content.includes('आयुष्मान') || query.includes('ayushman') || query.includes('insurance')) {
+      videoUrl = 'https://www.youtube.com/watch?v=_7QGSY80tfE'; // Ayushman Bharat truth
+    } else if (content.includes('knee replacement') || content.includes('joint replacement') || query.includes('replacement') || query.includes('रिप्लेसमेंट')) {
+      videoUrl = 'https://www.youtube.com/watch?v=EnZPFC98K9Q'; // Knee replacement webinar
+    } else if (content.includes('arthritis') || content.includes('गठिया') || query.includes('arthritis')) {
+      videoUrl = 'https://www.youtube.com/watch?v=fMvqaPRe8KM'; // Arthritis grade and WOMAC
+    } else if (content.includes('cartilage') || content.includes('उपास्थि') || query.includes('cartilage')) {
+      videoUrl = 'https://www.youtube.com/watch?v=bAzw-3FX3z0'; // Cartilage damage symptoms
+    } else if (content.includes('bone healing') || content.includes('हड्डी जुड़ना') || query.includes('healing time') || query.includes('bone heal')) {
+      videoUrl = 'https://www.youtube.com/watch?v=xPLSBQ1nknc'; // Bone healing process explained
+    } else if (content.includes('knee surgery recovery') || content.includes('post operative') || query.includes('after surgery') || query.includes('ऑपरेशन के बाद')) {
+      videoUrl = 'https://www.youtube.com/watch?v=HI0rSC0Dne0'; // Knee recovery after operation
+    } else if (content.includes('back pain') || content.includes('कमर दर्द') || query.includes('back pain') || query.includes('spine')) {
+      videoUrl = 'https://www.youtube.com/watch?v=EW9InXq9C0s'; // Back pain treatment
+    } else if (content.includes('pain after healing') || content.includes('हड्डी जुड़ने के बाद दर्द') || query.includes('pain after fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=ZQgT3IVBq_c'; // Pain after fracture healing
+    } else if (content.includes('plaster') || content.includes('cast') || content.includes('प्लास्टर') || query.includes('stiffness') || query.includes('जाम')) {
+      videoUrl = 'https://www.youtube.com/watch?v=na5DAtCkVkg'; // Hand/leg stuck after plaster
+    } else if (content.includes('walking training') || content.includes('gait training') || query.includes('walk again') || query.includes('चलना सीखना')) {
+      videoUrl = 'https://www.youtube.com/watch?v=yUaSt5hWVGE'; // Walking training after knee operation
+    } else if (content.includes('knee test') || content.includes('घुटने की जांच') || query.includes('knee diagnosis') || query.includes('identify knee')) {
+      videoUrl = 'https://www.youtube.com/watch?v=t9clzjJD4dQ'; // Identify knee disease at home
+    } else if (content.includes('running') || content.includes('दौड़ना') || query.includes('running') || query.includes('sports')) {
+      videoUrl = 'https://www.youtube.com/watch?v=LnX-DH7uIEQ'; // Running after bone fracture
+    } else if (content.includes('home remedy') || content.includes('घरेलू उपाय') || query.includes('home treatment')) {
+      videoUrl = 'https://www.youtube.com/watch?v=ROuh48N535w'; // Home remedy for knee pain
+    } else if (content.includes('femur') || content.includes('thigh bone') || content.includes('जांघ की हड्डी') || query.includes('thigh fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=fpb3idwBBck'; // Femur fracture surgery success
+    } else if (content.includes('hip replacement') || content.includes('हिप रिप्लेसमेंट') || query.includes('hip surgery') || query.includes('bilateral hip')) {
+      videoUrl = 'https://www.youtube.com/watch?v=4pGok7l-ygo'; // Ayushman Bharat hip replacement
+    } else if (content.includes('child fracture') || content.includes('बच्चे की हड्डी') || query.includes('child thigh') || query.includes('supracondylar')) {
+      videoUrl = 'https://www.youtube.com/watch?v=kwX-ztRyU-s'; // Child thigh bone fracture treatment
+    } else if (content.includes('painkillers') || content.includes('दर्द की दवा') || query.includes('body pain') || query.includes('inflammation')) {
+      videoUrl = 'https://www.youtube.com/watch?v=-cvzWhbPrFw'; // Painkillers and body pain
+    } else if (content.includes('elderly surgery') || content.includes('बुजुर्गों में ऑपरेशन') || query.includes('old age surgery') || query.includes('elderly fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=9t5pC0ubPow'; // Elderly bone fracture surgery
+    } else if (content.includes('plaster removal') || content.includes('प्लास्टर निकलने के बाद') || query.includes('after plaster') || query.includes('re-fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=bvkU8cns9sk'; // Precautions after plaster removal
+    } else if (content.includes('finger movement') || content.includes('उंगली नहीं हिलती') || query.includes('finger stiffness') || query.includes('hand fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=ogdKp3-uZXo'; // Finger movement after bone healing
+    } else if (content.includes('height increase') || content.includes('लंबाई बढ़ाना') || query.includes('children height') || query.includes('growth')) {
+      videoUrl = 'https://www.youtube.com/watch?v=73MFgYFvybQ'; // Height increase in children
+    } else if (content.includes('hot cold food') || content.includes('गर्म ठंडा खाना') || query.includes('arthritis diet') || query.includes('ayurveda')) {
+      videoUrl = 'https://www.youtube.com/watch?v=A4J1e89oAf8'; // Hot cold food for arthritis
+    } else if (content.includes('post operative exercise') || content.includes('ऑपरेशन के बाद एक्सरसाइज') || query.includes('hand jamming') || query.includes('elbow fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=fACzS3gFme4'; // Exercise after operation
+    } else if (content.includes('fracture diet') || content.includes('फ्रैक्चर में खाना') || query.includes('food myths') || query.includes('milk fish')) {
+      videoUrl = 'https://www.youtube.com/watch?v=8Lga0yGg98E'; // Diet myths in fracture
+    } else if (content.includes('plate removal') || content.includes('प्लेट निकलवाना') || query.includes('implant removal') || query.includes('stress fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=sRHVYuMTrY4'; // When to remove surgical plate
+    } else if (content.includes('plaster vs surgery') || content.includes('प्लास्टर या ऑपरेशन') || query.includes('treatment decision') || query.includes('surgery necessary')) {
+      videoUrl = 'https://www.youtube.com/watch?v=JmsSjRLKs0O'; // Plaster vs operation decision
+    } else if (content.includes('fracture treatment') || content.includes('हड्डी टूटने पर क्या करें') || query.includes('broken bone') || query.includes('first aid')) {
+      videoUrl = 'https://www.youtube.com/watch?v=QdOrhOk-u7o'; // What to do if bone breaks
+    } else if (content.includes('limb lengthening') || content.includes('लंबाई बढ़ाने का ऑपरेशन') || query.includes('height surgery') || query.includes('ilizarov')) {
+      videoUrl = 'https://www.youtube.com/watch?v=LnZsKHuvknI'; // Height increase operation
+    } else if (content.includes('knee pain treatment') || content.includes('घुटने का दर्द इलाज') || query.includes('avoid knee surgery') || query.includes('ozone therapy')) {
+      videoUrl = 'https://www.youtube.com/watch?v=xHlYl-5NiYk'; // Non-surgical knee treatment
+    } else if (content.includes('plaster mistakes') || content.includes('प्लास्टर की गलतियां') || query.includes('bone healing mistakes') || query.includes('non-union')) {
+      videoUrl = 'https://www.youtube.com/watch?v=K3vjTmyxSL0'; // Plaster care mistakes
+    } else if (content.includes('cycling exercise') || content.includes('साइकिलिंग एक्सरसाइज') || query.includes('air cycling') || query.includes('knee cartilage')) {
+      videoUrl = 'https://www.youtube.com/watch?v=Qg586LzvFF8'; // Home cycling exercise for knees
+    } else if (content.includes('plaster precautions') || content.includes('प्लास्टर की सावधानी') || query.includes('cast care') || query.includes('joint movement')) {
+      videoUrl = 'https://www.youtube.com/watch?v=DS8JISDJ2zg'; // Plaster precautions for joints
+    } else if (content.includes('hip fracture elderly') || content.includes('बुजुर्गों में हिप फ्रैक्चर') || query.includes('intertrochanteric') || query.includes('PFN surgery')) {
+      videoUrl = 'https://www.youtube.com/watch?v=djNuKWl0WdM'; // Elderly hip fracture treatment
+    } else if (content.includes('back pain causes') || content.includes('कमर दर्द के कारण') || query.includes('youth back pain') || query.includes('posture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=YhOb0ojcyRU'; // Back pain causes in youth
+    } else if (content.includes('elderly knee mistakes') || content.includes('बुजुर्गों की घुटने की गलतियां') || query.includes('knee care 65+') || query.includes('senior knee')) {
+      videoUrl = 'https://www.youtube.com/watch?v=vdBH_9_gmMs'; // Knee mistakes after 65
+    } else if (content.includes('knee grease') || content.includes('घुटने का ग्रीस') || query.includes('knee stiffness') || query.includes('mobilization')) {
+      videoUrl = 'https://www.youtube.com/watch?v=NlJnMeoZ3zw'; // Knee grease gone exercise
+    } else if (content.includes('back pain cure') || content.includes('कमर दर्द का इलाज') || query.includes('core strengthening') || query.includes('permanent cure')) {
+      videoUrl = 'https://www.youtube.com/watch?v=JvmVk8HTPq8'; // Back pain cure vs relief
+    } else if (content.includes('physiotherapy fracture') || content.includes('फिजियोथेरेपी फ्रैक्चर') || query.includes('why physiotherapy') || query.includes('rehabilitation')) {
+      videoUrl = 'https://www.youtube.com/watch?v=fJgh0TL8t_U'; // Physiotherapy after fracture
+    } else if (content.includes('knee x-ray') || content.includes('घुटने का एक्सरे') || query.includes('arthritis x-ray') || query.includes('joint wear')) {
+      videoUrl = 'https://www.youtube.com/watch?v=6F8jr6XUTlM'; // Knee X-ray with arthritis
+    } else if (content.includes('height operation') || content.includes('लंबाई का ऑपरेशन') || query.includes('limb lengthening') || query.includes('ilizarov surgery')) {
+      videoUrl = 'https://www.youtube.com/watch?v=ALjUjxUfsJc'; // Height increase by operation
+    } else if (content.includes('wrong posture') || content.includes('गलत पोश्चर') || query.includes('sitting posture') || query.includes('lifting posture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=szGp0yMqEpM'; // Wrong sitting and lifting postures
+    } else if (content.includes('fracture carelessness') || content.includes('फ्रैक्चर की लापरवाही') || query.includes('recovery mistakes') || query.includes('healing mistakes')) {
+      videoUrl = 'https://www.youtube.com/watch?v=rj5ZbtS7g8w'; // Fracture recovery mistakes
+    } else if (content.includes('neck femur') || content.includes('नेक फीमर') || query.includes('femur neck fracture') || query.includes('valgus osteotomy')) {
+      videoUrl = 'https://www.youtube.com/watch?v=D_s_3Lunufw'; // Neck femur fracture surgery
+    } else if (content.includes('supplements') || content.includes('सप्लीमेंट') || query.includes('calcium vitamin d') || query.includes('omega 3')) {
+      videoUrl = 'https://www.youtube.com/watch?v=hGjVlviE81I'; // Supplements for pain and bones
+    } else if (content.includes('mattress chair') || content.includes('मैट्रेस चेयर') || query.includes('back pain furniture') || query.includes('ergonomics')) {
+      videoUrl = 'https://www.youtube.com/watch?v=MQ6h6greAGs'; // Mattress and chair for back pain
+    } else if (content.includes('10000 injection') || content.includes('10000 का इंजेक्शन') || query.includes('arthritis injection') || query.includes('expensive injection')) {
+      videoUrl = 'https://www.youtube.com/watch?v=9dJYa6mGO9g'; // 10000 rupees injection truth
+    } else if (content.includes('elderly fracture surgery') || content.includes('बुजुर्गों का फ्रैक्चर ऑपरेशन') || query.includes('old age bone surgery') || query.includes('geriatric surgery')) {
+      videoUrl = 'https://www.youtube.com/watch?v=VMFwgmVrAWI'; // Elderly fracture surgery risks vs benefits
+    } else if (content.includes('painkiller side effects') || content.includes('दर्द की दवा के नुकसान') || query.includes('kidney damage') || query.includes('liver damage')) {
+      videoUrl = 'https://www.youtube.com/watch?v=UmkedHZ-Wuw'; // Harmful effects of painkillers
+    } else if (content.includes('walking cast') || content.includes('वॉकिंग कास्ट') || query.includes('PTB cast') || query.includes('foot fracture cast')) {
+      videoUrl = 'https://www.youtube.com/watch?v=dlglJiAKxJ8'; // Walking cast for foot fracture
+    } else if (content.includes('knee inactivity') || content.includes('घुटने की निष्क्रियता') || query.includes('knee rest mistake') || query.includes('complete rest')) {
+      videoUrl = 'https://www.youtube.com/watch?v=-FqPfuTUCdw'; // Knee pain inactivity mistake
+    } else if (content.includes('pain swelling causes') || content.includes('दर्द सूजन के कारण') || query.includes('stop 4 things') || query.includes('knee swelling')) {
+      videoUrl = 'https://www.youtube.com/watch?v=2Zk_6j_JwmI'; // Real reason behind pain and swelling
+    } else if (content.includes('knee pain 4 reasons') || content.includes('घुटने दर्द के 4 कारण') || query.includes('major knee causes') || query.includes('ignored reasons')) {
+      videoUrl = 'https://www.youtube.com/watch?v=2xEyTbnAkws'; // 4 major reasons for knee pain
+    } else if (content.includes('bone fracture first aid') || content.includes('हड्डी टूटने पर प्राथमिक उपचार') || query.includes('first aid fracture') || query.includes('do not harm')) {
+      videoUrl = 'https://www.youtube.com/watch?v=-0BggP2XY5s'; // Bone fracture first aid tips
+    } else if (content.includes('knee operation mistake') || content.includes('घुटने के ऑपरेशन की गलती') || query.includes('post surgery weight') || query.includes('50% mistake')) {
+      videoUrl = 'https://www.youtube.com/watch?v=tAxfZMpNkVs'; // 50% people mistake after knee operation
+    } else if (content.includes('broken arm exercise') || content.includes('टूटे हाथ की एक्सरसाइज') || query.includes('arm stiffness') || query.includes('plaster removal arm')) {
+      videoUrl = 'https://www.youtube.com/watch?v=6fJg4JM8sVY'; // Exercise after broken arm
+    } else if (content.includes('pro inflammatory foods') || content.includes('प्रो इंफ्लेमेटरी फूड') || query.includes('inflammatory diet') || query.includes('foods increase pain')) {
+      videoUrl = 'https://www.youtube.com/watch?v=riuSNV_NpeE'; // Pro-inflammatory foods dangers
+    } else if (content.includes('knee surgery necessary') || content.includes('घुटने का ऑपरेशन जरूरी') || query.includes('when knee replacement') || query.includes('surgery last resort')) {
+      videoUrl = 'https://www.youtube.com/watch?v=bTrjlTYu8uI'; // When is knee surgery necessary
+    } else if (content.includes('knee operation food') || content.includes('घुटने के ऑपरेशन के बाद खाना') || query.includes('post surgery diet') || query.includes('recovery nutrition')) {
+      videoUrl = 'https://www.youtube.com/watch?v=HkR-yWWDIK8'; // What to eat after knee operation
+    } else if (content.includes('anti inflammatory foods') || content.includes('एंटी इंफ्लेमेटरी फूड') || query.includes('reduce inflammation') || query.includes('turmeric ginger')) {
+      videoUrl = 'https://www.youtube.com/watch?v=0NreJ4l10XQ'; // Anti-inflammatory foods
+    } else if (content.includes('radius ulna fracture') || content.includes('रेडियस अलना फ्रैक्चर') || query.includes('square nail') || query.includes('forearm fracture')) {
+      videoUrl = 'https://www.youtube.com/watch?v=K59weo_-_vg'; // Radius ulna fracture treatment
+    } else if (content.includes('brinjal pumpkin') || content.includes('बैंगन कोहड़ा') || query.includes('eggplant fracture') || query.includes('food myths')) {
+      videoUrl = 'https://www.youtube.com/watch?v=BIlfUIs_OYE'; // Brinjal pumpkin truth for fractures
+    } else if (content.includes('painkiller correct use') || content.includes('दर्द की दवा सही उपयोग') || query.includes('painkiller precautions') || query.includes('medication safety')) {
+      videoUrl = 'https://www.youtube.com/watch?v=1yzp4GMtHQ4'; // Correct use of painkillers
+    } else if (content.includes('surgical rod removal') || content.includes('सर्जिकल रोड निकालना') || query.includes('implant removal') || query.includes('visible rod')) {
+      videoUrl = 'https://www.youtube.com/watch?v=hwAMElK_hYg'; // Visible surgical rods removal
+    } else if (content.includes('knee exercise duration') || content.includes('घुटने की एक्सरसाइज कितने दिन') || query.includes('how long exercise') || query.includes('knee supplements')) {
+      videoUrl = 'https://www.youtube.com/watch?v=hZGFbQYxj4U'; // Knee exercise duration and supplements
+    } else if (content.includes('knee not bending') || content.includes('घुटना नहीं मुड़ रहा') || query.includes('knee stiffness') || query.includes('CPM machine')) {
+      videoUrl = 'https://www.youtube.com/watch?v=804YW_d-O4I'; // Knee not bending after surgery
+    } else if (content.includes('partial knee replacement') || content.includes('पार्शियल नी रिप्लेसमेंट') || query.includes('leg not lifting') || query.includes('knee surgery recovery')) {
+      videoUrl = 'https://www.youtube.com/watch?v=GbIp56va6ho'; // Partial knee replacement recovery
+    } else if (content.includes('arthritis symptoms') || content.includes('गठिया के लक्षण') || query.includes('joint wear') || query.includes('movement issues')) {
+      videoUrl = 'https://www.youtube.com/watch?v=ZeHg7GQ1Scw'; // Arthritis symptoms identification
+    } else if (content.includes('arthritis diet mistakes') || content.includes('गठिया में खाने की गलती') || query.includes('joint pain food') || query.includes('dietary precautions')) {
+      videoUrl = 'https://www.youtube.com/watch?v=eVHrEZA7qxc'; // Arthritis diet mistakes
+    
     // Query-based intent matching for better URL selection
     } else if (query.includes('pain') || query.includes('दर्द') || query.includes('relief')) {
       videoUrl = 'https://www.youtube.com/watch?v=MIElsmWZKHc'; // Pain Management Module
@@ -1724,6 +1868,7 @@ Give clear, natural, conversational answers that feel like chatting with a helpf
 
 **CRITICAL: NO TECHNICAL LABELS**
 NEVER show system-level labels like:
+❌ NEVER add dots (.) after YouTube links - they break the links
 ❌ "User Query:", "OrthoBot Response", "From Knowledge Base", "Category:", "Detailed Summary:", "File Name:", etc.
 ✅ Instead, jump straight into helpful, conversational responses
 
@@ -2033,6 +2178,7 @@ WARNING: NEVER EVER provide fake, made-up, or assumed contact details for Dr. Ra
 ❌ FORBIDDEN: Do NOT mention any other hospitals like 'Delhi Orthopedic Hospital', 'Mumbai hospitals', or any other fake names.
 ❌ FORBIDDEN: Do NOT provide any other phone numbers, emails, websites, or addresses.
 ❌ FORBIDDEN: Do NOT make up or assume any information about Dr. Rameshwar Kumar.
+❌ NEVER add dots (.) after YouTube links - they break the links
 
 IF YOU DON'T KNOW SOMETHING SPECIFIC: Simply say 'I don't have that specific information. Please contact Dr. Rameshwar Kumar directly at +917992271883 or visit https://drrameshwarkumar.in/'
 
