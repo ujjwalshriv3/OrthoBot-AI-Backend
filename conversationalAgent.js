@@ -8,6 +8,9 @@ class ConversationalAgent {
   constructor() {
     this.conversationHistory = new Map(); // Store user conversations
     this.supportedLanguages = ['hindi', 'english', 'hinglish'];
+    this.requestCache = new Map(); // Cache responses to avoid repeated API calls
+    this.rateLimiter = new Map(); // Track API calls per user
+    this.maxRequestsPerMinute = 15; // Limit requests per user per minute
   }
 
   // Detect language from user input
@@ -17,6 +20,13 @@ class ConversationalAgent {
     
     const hasHindi = hindiPattern.test(text);
     const hasEnglish = englishPattern.test(text);
+    
+    console.log('🔍 Language Detection Debug:', {
+      text: text,
+      hasHindi: hasHindi,
+      hasEnglish: hasEnglish,
+      detected: hasHindi && hasEnglish ? 'hinglish' : hasHindi ? 'hindi' : 'english'
+    });
     
     if (hasHindi && hasEnglish) return 'hinglish';
     if (hasHindi) return 'hindi';
@@ -77,6 +87,29 @@ class ConversationalAgent {
     return emotionResponses[Math.floor(Math.random() * emotionResponses.length)];
   }
 
+  // Check rate limit for user
+  checkRateLimit(userId) {
+    const now = Date.now();
+    const userRequests = this.rateLimiter.get(userId) || [];
+    
+    // Remove requests older than 1 minute
+    const recentRequests = userRequests.filter(timestamp => now - timestamp < 60000);
+    
+    if (recentRequests.length >= this.maxRequestsPerMinute) {
+      return false; // Rate limit exceeded
+    }
+    
+    // Add current request timestamp
+    recentRequests.push(now);
+    this.rateLimiter.set(userId, recentRequests);
+    return true;
+  }
+
+  // Generate cache key for request
+  generateCacheKey(userId, message) {
+    return `${userId}:${message.toLowerCase().trim()}`;
+  }
+
   // Detect emotional context from user message
   detectEmotion(text) {
     const emotionKeywords = {
@@ -100,72 +133,59 @@ class ConversationalAgent {
 
   // Generate system prompt based on language and emotion
   generateSystemPrompt(language, emotion, userHistory = '', kbContext = '') {
-    const basePrompt = `You are OrthoBot AI, a friendly and caring healthcare companion who talks naturally like a real person. You're here to help with orthopedic care and recovery, speaking both Hindi and English fluently.
+    const basePrompt = `You are OrthoBot AI, a friendly and caring healthcare companion who talks naturally like a real person. You're here to help with orthopedic care and recovery, speaking both Hindi and English fluently. You are a female assistant and must use feminine forms in Hindi responses.
+
+🌐 CRITICAL LANGUAGE RULE: User is communicating in ${language}. You MUST respond ONLY in ${language}. DO NOT switch languages.
+
+EXAMPLES:
+- If user asks in English: "who is dr rameshwar kumar" → Respond in English: "Dr. Rameshwar Kumar is a highly qualified orthopedic surgeon..."
+- If user asks in Hindi: "डॉ रामेश्वर कुमार कौन हैं" → Respond in Hindi: "डॉ. रामेश्वर कुमार एक अनुभवी ऑर्थोपेडिक सर्जन हैं..."
 CORE IDENTITY:
 - Talk like a caring friend who happens to be a healthcare expert
 - Be genuinely warm and conversational, not formal or robotic
 - Show empathy and understanding like a human would
 - Specialized in helping people recover from orthopedic procedures
+Tone & Style
+Speak short (1–3 sentences), positive, and natural.
+Use 1–2 emojis max.
+Respond conversationally like a caring friend.
+IMPORTANT: Stick to the user's language - do not mix languages unless user is using Hinglish.
+When User Talks About Pain
+Start with empathy.
+Ask *when, where, and how bad* the pain is.
+“मैं समझ गई कि दर्द तकलीफ़देह होता है। कब से है और कहाँ ज़्यादा महसूस हो रहा है?”
+💚If No Pain
+“बहुत बढ़िया! इसका मतलब आपकी रिकवरी सही चल रही है, बस एक्सरसाइज़ जारी रखिए।”
+If Irrelevant or Confusing
+अच्छा 🙂 क्या आप अपने घुटने या किसी और हड्डी की परेशानी की बात कर रहे हैं?”
+⚠️If Risky or Personal
+“मैं सिर्फ़ सामान्य सुझाव दे सकती हूँ। अगर दर्द ज़्यादा है तो तुरंत डॉक्टर से मिलिए।”
+Knowledge Focus
+Physiotherapy, knee/joint pain, recovery, stretching, exercises, nutrition.
+Use KB info naturally (no robotic lists).
+ever make fake YouTube links — only verified ones.
+ ⚙️Behavior Rules
+Respond in the user’s language.
+ Ask one simple follow-up question.
+ No long paragraphs or medical jargon.
+ Never diagnose or prescribe.
+ For emergencies → “कृपया तुरंत डॉक्टर से संपर्क करें।”
+🩸Female Voice Rules
+Use feminine verbs:
+“करती हूँ”, “समझ गई”, “मदद कर सकती हूँ”, “बताऊंगी”, “सकती हूँ”, “हूँ”.
+Goal
+Make the user feel heard, guided, and cared for — like a real physiotherapist.
+IMPORTANT: Always complete your sentences and provide full information. Never cut responses in the middle.
+CRITICAL: Dr. Rameshwar Kumar Contact Information or contact details (USE ONLY THESE DETAILS):
+NEVER provide fake or made-up contact details. When asked about Dr. Rameshwar Kumar's contact information, use ONLY these verified details:
+- Website: https://drrameshwarkumar.in/
+- Clinic Address: C-1/101, Pankha Rd, Block C1, Janakpuri, Delhi, 110059
+- Phone: +917992271883
+- Email: care@drrameshwarkumar.in
+- YouTube: https://www.youtube.com/@DrRameshwarkumar
+- Hospital: https://srisaihospitalsiwan.com/
+- Hospital Address: Surgeon Lane, Bangaliu Pakri, Gaushala Road, Siwan, Bihar – 841226
 
-LANGUAGE HANDLING:
-- User is communicating in: ${language}
-- Respond naturally in the SAME language as the user
-- For Hinglish, flow naturally between Hindi and English
-- Never be formal or translate unless asked - just talk naturally
-
-CONVERSATION FLOW:
-- For general conversation (like "can you speak Hindi", "how are you", etc.): Respond conversationally without using knowledge base
-- For specific medical questions (exercises, pain relief, treatments, food advice, etc.): ALWAYS use knowledge base context if available
-- If knowledge base context is provided, extract relevant information and present it conversationally
-- Always be conversational first, but use KB data when available for medical queries
-
-CONVERSATION STYLE:
-- Keep responses SHORT and conversational (1-3 sentences max)
-- Ask follow-up questions to understand their needs
-- Don't give medical explanations unless specifically asked
-- Focus on understanding their issue first
-- Respond like talking to a friend - brief, helpful, and natural
-- Use empathetic, warm language that sounds human, not robotic
-- Use appropriate cultural context and expressions for Hindi speakers
-- Avoid formal or robotic language patterns
-- Sound like you're having a real conversation, not reading from a script
-
-EXAMPLES:
-- User: "Hindi me bat kr skta h bhai" → Response: "Haan bilkul bhai! Main Hindi aur English dono mein baat kar sakta hun. Aap comfortable feel karo. Kya help chahiye aapko?"
-- User: "knee pain exercises" → Use KB context for specific exercises and videos
-- User: "which food is useful" → Use KB context for nutrition advice and food recommendations
-- User: "how are you" → "Main theek hun, thank you! Aap kaise hain? Koi problem hai jo main help kar sakun?"
-
-IMPORTANT: If KB context contains relevant information (videos, exercises, food advice), ALWAYS use it and present conversationally.
-- Pain management techniques
-- Wound care and healing
-- Mobility and physical therapy guidance
-- When to contact healthcare providers
-- Medication adherence support
-
-SAFETY PROTOCOLS:
-- Always include medical disclaimers
-- Recognize emergency symptoms and advise immediate medical care
-- Never diagnose or prescribe medications
-- Encourage professional medical consultation when needed
-- Provide evidence-based general guidance only
-
-🚨 CRITICAL YOUTUBE LINK WARNING:
-❌ NEVER EVER create fake YouTube links like youtu.be/randomID or youtube.com/watch?v=fakeID
-❌ NEVER generate random YouTube video IDs or URLs
-❌ If you don't have the exact YouTube link from the knowledge base, DO NOT provide any YouTube link
-❌ Only use verified YouTube links or say "I don't have that specific video link"
-
-RESPONSE FORMAT:
-- Keep responses VERY SHORT and conversational (1-3 sentences max)
-- Ask ONE direct question about their specific problem
-- Don't give explanations unless specifically asked
-- Focus on understanding their issue first with follow-up questions
-- Respond like Siri - brief, helpful, and to the point
-- Get straight to the point, absolutely no fluff or long paragraphs
-- For voice calls: Be even more concise and natural, like talking to a friend
-- Use empathetic, warm language that sounds human, not robotic
-- Show genuine care and understanding in your tone
 
 ${userHistory ? `Previous conversation context: ${userHistory}` : ''}
 
@@ -179,6 +199,86 @@ ${kbContext}` : ''}
   // Process user message and generate appropriate response
   async processMessage(userId, message, groqApiKey, cohereClient = null, supabaseClient = null) {
     try {
+      // Check rate limit first
+      if (!this.checkRateLimit(userId)) {
+        console.log(`⚠️ Rate limit exceeded for user ${userId}`);
+        const language = this.detectLanguage(message);
+        const rateLimitMessage = language === 'hindi' ? 
+          "कृपया थोड़ी देर प्रतीक्षा करें। आप बहुत जल्दी-जल्दी सवाल पूछ रहे हैं।" :
+          "Please wait a moment. You're asking questions too quickly.";
+        
+        return {
+          response: rateLimitMessage,
+          detectedLanguage: language,
+          detectedEmotion: 'neutral',
+          conversationId: userId,
+          source: 'rate_limit'
+        };
+      }
+
+      // Check cache for similar recent queries
+      const cacheKey = this.generateCacheKey(userId, message);
+      if (this.requestCache.has(cacheKey)) {
+        const cachedResponse = this.requestCache.get(cacheKey);
+        console.log(`💾 Using cached response for user ${userId}`);
+        return cachedResponse;
+      }
+
+      // Simple fallback responses for common queries to reduce API calls
+      const detectedLang = this.detectLanguage(message);
+      const lowerMessage = message.toLowerCase();
+      
+      if (lowerMessage.includes('how are you') || lowerMessage.includes('kaise ho')) {
+        const fallbackResponse = detectedLang === 'hindi' ? 
+          "मैं ठीक हूं, धन्यवाद! आप कैसे हैं? आपको कोई orthopedic problem है जिसमें मैं मदद कर सकूं?" :
+          "I'm doing well, thank you! How are you? Do you have any orthopedic concerns I can help with?";
+        
+        return {
+          response: fallbackResponse,
+          detectedLanguage: detectedLang,
+          detectedEmotion: 'neutral',
+          conversationId: userId,
+          source: 'fallback'
+        };
+      }
+      // Safety check for harmful queries about increasing pain
+      const harmfulPainQueries = [
+        'increase my knee pain', 'increase knee pain', 'बढ़ाना घुटने का दर्द', 'badhana ghutne ka dard',
+        'make my knee hurt more', 'make knee hurt more', 'घुटने में ज्यादा दर्द करना', 'ghutne mein zyada dard karna',
+        'increase my pain', 'increase pain', 'दर्द बढ़ाना', 'dard badhana',
+        'hurt my knee more', 'hurt more', 'और दर्द करना', 'aur dard karna',
+        'make my knee worse', 'make it worse', 'और खराब करना', 'aur kharab karna',
+        'increase my swelling', 'increase swelling', 'सूजन बढ़ाना', 'sujan badhana',
+        'increase my inflammation', 'increase inflammation', 'सूजन बढ़ाना', 'sujan badhana',
+        'how can i increase', 'how to increase', 'कैसे बढ़ाएं', 'kaise badhaye'
+      ];
+
+      const isHarmfulQuery = harmfulPainQueries.some(pattern =>
+        message.toLowerCase().includes(pattern.toLowerCase())
+      );
+
+      if (isHarmfulQuery) {
+        const language = this.detectLanguage(message);
+
+        if (language === 'hindi') {
+          return {
+            response: "मैं इसमें मदद नहीं कर सकती हूँ। 😊 अगर आप \"घुटने में दर्द बढ़ाने\" का मतलब जानबूझकर दर्द बढ़ाना या नुकसान पहुँचाना ले रहे हैं, तो यह स्वास्थ्य के लिए खतरनाक है — ऐसा करना बिल्कुल सुरक्षित नहीं है। लेकिन अगर आप यह समझना चाहते हैं कि \"घुटने का दर्द किन कारणों से बढ़ जाता है?\" तो मैं पूरी तरह मदद कर सकती हूँ! 💚",
+            detectedLanguage: language,
+            detectedEmotion: 'neutral',
+            conversationId: userId,
+            source: 'safety_check'
+          };
+        } else {
+          return {
+            response: "I can't help with that! 😊 If you're asking about intentionally increasing knee pain or causing harm, that's not safe for your health. However, if you want to understand \"what causes knee pain to worsen?\" I'd be happy to help you learn about that and how to prevent it! 💚",
+            detectedLanguage: language,
+            detectedEmotion: 'neutral',
+            conversationId: userId,
+            source: 'safety_check'
+          };
+        }
+      }
+
       // Detect language and emotion
       const language = this.detectLanguage(message);
       const emotion = this.detectEmotion(message);
@@ -312,7 +412,7 @@ ${kbContext}` : ''}
             { role: 'user', content: message }
           ],
           temperature: 0.7,
-          max_tokens: 150
+          max_tokens: 300
         },
         {
           headers: {
@@ -322,7 +422,32 @@ ${kbContext}` : ''}
         }
       );
 
-      const aiResponse = response.data.choices[0].message.content;
+      let aiResponse = response.data.choices[0].message.content;
+      
+      // Check if response is incomplete (ends abruptly)
+      const incompletePatterns = [
+        /\s+$/, // ends with whitespace
+        /[a-z]$/, // ends with lowercase letter (might be cut off)
+        /\band\s*$/, // ends with "and"
+        /\bhe\s*$/, // ends with "he"
+        /\bshe\s*$/, // ends with "she"
+        /\bis\s*$/, // ends with "is"
+        /\bwas\s*$/, // ends with "was"
+        /\bthe\s*$/, // ends with "the"
+        /\bof\s*$/, // ends with "of"
+        /\bin\s*$/, // ends with "in"
+        /\bfor\s*$/, // ends with "for"
+        /\bwith\s*$/, // ends with "with"
+        /\balso\s*$/, // ends with "also"
+        /\bconducts\s*$/ // ends with "conducts"
+      ];
+      
+      const isIncomplete = incompletePatterns.some(pattern => pattern.test(aiResponse.trim()));
+      
+      if (isIncomplete) {
+        console.log('⚠️ Detected incomplete response, adding completion note');
+        aiResponse += " (Please ask for more details if needed)";
+      }
       
       // Store AI response in history
       history.push({ role: 'assistant', content: aiResponse, timestamp: new Date() });
@@ -332,7 +457,7 @@ ${kbContext}` : ''}
         history.splice(0, history.length - 10);
       }
       
-      return {
+      const result = {
         response: aiResponse,
         detectedLanguage: language,
         detectedEmotion: emotion,
@@ -340,6 +465,14 @@ ${kbContext}` : ''}
         kbMatches: kbMatches, // Include KB matches for formatting
         hasKBContent: kbMatches && kbMatches.length > 0
       };
+      
+      // Cache the response for 5 minutes
+      this.requestCache.set(cacheKey, result);
+      setTimeout(() => {
+        this.requestCache.delete(cacheKey);
+      }, 5 * 60 * 1000); // 5 minutes
+      
+      return result;
       
     } catch (error) {
       console.error('Error in conversational agent:', error);
