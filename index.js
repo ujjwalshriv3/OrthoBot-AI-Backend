@@ -1174,19 +1174,7 @@ app.get('/api/azure/tts/voices', async (req, res) => {
   }
 });
 
-// Browser TTS endpoint (disabled Groq TTS as it's not supported)
-app.post('/api/groq/tts', async (req, res) => {
-  try {
-    // Groq doesn't support TTS, return error to use browser TTS
-    res.status(501).json({ 
-      error: "TTS not supported by Groq API", 
-      message: "Please use browser TTS instead" 
-    });
-  } catch (error) {
-    console.error('TTS endpoint error:', error.message);
-    res.status(500).json({ error: "TTS endpoint failed" });
-  }
-});
+// Groq TTS endpoint removed - using Azure TTS in frontend instead
 
 // Get greeting in user's preferred language
 app.post('/api/greeting', (req, res) => {
